@@ -1,0 +1,103 @@
+\doxysection{List\+Manager.\+py}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{import} os}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} typing \textcolor{keyword}{import} List}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} asyncore \textcolor{keyword}{import} read, write}
+\DoxyCodeLine{00004 }
+\DoxyCodeLine{00005 dir = \textcolor{stringliteral}{'./'}}
+\DoxyCodeLine{00006 ext = \textcolor{stringliteral}{'.txt'}}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00008 }
+\DoxyCodeLine{00009 \textcolor{keyword}{def }get\_all\_paths\_lists()-\/>List:}
+\DoxyCodeLine{00010     \textcolor{keyword}{global} dir}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012     files = [f \textcolor{keywordflow}{for} f \textcolor{keywordflow}{in} os.listdir(dir) \textcolor{keywordflow}{if} os.path.isfile(os.path.join(dir, f))]}
+\DoxyCodeLine{00013     }
+\DoxyCodeLine{00014     files.sort(key = \textcolor{keyword}{lambda} f : -\/os.path.getmtime(os.path.join(dir, f)))}
+\DoxyCodeLine{00015     filtered = filter(\textcolor{keyword}{lambda} f : \textcolor{stringliteral}{'.txt'} \textcolor{keywordflow}{in} f, files)}
+\DoxyCodeLine{00016     filtered = map(\textcolor{keyword}{lambda} f : os.path.join(dir, f), filtered)}
+\DoxyCodeLine{00017     filtered = list(filtered)}
+\DoxyCodeLine{00018     }
+\DoxyCodeLine{00019     \textcolor{keywordflow}{return} filtered}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021 \textcolor{keyword}{def }get\_list\_from\_index(index):}
+\DoxyCodeLine{00022     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00023         \textcolor{keywordflow}{return} read\_a\_list(get\_all\_paths\_lists()[index])}
+\DoxyCodeLine{00024     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00025         \textcolor{keywordflow}{return} \textcolor{stringliteral}{'invalid list'}}
+\DoxyCodeLine{00026 }
+\DoxyCodeLine{00027 \textcolor{keyword}{def }get\_path\_by\_index(index):}
+\DoxyCodeLine{00028     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00029         \textcolor{keywordflow}{return} get\_all\_paths\_lists()}
+\DoxyCodeLine{00030     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00031         \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033 \textcolor{keyword}{def }read\_a\_list(path:str)-\/>str:}
+\DoxyCodeLine{00034     file = open(path, \textcolor{stringliteral}{'r'})}
+\DoxyCodeLine{00035     res = \textcolor{stringliteral}{''}.join(file.readlines())}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037     file.close()}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039     \textcolor{keywordflow}{return} res}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041 \textcolor{keyword}{def }read\_a\_list\_as\_array(path:str)-\/>List:}
+\DoxyCodeLine{00042     file = open(path, \textcolor{stringliteral}{'r'})}
+\DoxyCodeLine{00043     res = file.readlines()}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045     file.close()}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047     \textcolor{keywordflow}{return} res}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050 \textcolor{keyword}{def }get\_name\_by\_path(path):}
+\DoxyCodeLine{00051     \textcolor{keyword}{global} dir, ext}
+\DoxyCodeLine{00052     name = path.split(dir)[1]}
+\DoxyCodeLine{00053     name = name.split(ext)[0]}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055     \textcolor{keywordflow}{return} name}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057 \textcolor{keyword}{def }get\_path\_by\_name(name):}
+\DoxyCodeLine{00058     \textcolor{keyword}{global} dir, ext}
+\DoxyCodeLine{00059     file\_path = dir+name+ext}
+\DoxyCodeLine{00060     \textcolor{keywordflow}{if} os.path.exists(file\_path):}
+\DoxyCodeLine{00061         \textcolor{keywordflow}{return} file\_path}
+\DoxyCodeLine{00062     \textcolor{keywordflow}{else} :}
+\DoxyCodeLine{00063         \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065 \textcolor{keyword}{def }save\_a\_list(name:str, content:str):}
+\DoxyCodeLine{00066     \textcolor{keyword}{global} dir, ext}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068     path = get\_path\_by\_name(name)}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070     \textcolor{keywordflow}{if} path == \textcolor{keywordtype}{None} : }
+\DoxyCodeLine{00071         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073     f = open((path), \textcolor{stringliteral}{'w'})}
+\DoxyCodeLine{00074     }
+\DoxyCodeLine{00075     f.write(content)}
+\DoxyCodeLine{00076     f.close()}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078 \textcolor{keyword}{def }create\_new\_list(name):}
+\DoxyCodeLine{00079     \textcolor{keyword}{global} dir, ext}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081     path = dir + name + ext}
+\DoxyCodeLine{00082 }
+\DoxyCodeLine{00083     \textcolor{keywordflow}{if} path == \textcolor{keywordtype}{None} : }
+\DoxyCodeLine{00084         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086     f = open((path), \textcolor{stringliteral}{'w'})}
+\DoxyCodeLine{00087     }
+\DoxyCodeLine{00088     f.write(\textcolor{stringliteral}{''})}
+\DoxyCodeLine{00089     f.close()}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092 \textcolor{keyword}{def }delete\_list(name):}
+\DoxyCodeLine{00093     path = get\_path\_by\_name(name)}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095     \textcolor{keywordflow}{if} path == \textcolor{keywordtype}{None} : }
+\DoxyCodeLine{00096         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098     os.remove(path)}
+
+\end{DoxyCode}

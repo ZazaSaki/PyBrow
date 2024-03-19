@@ -1,0 +1,853 @@
+\doxysection{docs\+Updater\+Base Namespace Reference}
+\label{namespacedocs_updater_base}\index{docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \textbf{ connection} ()
+\begin{DoxyCompactList}\small\item\em Refreshes the connection with {\itshape Google Api} \end{DoxyCompactList}\item 
+def \textbf{ do\+\_\+to\+\_\+all} (Function\+Type function, List args=None)
+\begin{DoxyCompactList}\small\item\em Applies a given function to every non ignored worksheet. \end{DoxyCompactList}\item 
+def \textbf{ do\+\_\+to\+\_\+all\+\_\+spreadsheets} (Function\+Type function, List args=None)
+\begin{DoxyCompactList}\small\item\em Applies a given function to every spreadsheet. \end{DoxyCompactList}\item 
+def \textbf{ insert\+Profiles} (List profiles, Worksheet sheet, int col=1, int offset=0)
+\begin{DoxyCompactList}\small\item\em Insert a list of given values into a given worksheet ~\newline
+ \end{DoxyCompactList}\item 
+bool \textbf{ validate} (Worksheet worksheet)
+\begin{DoxyCompactList}\small\item\em Validate a sheet based on the names and expressions given by \doxyref{Option\+Manager.\+py}{p.}{_option_manager_8py_source} . \end{DoxyCompactList}\item 
+Worksheet \textbf{ rebuild\+\_\+sheet} (str url, str title)
+\begin{DoxyCompactList}\small\item\em Rebuild a worksheet based on a given {\itshape spreadsheet\textquotesingle{}s} url and a given Returns a \textbackslash{}textit\{worksheet\}. \end{DoxyCompactList}\item 
+def \textbf{ reset\+Page} (Worksheet sheet)
+\begin{DoxyCompactList}\small\item\em Reset a sheet based on a {\itshape New profiles links\textquotesingle{} sheet} \end{DoxyCompactList}\item 
+tuple[List, int] \textbf{ get\+Not\+Included\+By\+Col} (List profiles, int col, Worksheet sheet, int offset=0)
+\begin{DoxyCompactList}\small\item\em Get not included values of a given worksheet from a given list of values and also filter the not included values from the intern database. \end{DoxyCompactList}\item 
+List \textbf{ get\+Profiles\+Table} (Worksheet sheet)
+\begin{DoxyCompactList}\small\item\em Get info from a given worksheet the names and profiles according to the option given by the \doxyref{Option\+Manager}{p.}{namespace_option_manager}. \end{DoxyCompactList}\item 
+str \textbf{ get\+\_\+cols\+\_\+title} (Worksheet worksheet, int col)
+\begin{DoxyCompactList}\small\item\em Get the column title from a given worksheet and a given col. \end{DoxyCompactList}\item 
+Spreadsheet \textbf{ get\+Sheet\+By\+Link} (str link)
+\item 
+def \textbf{ refresh\+Links\+Sheet} ()
+\begin{DoxyCompactList}\small\item\em Update all the {\itshape New Profiles From Ads}\textquotesingle{} worksheets. \end{DoxyCompactList}\item 
+def \textbf{ Update\+Lists\+In\+Data\+Base} (Worksheet sheet)
+\begin{DoxyCompactList}\small\item\em Update the {\itshape Data Base} based on a given worksheet. \end{DoxyCompactList}\item 
+def \textbf{ update\+New\+Links\+Sheet} (Worksheet sheet, List profiles=[$\,$])
+\begin{DoxyCompactList}\small\item\em Update the {\itshape New Profiles From Ads}\textquotesingle{} worksheets from a given worksheet if given, can insert new contacts on it. \end{DoxyCompactList}\item 
+def \textbf{ update\+New\+Links\+Sheet\+By\+Link} (str Link, List profiles=[$\,$])
+\begin{DoxyCompactList}\small\item\em Update the {\itshape New Profiles From Ads}\textquotesingle{} worksheet contaibed in a given spreadsheet if given, can insert new contacts on it. \end{DoxyCompactList}\item 
+def \textbf{ Full\+Update} (bool just=False, List[str] sheet\+Group=[$\,$])
+\begin{DoxyCompactList}\small\item\em Update routine, run through every spreadsheet {\itshape All Likes} and pull all info from them. \end{DoxyCompactList}\item 
+def \textbf{ Verify\+Update} ()
+\begin{DoxyCompactList}\small\item\em Updates the Worksheets left from the first update. \end{DoxyCompactList}\item 
+def \textbf{ update\+\_\+code} (Worksheet worksheet)
+\begin{DoxyCompactList}\small\item\em Update the code column of a given worksheet. \end{DoxyCompactList}\item 
+def \textbf{ update\+\_\+all} ()
+\begin{DoxyCompactList}\small\item\em Apply \doxyref{update\+\_\+code()}{p.}{namespacedocs_updater_base_a68f04140f55c040a90ea63d186470d1c} to all validated worksheets. \end{DoxyCompactList}\item 
+def \textbf{ fix\+\_\+no\+\_\+code\+\_\+sheet} (Worksheet worksheet)
+\begin{DoxyCompactList}\small\item\em Fix the code column of a given worksheet, in case of missing code or server crash. \end{DoxyCompactList}\item 
+def \textbf{ fix\+\_\+all\+\_\+sheets} ()
+\begin{DoxyCompactList}\small\item\em Fix all the validated worksheets. \end{DoxyCompactList}\item 
+def \textbf{ smart\+Lock\+Sheet} (Worksheet worksheet, List[str] emails)
+\begin{DoxyCompactList}\small\item\em Locks the sheet according to it If it\textquotesingle{}s a valid sheet it locks the \doxyref{Option\+Manager.\+code\+\_\+title}{p.}{namespace_option_manager_a5092f5c88e4a7d6f392838494fb63656} range Else if is an {\itshape All Likes} or {\itshape New Profiles From Ads} it locks it. \end{DoxyCompactList}\item 
+def \textbf{ smart\+Lock\+All} (List[str] emails)
+\begin{DoxyCompactList}\small\item\em Locks all worksheets according to each one of them. \end{DoxyCompactList}\item 
+str \textbf{ Query\+Builder\+All\+Likes} (Spreadsheet Spread\+Sheet)
+\begin{DoxyCompactList}\small\item\em Build Query Language of {\itshape All Likes}\textquotesingle{} sheet of a given spreadsheet. \end{DoxyCompactList}\item 
+def \textbf{ Query\+Updater} (Spreadsheet Spread\+Sheet)
+\begin{DoxyCompactList}\small\item\em Updates Query Language of {\itshape All Likes}\textquotesingle{} sheet. \end{DoxyCompactList}\item 
+def \textbf{ Update\+All\+Query} ()
+\begin{DoxyCompactList}\small\item\em Apply \doxyref{Query\+Updater()}{p.}{namespacedocs_updater_base_ad6454decf40ba5992abab503fa700e4a} to all spreadsheets. \end{DoxyCompactList}\item 
+Tuple \textbf{ Verifyer\+Builder} (Spreadsheet Spread\+Sheet)
+\begin{DoxyCompactList}\small\item\em Build Query Language of {\itshape Verifyer}\textquotesingle{}s sheet of a given spreadsheet for debugging purposes, It looks up on every valid worksheet. \end{DoxyCompactList}\item 
+def \textbf{ Verityer\+Updater} (Spreadsheet Spread\+Sheet)
+\begin{DoxyCompactList}\small\item\em Updates Query Language of {\itshape Verifyer}\textquotesingle{}s sheet. \end{DoxyCompactList}\item 
+def \textbf{ Update\+All\+Verifyers} ()
+\begin{DoxyCompactList}\small\item\em Apply \doxyref{Verityer\+Updater()}{p.}{namespacedocs_updater_base_a9f9f77b5999b0fd85987179760465c19} to all spreadsheets. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \textbf{ scope}
+\begin{DoxyCompactList}\small\item\em scope \end{DoxyCompactList}\item 
+\textbf{ creds} = Service\+Account\+Credentials.\+from\+\_\+json\+\_\+keyfile\+\_\+name(\char`\"{}creds.\+json\char`\"{}, \textbf{ scope})
+\begin{DoxyCompactList}\small\item\em credencials \end{DoxyCompactList}\item 
+\textbf{ client\+\_\+session} = gspread.\+authorize(\textbf{ creds})
+\begin{DoxyCompactList}\small\item\em Api Client Object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespacedocs_updater_base_ae4eb8ede2ad2cbceb528472d60db9d8d}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!connection@{connection}}
+\index{connection@{connection}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{connection()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+connection (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Refreshes the connection with {\itshape Google Api} 
+
+
+
+Definition at line \textbf{ 42} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a7259aecdefa20a2b6c198bf76d2f199e}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!do\_to\_all@{do\_to\_all}}
+\index{do\_to\_all@{do\_to\_all}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{do\_to\_all()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+do\+\_\+to\+\_\+all (\begin{DoxyParamCaption}\item[{Function\+Type}]{function,  }\item[{List }]{args = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Applies a given function to every non ignored worksheet. 
+
+~\newline
+ 
+\begin{DoxyParams}{Parameters}
+{\em funtion} & function to be executed \\
+\hline
+{\em args} & (({\itshape opcional})) extra arguments need a part from the worksheet in array format\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\itshape The first argument of this} {\bfseries{function}} {\bfseries{Need}} {\itshape to be the} {\bfseries{worksheet object}}
+\end{DoxyWarning}
+\doxyparagraph{Consider the hypothetical scenario}\label{namespacedocs_updater_base_autotoc_md0}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{def }foo(worksheet):}
+\DoxyCodeLine{    \textcolor{keywordflow}{return} worksheet}
+\DoxyCodeLine{  }
+\DoxyCodeLine{\textcolor{keyword}{def }foo\_with\_more\_args(worksheet, arg1, arg2):}
+\DoxyCodeLine{    worksheet.do\_something(arg1, arg2)}
+\DoxyCodeLine{    \textcolor{keywordflow}{return} worksheet}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#utilization}}
+\DoxyCodeLine{do\_to\_all(foo)}
+\DoxyCodeLine{do\_to\_all(foo\_with\_more\_args, [arg1, arg2])}
+
+\end{DoxyCode}
+ 
+
+Definition at line \textbf{ 70} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a183b5ed847a016ea38d182a10f6868ec}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!do\_to\_all\_spreadsheets@{do\_to\_all\_spreadsheets}}
+\index{do\_to\_all\_spreadsheets@{do\_to\_all\_spreadsheets}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{do\_to\_all\_spreadsheets()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+do\+\_\+to\+\_\+all\+\_\+spreadsheets (\begin{DoxyParamCaption}\item[{Function\+Type}]{function,  }\item[{List }]{args = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Applies a given function to every spreadsheet. 
+
+~\newline
+ 
+\begin{DoxyParams}{Parameters}
+{\em funtion} & function to be executed \\
+\hline
+{\em args} & (({\itshape opcional})) extra arguments need a part from the spreadsheet in array format\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\itshape The first argument of this} {\bfseries{function}} {\bfseries{Need}} {\itshape to be the} {\bfseries{spreadsheet object}}
+\end{DoxyWarning}
+\doxyparagraph{Consider the hypothetical scenario}\label{namespacedocs_updater_base_autotoc_md1}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{def }foo(spreadsheet):}
+\DoxyCodeLine{    \textcolor{keywordflow}{return} spreadsheet}
+\DoxyCodeLine{  }
+\DoxyCodeLine{\textcolor{keyword}{def }foo\_with\_more\_args(spreadsheet, arg1, arg2):}
+\DoxyCodeLine{    spreadsheet.do\_something(arg1, arg2)}
+\DoxyCodeLine{    \textcolor{keywordflow}{return} spreadsheet}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#utilization}}
+\DoxyCodeLine{do\_to\_all\_spreadsheets(foo)}
+\DoxyCodeLine{do\_to\_all\_spreadsheets(foo\_with\_more\_args, [arg1, arg2])}
+
+\end{DoxyCode}
+ 
+
+Definition at line \textbf{ 111} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a34a38a4b888163f965a296c01cd40de3}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!fix\_all\_sheets@{fix\_all\_sheets}}
+\index{fix\_all\_sheets@{fix\_all\_sheets}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{fix\_all\_sheets()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+fix\+\_\+all\+\_\+sheets (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Fix all the validated worksheets. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{do\+\_\+to\+\_\+all}{p.}{namespacedocs_updater_base_a7259aecdefa20a2b6c198bf76d2f199e}, \doxyref{fix\+\_\+no\+\_\+code\+\_\+sheet}{p.}{namespacedocs_updater_base_af2d10d037094765d0bdaa3e79e9c7d39}, \doxyref{validate}{p.}{namespacedocs_updater_base_a5c757ddb1a1da76edd15b9d695db40d9} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 618} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_af2d10d037094765d0bdaa3e79e9c7d39}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!fix\_no\_code\_sheet@{fix\_no\_code\_sheet}}
+\index{fix\_no\_code\_sheet@{fix\_no\_code\_sheet}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{fix\_no\_code\_sheet()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+fix\+\_\+no\+\_\+code\+\_\+sheet (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet }\end{DoxyParamCaption})}
+
+
+
+Fix the code column of a given worksheet, in case of missing code or server crash. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to update \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Option\+Manager.\+code\+\_\+title}{p.}{namespace_option_manager_a5092f5c88e4a7d6f392838494fb63656} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 590} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a4f38b8a38e1d34d4a864cc980ce7ae11}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!FullUpdate@{FullUpdate}}
+\index{FullUpdate@{FullUpdate}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{FullUpdate()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+Full\+Update (\begin{DoxyParamCaption}\item[{bool }]{just = {\ttfamily False},  }\item[{List[str] }]{sheet\+Group = {\ttfamily []} }\end{DoxyParamCaption})}
+
+
+
+Update routine, run through every spreadsheet {\itshape All Likes} and pull all info from them. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em just} & ({\itshape opcional}) if {\itshape TRUE} will only analise the sheets contained in sheet\+Group \\
+\hline
+{\em sheet\+Group} & ({\itshape opcional}) spreadsheet\textquotesingle{}s link\textquotesingle{}s list to analise \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+just is {\itshape FALSE} by default 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 451} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_aab2c82814e9ddcd56d48c6d487b71093}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!get\_cols\_title@{get\_cols\_title}}
+\index{get\_cols\_title@{get\_cols\_title}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{get\_cols\_title()}
+{\footnotesize\ttfamily str docs\+Updater\+Base.\+get\+\_\+cols\+\_\+title (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet,  }\item[{int}]{col }\end{DoxyParamCaption})}
+
+
+
+Get the column title from a given worksheet and a given col. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to get value from. \\
+\hline
+{\em col} & col number. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the cell value in {\itshape formula} format 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 301} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a0d73d1e6f90903ef1c064d9fd74e4ff5}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!getNotIncludedByCol@{getNotIncludedByCol}}
+\index{getNotIncludedByCol@{getNotIncludedByCol}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{getNotIncludedByCol()}
+{\footnotesize\ttfamily  tuple[List, int] docs\+Updater\+Base.\+get\+Not\+Included\+By\+Col (\begin{DoxyParamCaption}\item[{List}]{profiles,  }\item[{int}]{col,  }\item[{Worksheet}]{sheet,  }\item[{int }]{offset = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Get not included values of a given worksheet from a given list of values and also filter the not included values from the intern database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profiles} & the list to filter \\
+\hline
+{\em sheet} & worksheet to filter with \\
+\hline
+{\em col} & column to start to insert the values ({\itshape default value = 1, start counting on 1, ids are unique}) \\
+\hline
+{\em offset} & index in the $<$profiles$>$, that has the ids to compare ({\itshape deafault value = 0, start counting on 0})\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of filtered values
+\end{DoxyReturn}
+\doxyparagraph{Assuming we have the next worksheet named \textbackslash{}a \char`\"{}sheet\char`\"{} from a spreadsheet named \textbackslash{}a \char`\"{}spread\char`\"{}\+:}\label{namespacedocs_updater_base_autotoc_md3}
+ Aplaying this code \+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{list\_to\_insert = [}
+\DoxyCodeLine{    [\textcolor{stringliteral}{'row1'}, \textcolor{stringliteral}{'name'}, \textcolor{stringliteral}{'id1'}, \textcolor{stringliteral}{'age'}], }
+\DoxyCodeLine{    [\textcolor{stringliteral}{'row2'}, \textcolor{stringliteral}{'name'}, \textcolor{stringliteral}{'id2'}, \textcolor{stringliteral}{'age'}],}
+\DoxyCodeLine{    [\textcolor{stringliteral}{'row3'}, \textcolor{stringliteral}{'name'}, \textcolor{stringliteral}{'id3'}, \textcolor{stringliteral}{'age'}]}
+\DoxyCodeLine{]}
+\DoxyCodeLine{}
+\DoxyCodeLine{spreadsheet = client\_session.open(\textcolor{stringliteral}{"{}spread"{}})}
+\DoxyCodeLine{}
+\DoxyCodeLine{worksheet = spreadsheet.worksheet(\textcolor{stringliteral}{"{}sheet"{}})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#utilization}}
+\DoxyCodeLine{getNotIncludedByCol(list\_to\_insert, worksheet, offset = 2)}
+
+\end{DoxyCode}
+ the output would be\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{[}
+\DoxyCodeLine{    [\textcolor{stringliteral}{'row1'}, \textcolor{stringliteral}{'name'}, \textcolor{stringliteral}{'id1'}, \textcolor{stringliteral}{'age'}],}
+\DoxyCodeLine{    [\textcolor{stringliteral}{'row3'}, \textcolor{stringliteral}{'name'}, \textcolor{stringliteral}{'id3'}, \textcolor{stringliteral}{'age'}]}
+\DoxyCodeLine{]}
+
+\end{DoxyCode}
+ Unless the data base already had the {\itshape \char`\"{}id1\char`\"{}} and {\itshape \char`\"{}id3\char`\"{}}, in that case the contained {\itshape ids} in data base would be removed.
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{Data\+Manager.\+filter\+List}{p.}{namespace_data_manager_ae633c50307ff420c7d1fc5e3733e9db5} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 272} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_ae49217b82c76c86083b318b9cefdc2ef}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!getProfilesTable@{getProfilesTable}}
+\index{getProfilesTable@{getProfilesTable}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{getProfilesTable()}
+{\footnotesize\ttfamily List docs\+Updater\+Base.\+get\+Profiles\+Table (\begin{DoxyParamCaption}\item[{Worksheet}]{sheet }\end{DoxyParamCaption})}
+
+
+
+Get info from a given worksheet the names and profiles according to the option given by the \doxyref{Option\+Manager}{p.}{namespace_option_manager}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sheet} & worksheet to get values from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+It is used to extract information from {\itshape All Likes}\textquotesingle{} sheets. 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+List of filtered values to insert {\bfseries{[[\char`\"{}name\char`\"{}, \char`\"{}profile\char`\"{}]]}} 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 286} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a83dc82cf1bea8518779b1ec10466e20b}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!getSheetByLink@{getSheetByLink}}
+\index{getSheetByLink@{getSheetByLink}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{getSheetByLink()}
+{\footnotesize\ttfamily Spreadsheet docs\+Updater\+Base.\+get\+Sheet\+By\+Link (\begin{DoxyParamCaption}\item[{str}]{link }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em link} & link of the spreadsheet. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the {\itshape spreadsheet object} from a given link. 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 323} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a7867606ea5e26688cecf187b0c44a635}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!insertProfiles@{insertProfiles}}
+\index{insertProfiles@{insertProfiles}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{insertProfiles()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+insert\+Profiles (\begin{DoxyParamCaption}\item[{List}]{profiles,  }\item[{Worksheet}]{sheet,  }\item[{int }]{col = {\ttfamily 1},  }\item[{int }]{offset = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Insert a list of given values into a given worksheet ~\newline
+ 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profiles} & the list of values to insert \\
+\hline
+{\em sheet} & worksheet to insert the values in \\
+\hline
+{\em col} & column to start to insert the values in ({\itshape default value = 1, start counting on 1, ids are unique}) \\
+\hline
+{\em offset} & index in the $<$profiles$>$, that has the ids to look up on ({\itshape deafault value = 0, start counting on 0})\\
+\hline
+\end{DoxyParams}
+\doxyparagraph{Consider the hypothetical scenario}\label{namespacedocs_updater_base_autotoc_md2}
+ Aplaying this code \+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{list\_to\_insert = [}
+\DoxyCodeLine{    [\textcolor{stringliteral}{'row1'}, \textcolor{stringliteral}{'name'}, \textcolor{stringliteral}{'id1'}, \textcolor{stringliteral}{'age'}], }
+\DoxyCodeLine{    [\textcolor{stringliteral}{'row2'}, \textcolor{stringliteral}{'name'}, \textcolor{stringliteral}{'id2'}, \textcolor{stringliteral}{'age'}],}
+\DoxyCodeLine{    [\textcolor{stringliteral}{'row3'}, \textcolor{stringliteral}{'name'}, \textcolor{stringliteral}{'id3'}, \textcolor{stringliteral}{'age'}]}
+\DoxyCodeLine{]}
+\DoxyCodeLine{}
+\DoxyCodeLine{spreadsheet = client\_session.open(\textcolor{stringliteral}{"{}spread"{}})}
+\DoxyCodeLine{}
+\DoxyCodeLine{worksheet = spreadsheet.worksheet(\textcolor{stringliteral}{"{}sheet"{}})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{\#utilization}}
+\DoxyCodeLine{insertProfiles(list\_to\_insert, worksheet, offset = 2)}
+
+\end{DoxyCode}
+ the output would be\+:  The {\itshape row} with {\itshape \char`\"{}id2\char`\"{}} is not reinserted once we already have it in the sheet, and the offset is setted to lookup to that index 
+
+Definition at line \textbf{ 160} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_ad15602035df1f399ea314877ee04e79b}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!QueryBuilderAllLikes@{QueryBuilderAllLikes}}
+\index{QueryBuilderAllLikes@{QueryBuilderAllLikes}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{QueryBuilderAllLikes()}
+{\footnotesize\ttfamily str docs\+Updater\+Base.\+Query\+Builder\+All\+Likes (\begin{DoxyParamCaption}\item[{Spreadsheet}]{Spread\+Sheet }\end{DoxyParamCaption})}
+
+
+
+Build Query Language of {\itshape All Likes}\textquotesingle{} sheet of a given spreadsheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spread\+Sheet} & spreadsheet to build the command from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Query Language command with the valid worksheets 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{validate}{p.}{namespacedocs_updater_base_a5c757ddb1a1da76edd15b9d695db40d9}, \doxyref{Query\+Updater}{p.}{namespacedocs_updater_base_ad6454decf40ba5992abab503fa700e4a} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 659} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_ad6454decf40ba5992abab503fa700e4a}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!QueryUpdater@{QueryUpdater}}
+\index{QueryUpdater@{QueryUpdater}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{QueryUpdater()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+Query\+Updater (\begin{DoxyParamCaption}\item[{Spreadsheet}]{Spread\+Sheet }\end{DoxyParamCaption})}
+
+
+
+Updates Query Language of {\itshape All Likes}\textquotesingle{} sheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spread\+Sheet} & spreadsheet to update\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\bfseries{DO NOT USE}} unless it\textquotesingle{}s used with a {\itshape All Likes}\textquotesingle{} worksheet
+\end{DoxyWarning}
+\begin{DoxyNote}{Note}
+If the {\itshape All Likes}\textquotesingle{} worksheet doesn\textquotesingle{}t exist, one will be autogenerated
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Option\+Manager.\+get\+\_\+all\+\_\+likes\+\_\+name}{p.}{namespace_option_manager_aadacf1e9a0a92505de8d0ff861bd864a}, \doxyref{Query\+Builder\+All\+Likes}{p.}{namespacedocs_updater_base_ad15602035df1f399ea314877ee04e79b} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 693} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a712d680cdadc169a8ef5461ed2fbc601}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!rebuild\_sheet@{rebuild\_sheet}}
+\index{rebuild\_sheet@{rebuild\_sheet}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{rebuild\_sheet()}
+{\footnotesize\ttfamily Worksheet docs\+Updater\+Base.\+rebuild\+\_\+sheet (\begin{DoxyParamCaption}\item[{str}]{url,  }\item[{str}]{title }\end{DoxyParamCaption})}
+
+
+
+Rebuild a worksheet based on a given {\itshape spreadsheet\textquotesingle{}s} url and a given Returns a \textbackslash{}textit\{worksheet\}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em url} & url of the spreadsheet that contains the wanted worksheet \\
+\hline
+{\em title} & title of the wanted worksheet \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\itshape worksheet} 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 223} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a815a84b2d6dfa472331bd94008486b0b}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!refreshLinksSheet@{refreshLinksSheet}}
+\index{refreshLinksSheet@{refreshLinksSheet}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{refreshLinksSheet()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+refresh\+Links\+Sheet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Update all the {\itshape New Profiles From Ads}\textquotesingle{} worksheets. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{update\+New\+Links\+Sheet\+By\+Link}{p.}{namespacedocs_updater_base_a977e11792b6181590fdc1ae9d0cebc2c} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 329} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a55ee351082302e5c288bdce28c6743af}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!resetPage@{resetPage}}
+\index{resetPage@{resetPage}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{resetPage()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+reset\+Page (\begin{DoxyParamCaption}\item[{Worksheet}]{sheet }\end{DoxyParamCaption})}
+
+
+
+Reset a sheet based on a {\itshape New profiles links\textquotesingle{} sheet} 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sheet} & worksheet to reset \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\bfseries{DO NOT USE}} unless it is used on a {\itshape New profiles links\textquotesingle{} sheet}. 
+\end{DoxyWarning}
+
+
+Definition at line \textbf{ 229} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a2ac6366849a1bfa7e488fc7baf64f697}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!smartLockAll@{smartLockAll}}
+\index{smartLockAll@{smartLockAll}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{smartLockAll()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+smart\+Lock\+All (\begin{DoxyParamCaption}\item[{List[str]}]{emails }\end{DoxyParamCaption})}
+
+
+
+Locks all worksheets according to each one of them. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em emails} & emails that can access the worksheet \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+smart\+Locksheet, \doxyref{do\+\_\+to\+\_\+all}{p.}{namespacedocs_updater_base_a7259aecdefa20a2b6c198bf76d2f199e} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 651} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_acc6fe12bbb371c77e681a40261b112d4}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!smartLockSheet@{smartLockSheet}}
+\index{smartLockSheet@{smartLockSheet}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{smartLockSheet()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+smart\+Lock\+Sheet (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet,  }\item[{List[str]}]{emails }\end{DoxyParamCaption})}
+
+
+
+Locks the sheet according to it If it\textquotesingle{}s a valid sheet it locks the \doxyref{Option\+Manager.\+code\+\_\+title}{p.}{namespace_option_manager_a5092f5c88e4a7d6f392838494fb63656} range Else if is an {\itshape All Likes} or {\itshape New Profiles From Ads} it locks it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to lock \\
+\hline
+{\em emails} & emails that can access the worksheet \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 628} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_af65819ade2f37c8639b4251688cced11}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!update\_all@{update\_all}}
+\index{update\_all@{update\_all}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{update\_all()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+update\+\_\+all (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Apply \doxyref{update\+\_\+code()}{p.}{namespacedocs_updater_base_a68f04140f55c040a90ea63d186470d1c} to all validated worksheets. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{validate}{p.}{namespacedocs_updater_base_a5c757ddb1a1da76edd15b9d695db40d9}, \doxyref{do\+\_\+to\+\_\+all}{p.}{namespacedocs_updater_base_a7259aecdefa20a2b6c198bf76d2f199e}, \doxyref{update\+\_\+code}{p.}{namespacedocs_updater_base_a68f04140f55c040a90ea63d186470d1c} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 582} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a68f04140f55c040a90ea63d186470d1c}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!update\_code@{update\_code}}
+\index{update\_code@{update\_code}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{update\_code()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+update\+\_\+code (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet }\end{DoxyParamCaption})}
+
+
+
+Update the code column of a given worksheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to update \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Option\+Manager.\+code\+\_\+title}{p.}{namespace_option_manager_a5092f5c88e4a7d6f392838494fb63656} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 529} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a08b414e104993d0693bce7c23bd64981}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!UpdateAllQuery@{UpdateAllQuery}}
+\index{UpdateAllQuery@{UpdateAllQuery}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{UpdateAllQuery()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+Update\+All\+Query (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Apply \doxyref{Query\+Updater()}{p.}{namespacedocs_updater_base_ad6454decf40ba5992abab503fa700e4a} to all spreadsheets. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{do\+\_\+to\+\_\+all\+\_\+spreadsheets}{p.}{namespacedocs_updater_base_a183b5ed847a016ea38d182a10f6868ec}, \doxyref{Query\+Updater}{p.}{namespacedocs_updater_base_ad6454decf40ba5992abab503fa700e4a} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 716} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_ad6b753f030f7783d2d69e40f8464a427}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!UpdateAllVerifyers@{UpdateAllVerifyers}}
+\index{UpdateAllVerifyers@{UpdateAllVerifyers}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{UpdateAllVerifyers()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+Update\+All\+Verifyers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Apply \doxyref{Verityer\+Updater()}{p.}{namespacedocs_updater_base_a9f9f77b5999b0fd85987179760465c19} to all spreadsheets. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{do\+\_\+to\+\_\+all\+\_\+spreadsheets}{p.}{namespacedocs_updater_base_a183b5ed847a016ea38d182a10f6868ec}, \doxyref{Verityer\+Updater}{p.}{namespacedocs_updater_base_a9f9f77b5999b0fd85987179760465c19} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 775} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a1b8ca92fd7c4824b2e10cd4656b184f4}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!UpdateListsInDataBase@{UpdateListsInDataBase}}
+\index{UpdateListsInDataBase@{UpdateListsInDataBase}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{UpdateListsInDataBase()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+Update\+Lists\+In\+Data\+Base (\begin{DoxyParamCaption}\item[{Worksheet}]{sheet }\end{DoxyParamCaption})}
+
+
+
+Update the {\itshape Data Base} based on a given worksheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to pull data from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+It\textquotesingle{}s used to download {\itshape All Likes}\textquotesingle{} sheets\textquotesingle{} information to the {\itshape Data base}. It pull information according to the settings defined in \doxyref{Option\+Manager}{p.}{namespace_option_manager} 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 340} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_af8a2454460949406ba7e424786e334ed}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!updateNewLinksSheet@{updateNewLinksSheet}}
+\index{updateNewLinksSheet@{updateNewLinksSheet}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{updateNewLinksSheet()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+update\+New\+Links\+Sheet (\begin{DoxyParamCaption}\item[{Worksheet}]{sheet,  }\item[{List }]{profiles = {\ttfamily []} }\end{DoxyParamCaption})}
+
+
+
+Update the {\itshape New Profiles From Ads}\textquotesingle{} worksheets from a given worksheet if given, can insert new contacts on it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sheet} & worksheet to update \\
+\hline
+{\em profiles} & ({\itshape opcional}) new profiles to insert if intended\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+{\bfseries{DO NOT USE}} unless it\textquotesingle{}s used with a {\itshape New Profiles From Ads}\textquotesingle{} worksheet
+
+If the {\itshape New Profiles From Ads}\textquotesingle{} worksheet {\bfseries{doesn\textquotesingle{}t exist}} the program will raise an exeption 
+\end{DoxyWarning}
+
+
+Definition at line \textbf{ 355} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a977e11792b6181590fdc1ae9d0cebc2c}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!updateNewLinksSheetByLink@{updateNewLinksSheetByLink}}
+\index{updateNewLinksSheetByLink@{updateNewLinksSheetByLink}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{updateNewLinksSheetByLink()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+update\+New\+Links\+Sheet\+By\+Link (\begin{DoxyParamCaption}\item[{str}]{Link,  }\item[{List }]{profiles = {\ttfamily []} }\end{DoxyParamCaption})}
+
+
+
+Update the {\itshape New Profiles From Ads}\textquotesingle{} worksheet contaibed in a given spreadsheet if given, can insert new contacts on it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Link} & spreadsheet\textquotesingle{}s link to update \\
+\hline
+{\em profiles} & ({\itshape opcional}) new profiles to insert if intended\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+If the {\itshape New Profiles From Ads}\textquotesingle{} worksheet doesn\textquotesingle{}t exist, one will be autogenerated 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxyref{update\+New\+Links\+Sheet}{p.}{namespacedocs_updater_base_af8a2454460949406ba7e424786e334ed}, \doxyref{Option\+Manager.\+get\+\_\+new\+\_\+profiles\+\_\+name}{p.}{namespace_option_manager_a6f9fe34999b42751265ab9e32a6e7f4d} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 414} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a5c757ddb1a1da76edd15b9d695db40d9}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!validate@{validate}}
+\index{validate@{validate}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{validate()}
+{\footnotesize\ttfamily  bool docs\+Updater\+Base.\+validate (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet }\end{DoxyParamCaption})}
+
+
+
+Validate a sheet based on the names and expressions given by \doxyref{Option\+Manager.\+py}{p.}{_option_manager_8py_source} . 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to validate \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\itshape boolean} \+: {\itshape TRUE} if is valid our {\itshape FALSE} if is invalid
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Option\+Manager.\+get\+\_\+ignore\+\_\+titles}{p.}{namespace_option_manager_a652e471aa8bd8550b5651d86f38f00fb}, \doxyref{Option\+Manager.\+get\+\_\+ignore\+\_\+words}{p.}{namespace_option_manager_aec246bac30230e549d659462e3c85e5a} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 209} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a319f4d762ca6ba3f847d501c07d9b7f2}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!VerifyerBuilder@{VerifyerBuilder}}
+\index{VerifyerBuilder@{VerifyerBuilder}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{VerifyerBuilder()}
+{\footnotesize\ttfamily Tuple docs\+Updater\+Base.\+Verifyer\+Builder (\begin{DoxyParamCaption}\item[{Spreadsheet}]{Spread\+Sheet }\end{DoxyParamCaption})}
+
+
+
+Build Query Language of {\itshape Verifyer}\textquotesingle{}s sheet of a given spreadsheet for debugging purposes, It looks up on every valid worksheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spread\+Sheet} & spreadsheet to build the command from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Query Language command with the valid worksheets 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{[[GeneralCode], tableList], range}
+
+\end{DoxyCode}
+ 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{validate}{p.}{namespacedocs_updater_base_a5c757ddb1a1da76edd15b9d695db40d9}, \doxyref{Verityer\+Updater}{p.}{namespacedocs_updater_base_a9f9f77b5999b0fd85987179760465c19} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 729} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a54133e11a9193060b1ecf5c75d39687a}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!VerifyUpdate@{VerifyUpdate}}
+\index{VerifyUpdate@{VerifyUpdate}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{VerifyUpdate()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+Verify\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Updates the Worksheets left from the first update. 
+
+
+
+Definition at line \textbf{ 515} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a9f9f77b5999b0fd85987179760465c19}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!VerityerUpdater@{VerityerUpdater}}
+\index{VerityerUpdater@{VerityerUpdater}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{VerityerUpdater()}
+{\footnotesize\ttfamily def docs\+Updater\+Base.\+Verityer\+Updater (\begin{DoxyParamCaption}\item[{Spreadsheet}]{Spread\+Sheet }\end{DoxyParamCaption})}
+
+
+
+Updates Query Language of {\itshape Verifyer}\textquotesingle{}s sheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em spread\+Sheet} & spreadsheet to update \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+If the {\itshape Verifyer}\textquotesingle{} worksheet doesn\textquotesingle{}t exist, one will be autogenerated 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Verifyer\+Builder}{p.}{namespacedocs_updater_base_a319f4d762ca6ba3f847d501c07d9b7f2} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 754} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{namespacedocs_updater_base_a4a3898e59e08516d3401d5877b919cc6}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!client\_session@{client\_session}}
+\index{client\_session@{client\_session}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{client\_session}
+{\footnotesize\ttfamily docs\+Updater\+Base.\+client\+\_\+session = gspread.\+authorize(\textbf{ creds})}
+
+
+
+Api Client Object. 
+
+
+
+Definition at line \textbf{ 19} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_ad6fecf755aefbdcc9cc1af0e0542d7c1}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!creds@{creds}}
+\index{creds@{creds}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{creds}
+{\footnotesize\ttfamily docs\+Updater\+Base.\+creds = Service\+Account\+Credentials.\+from\+\_\+json\+\_\+keyfile\+\_\+name(\char`\"{}creds.\+json\char`\"{}, \textbf{ scope})}
+
+
+
+credencials 
+
+
+
+Definition at line \textbf{ 16} of file \textbf{ docs\+Updater\+Base.\+py}.
+
+\mbox{\label{namespacedocs_updater_base_a33d7e5428dfa582568c7b3bddc48d8c0}} 
+\index{docsUpdaterBase@{docsUpdaterBase}!scope@{scope}}
+\index{scope@{scope}!docsUpdaterBase@{docsUpdaterBase}}
+\doxysubsubsection{scope}
+{\footnotesize\ttfamily list docs\+Updater\+Base.\+scope}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [\textcolor{stringliteral}{"{}https://spreadsheets.google.com/feeds"{}}, \textcolor{stringliteral}{'https://www.googleapis.com/auth/spreadsheets'},}
+\DoxyCodeLine{00002         \textcolor{stringliteral}{"{}https://www.googleapis.com/auth/drive.file"{}}, \textcolor{stringliteral}{"{}https://www.googleapis.com/auth/drive"{}}]}
+
+\end{DoxyCode}
+
+
+scope 
+
+
+
+Definition at line \textbf{ 12} of file \textbf{ docs\+Updater\+Base.\+py}.
+

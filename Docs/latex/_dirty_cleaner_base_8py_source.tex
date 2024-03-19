@@ -1,0 +1,44 @@
+\doxysection{Dirty\+Cleaner\+Base.\+py}
+\label{_dirty_cleaner_base_8py_source}\index{DirtyCleanerBase.py@{DirtyCleanerBase.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} Browser.Read \textcolor{keyword}{import} closeBrowser, getBrowser, login, openBrowser}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} Drive.DataBase.DataManager \textcolor{keyword}{import} getUnVerifyed, removeValids, validate}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} General.general \textcolor{keyword}{import} wait\_secs, linkparse}
+\DoxyCodeLine{00004 \textcolor{keyword}{from} General.loadingBar \textcolor{keyword}{import} closeCounter, complexUpdate, setDisplayInfo}
+\DoxyCodeLine{00005 }
+\DoxyCodeLine{00006 }
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00008 \textcolor{keyword}{def }cleanDirtyLinks():}
+\DoxyCodeLine{00009     openBrowser()}
+\DoxyCodeLine{00010     dirtylinks = getUnVerifyed()}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012     login()}
+\DoxyCodeLine{00013     wait\_secs(3)}
+\DoxyCodeLine{00014     i = 0}
+\DoxyCodeLine{00015     }
+\DoxyCodeLine{00016     setDisplayInfo(\textcolor{stringliteral}{"{}item"{}}, 0, len(dirtylinks))}
+\DoxyCodeLine{00017     setDisplayInfo(\textcolor{stringliteral}{"{}link"{}}, \textcolor{stringliteral}{"{}holding"{}}, \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00018     \textcolor{keywordflow}{for} link \textcolor{keywordflow}{in} dirtylinks:}
+\DoxyCodeLine{00019         i += 1}
+\DoxyCodeLine{00020         complexUpdate(\textcolor{stringliteral}{"{}item"{}}, i)}
+\DoxyCodeLine{00021         complexUpdate(\textcolor{stringliteral}{"{}link"{}}, link[1])}
+\DoxyCodeLine{00022 }
+\DoxyCodeLine{00023         getBrowser().get(link[1])}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025         }
+\DoxyCodeLine{00026         newLink = linkparse(getBrowser().current\_url)}
+\DoxyCodeLine{00027         complexUpdate(\textcolor{stringliteral}{"{}link"{}}, newLink)}
+\DoxyCodeLine{00028         }
+\DoxyCodeLine{00029         \textcolor{keywordflow}{if} newLink.split(\textcolor{stringliteral}{"{}/"{}})[-\/1].isdigit():}
+\DoxyCodeLine{00030             validate(newLink, \textcolor{keyword}{False})}
+\DoxyCodeLine{00031         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00032             validate(link[1], \textcolor{keyword}{True}, link[0], newLink)}
+\DoxyCodeLine{00033         }
+\DoxyCodeLine{00034         \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00035     }
+\DoxyCodeLine{00036     removeValids()}
+\DoxyCodeLine{00037     closeCounter()}
+\DoxyCodeLine{00038     closeBrowser()}
+
+\end{DoxyCode}

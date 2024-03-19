@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['link_0',['link',['../namespace_g_u_i.html#af0cc098bb26a17c601f45c11fc55ca47',1,'GUI']]],
+  ['linkparse_1',['linkparse',['../namespacegeneral.html#ae6066afec82d0a0700b80c63547a23e1',1,'general']]],
+  ['listmanager_2',['ListManager',['../namespace_list_manager.html',1,'']]],
+  ['listofrowstolistofcols_3',['listOfRowsToListOfCols',['../namespacegeneral.html#a551fab5c6bd46e54fab4d3004a6e44cd',1,'general']]],
+  ['listparse_4',['listparse',['../namespacegeneral.html#afdb870c1fd3fced161071851846f1107',1,'general']]],
+  ['load_5',['load',['../namespace_option_manager.html#a1ff5ef42ee19d70560f0133ccd171a18',1,'OptionManager']]],
+  ['loadandread_6',['loadAndRead',['../namespace_read.html#ae759ba6a7fffd611a731519c10192c37',1,'Read']]],
+  ['loadingbar_7',['loadingBar',['../namespaceloading_bar.html',1,'']]],
+  ['loadscroller_8',['loadScroller',['../namespace_file_reader.html#af5ed948fc9e986bbbb70380bd383ad15',1,'FileReader']]],
+  ['lockall_9',['lockAll',['../namespace_locker.html#a1d0e0d2449a9afb072da96b319110d24',1,'Locker']]],
+  ['locker_10',['Locker',['../namespace_locker.html',1,'']]],
+  ['locklinkscol_11',['lockLinksCol',['../namespace_lock_manager.html#a9d52e8d1b0dd36ee55c23cf3587f477d',1,'LockManager.lockLinksCol()'],['../namespace_locker.html#a4c750da11430277a78fc726498df116b',1,'Locker.lockLinksCol()']]],
+  ['lockmanager_12',['LockManager',['../namespace_lock_manager.html',1,'']]],
+  ['lockrange_13',['lockRange',['../namespace_lock_manager.html#a3ae8b8ed4682fb969223ef52a163f140',1,'LockManager']]],
+  ['locksheet_14',['lockSheet',['../namespace_lock_manager.html#afce6728c7840ee4ae40250106d14c531',1,'LockManager.lockSheet()'],['../namespace_locker.html#a7795747b0d8a26365d5d94cebd69653d',1,'Locker.lockSheet()']]],
+  ['login_15',['login',['../namespace_read.html#ae7d8ac4470f4877dd2df4de33880e1ce',1,'Read']]],
+  ['lossmanager_16',['LossManager',['../namespace_loss_manager.html',1,'']]]
+];

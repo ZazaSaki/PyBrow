@@ -1,0 +1,124 @@
+\doxysection{Locker.\+py}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} os \textcolor{keyword}{import} link}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} pprint \textcolor{keyword}{import} pprint}
+\DoxyCodeLine{00003 }
+\DoxyCodeLine{00004 \textcolor{keyword}{import} gspread}
+\DoxyCodeLine{00005 \textcolor{keyword}{from} Drive.docsUpdaterBase \textcolor{keyword}{import} getSheetByLink}
+\DoxyCodeLine{00006 \textcolor{keyword}{from} Drive.DataBase.FacebookPageManager \textcolor{keyword}{import} getAllPagesSheet}
+\DoxyCodeLine{00007 \textcolor{keyword}{from} General.general \textcolor{keyword}{import} ExplicitWait, get\_col\_by\_num, time\_out\_checker}
+\DoxyCodeLine{00008 }
+\DoxyCodeLine{00009 \textcolor{keyword}{from} gspread.exceptions \textcolor{keyword}{import} APIError}
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{00011 validSheetsLinks = getAllPagesSheet()}
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013 ignore = [\textcolor{stringliteral}{"{}all likes"{}}, \textcolor{stringliteral}{"{}paste here"{}}]}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015 \textcolor{keyword}{def }lockLinksCol(worksheet):}
+\DoxyCodeLine{00016     ll = [\textcolor{stringliteral}{"{}benjamin.de.angeli@missionary.org"{}},}
+\DoxyCodeLine{00017             \textcolor{stringliteral}{"{}dataloader@database-\/328914.iam.gserviceaccount.com"{}}, \textcolor{stringliteral}{"{}isac.marinho.da.cruz@missionary.org"{}}]}
+\DoxyCodeLine{00018     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00019         out = worksheet.add\_protected\_range(}
+\DoxyCodeLine{00020             \textcolor{stringliteral}{"{}C:C"{}}, editor\_users\_emails=ll, description=\textcolor{stringliteral}{"{}bot column"{}})}
+\DoxyCodeLine{00021     }
+\DoxyCodeLine{00022     \textcolor{keywordflow}{except} gspread.exceptions.APIError \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00023         rep = err.response}
+\DoxyCodeLine{00024         args = err.args}
+\DoxyCodeLine{00025 }
+\DoxyCodeLine{00026         pprint([rep, args])}
+\DoxyCodeLine{00027         \textcolor{keywordflow}{if} args[0][\textcolor{stringliteral}{"{}code"{}}] == 400:}
+\DoxyCodeLine{00028             \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00029         pprint(args)}
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031 \textcolor{keyword}{def }lockSheet(worksheet):}
+\DoxyCodeLine{00032     ll = [\textcolor{stringliteral}{"{}benjamin.de.angeli@missionary.org"{}},}
+\DoxyCodeLine{00033             \textcolor{stringliteral}{"{}dataloader@database-\/328914.iam.gserviceaccount.com"{}}, \textcolor{stringliteral}{"{}isac.marinho.da.cruz@missionary.org"{}}]}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035     max = worksheet.col\_count-\/1}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037     range\_name = \textcolor{stringliteral}{"{}A:"{}} + get\_col\_by\_num(max)}
+\DoxyCodeLine{00038     }
+\DoxyCodeLine{00039     \textcolor{keywordflow}{try} : }
+\DoxyCodeLine{00040         out = worksheet.add\_protected\_range(}
+\DoxyCodeLine{00041             range\_name, editor\_users\_emails=ll, description=\textcolor{stringliteral}{"{}bot column"{}})}
+\DoxyCodeLine{00042     \textcolor{keywordflow}{except} gspread.exceptions.APIError \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00043         rep = err.response}
+\DoxyCodeLine{00044         args = err.args}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046         pprint([rep, args])}
+\DoxyCodeLine{00047         \textcolor{keywordflow}{if} args[0][\textcolor{stringliteral}{"{}code"{}}] == 400:}
+\DoxyCodeLine{00048             \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00049         pprint(args)}
+\DoxyCodeLine{00050         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052 \textcolor{keyword}{def }get\_cols\_title(worksheet, col):}
+\DoxyCodeLine{00053     cell = get\_col\_by\_num(col) + \textcolor{stringliteral}{'1'}}
+\DoxyCodeLine{00054     \textcolor{keywordflow}{while} \textcolor{keyword}{True}:}
+\DoxyCodeLine{00055         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00056             command = worksheet.acell(}
+\DoxyCodeLine{00057                 cell, value\_render\_option=\textcolor{stringliteral}{'FORMULA'}).value}
+\DoxyCodeLine{00058             print(command)}
+\DoxyCodeLine{00059             \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00060         \textcolor{keywordflow}{except} gspread.exceptions.APIError \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00061             rep = err.response}
+\DoxyCodeLine{00062             args = err.args}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064             pprint([rep, args])}
+\DoxyCodeLine{00065             \textcolor{keywordflow}{if} args[0][\textcolor{stringliteral}{"{}code"{}}] == 400:}
+\DoxyCodeLine{00066                 \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00067             }
+\DoxyCodeLine{00068             \textcolor{keywordflow}{if} time\_out\_checker(err):}
+\DoxyCodeLine{00069                 ExplicitWait(\textcolor{stringliteral}{"{}api"{}}, 60)}
+\DoxyCodeLine{00070             \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00071     \textcolor{keywordflow}{return} command}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073 \textcolor{keyword}{def }lockSheet(worksheet):}
+\DoxyCodeLine{00074     command = get\_cols\_title(worksheet, 2)}
+\DoxyCodeLine{00075 }
+\DoxyCodeLine{00076     \textcolor{keywordflow}{if} worksheet.title.lower() == \textcolor{stringliteral}{"{}All Likes"{}}.lower() \textcolor{keywordflow}{or} worksheet.title.lower() == \textcolor{stringliteral}{"{}New Profiles From Ads"{}}.lower():}
+\DoxyCodeLine{00077         lockSheet(worksheet)}
+\DoxyCodeLine{00078         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080     \textcolor{keywordflow}{if} command == \textcolor{stringliteral}{"{}=GetUrl(A:A)"{}}:}
+\DoxyCodeLine{00081         lockLinksCol(worksheet)}
+\DoxyCodeLine{00082         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084 \textcolor{keyword}{def }update\_code(worksheet):}
+\DoxyCodeLine{00085     command = get\_cols\_title(worksheet, 2)}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087     \textcolor{keywordflow}{if} command == \textcolor{stringliteral}{"{}=GetUrl(A:A)"{}} \textcolor{keywordflow}{or} command == \textcolor{stringliteral}{"{}=GetUrl(A2)"{}} \textcolor{keywordflow}{or} command == \textcolor{stringliteral}{"{}=GetUrl(A1)"{}}:}
+\DoxyCodeLine{00088         \textcolor{keywordflow}{while} \textcolor{keyword}{True}:}
+\DoxyCodeLine{00089             \textcolor{keywordflow}{try} :}
+\DoxyCodeLine{00090                 worksheet.update(\textcolor{stringliteral}{"{}C1"{}}, \textcolor{stringliteral}{"{}=GetUrl(A2)"{}}, raw = \textcolor{keyword}{False})}
+\DoxyCodeLine{00091                 worksheet.update(\textcolor{stringliteral}{"{}C1"{}}, \textcolor{stringliteral}{"{}=GetUrl(A:A)"{}}, raw = \textcolor{keyword}{False})}
+\DoxyCodeLine{00092                 \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00093             \textcolor{keywordflow}{except} APIError \textcolor{keyword}{as} err: }
+\DoxyCodeLine{00094                 \textcolor{keywordflow}{if} time\_out\_checker(err):}
+\DoxyCodeLine{00095                     ExplicitWait(\textcolor{stringliteral}{"{}timeout"{}}, 30)}
+\DoxyCodeLine{00096                 }
+\DoxyCodeLine{00097                 \textcolor{keywordflow}{if} err.args[0][\textcolor{stringliteral}{"{}code"{}}] == 400:}
+\DoxyCodeLine{00098                     pprint(\textcolor{stringliteral}{"{}celula invalida"{}})}
+\DoxyCodeLine{00099                     pprint([worksheet.title, worksheet.spreadsheet.url, worksheet.col\_count])}
+\DoxyCodeLine{00100             \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102 \textcolor{keyword}{def }do\_to\_all(function):}
+\DoxyCodeLine{00103     \textcolor{keywordflow}{for} sheetLink \textcolor{keywordflow}{in} validSheetsLinks:}
+\DoxyCodeLine{00104         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00105             sheet = getSheetByLink(sheetLink)}
+\DoxyCodeLine{00106         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00107             print(\textcolor{stringliteral}{'invalid Link : '} + sheetLink)}
+\DoxyCodeLine{00108             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00109         }
+\DoxyCodeLine{00110         \textcolor{keywordflow}{for} worksheet \textcolor{keywordflow}{in} sheet:}
+\DoxyCodeLine{00111             function(worksheet)}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113 \textcolor{keyword}{def }update\_all():}
+\DoxyCodeLine{00114     do\_to\_all(update\_code)}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116 \textcolor{keyword}{def }lockAll():}
+\DoxyCodeLine{00117     do\_to\_all(lockSheet)}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119 update\_all()}
+
+\end{DoxyCode}

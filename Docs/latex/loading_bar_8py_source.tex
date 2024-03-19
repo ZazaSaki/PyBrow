@@ -1,0 +1,119 @@
+\doxysection{loading\+Bar.\+py}
+\label{loading_bar_8py_source}\index{loadingBar.py@{loadingBar.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{import} time}
+\DoxyCodeLine{00002 \textcolor{keyword}{import} sys}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} typing \textcolor{keyword}{import} ValuesView}
+\DoxyCodeLine{00004 }
+\DoxyCodeLine{00005 \textcolor{keyword}{global} x, max, title}
+\DoxyCodeLine{00006 max = 0}
+\DoxyCodeLine{00007 x = 0}
+\DoxyCodeLine{00008 title = \textcolor{stringliteral}{"{}progress"{}}}
+\DoxyCodeLine{00009 clean = \textcolor{stringliteral}{"{}\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_"{}}}
+\DoxyCodeLine{00010 dynamicDisplay = \{\}}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013 \textcolor{keyword}{def }show():}
+\DoxyCodeLine{00014     sys.stdout.write(\textcolor{stringliteral}{"{}\(\backslash\)r\%s \%i/\%i"{}} \% (title, x, max))}
+\DoxyCodeLine{00015     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00017 }
+\DoxyCodeLine{00018 \textcolor{keyword}{def }cleanDisplay():}
+\DoxyCodeLine{00019     \textcolor{keyword}{global} clean}
+\DoxyCodeLine{00020     sys.stdout.write(clean)}
+\DoxyCodeLine{00021     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00022 }
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024 \textcolor{keyword}{def }openCounter(message, finish):}
+\DoxyCodeLine{00025     \textcolor{keyword}{global} max, title, x}
+\DoxyCodeLine{00026     max = finish}
+\DoxyCodeLine{00027     title = message}
+\DoxyCodeLine{00028     x = 0}
+\DoxyCodeLine{00029     show()}
+\DoxyCodeLine{00030     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033 \textcolor{keyword}{def }updateCounter(progress):}
+\DoxyCodeLine{00034     \textcolor{keyword}{global} x}
+\DoxyCodeLine{00035     x = progress}
+\DoxyCodeLine{00036     show()}
+\DoxyCodeLine{00037     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040 \textcolor{keyword}{def }closeCounter():}
+\DoxyCodeLine{00041     \textcolor{keyword}{global} x}
+\DoxyCodeLine{00042     sys.stdout.flush()}
+\DoxyCodeLine{00043     print(\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00044     x = 0}
+\DoxyCodeLine{00045     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048 \textcolor{comment}{\# Dynamic Counter}}
+\DoxyCodeLine{00049 \textcolor{keyword}{def }setDisplayInfo(name, val, max):}
+\DoxyCodeLine{00050     \textcolor{keyword}{global} dynamicDisplay}
+\DoxyCodeLine{00051     dynamicDisplay[name] = \{\textcolor{stringliteral}{"{}val"{}}: val, \textcolor{stringliteral}{"{}max"{}}: max\}}
+\DoxyCodeLine{00052     complexUpdate(name, val)}
+\DoxyCodeLine{00053     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056 \textcolor{keyword}{def }appendDisplayInfo(info):}
+\DoxyCodeLine{00057     \textcolor{keyword}{global} dynamicDisplay}
+\DoxyCodeLine{00058     dynamicDisplay.append(info)}
+\DoxyCodeLine{00059     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00061 }
+\DoxyCodeLine{00062 \textcolor{keyword}{def }dynamicUpdate(name, info):}
+\DoxyCodeLine{00063     \textcolor{keyword}{global} dynamicDisplay}
+\DoxyCodeLine{00064     dynamicDisplay[name][\textcolor{stringliteral}{"{}val"{}}] = info}
+\DoxyCodeLine{00065 }
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067 \textcolor{keyword}{def }getDynamicString():}
+\DoxyCodeLine{00068     \textcolor{keyword}{global} dynamicDisplay}
+\DoxyCodeLine{00069     output = \textcolor{stringliteral}{"{}\(\backslash\)r"{}}}
+\DoxyCodeLine{00070     \textcolor{keywordflow}{for} display \textcolor{keywordflow}{in} dynamicDisplay:}
+\DoxyCodeLine{00071         message = display}
+\DoxyCodeLine{00072         val = getFormatString(dynamicDisplay[message][\textcolor{stringliteral}{"{}val"{}}])}
+\DoxyCodeLine{00073         max = getFormatString(dynamicDisplay[message][\textcolor{stringliteral}{"{}max"{}}])}
+\DoxyCodeLine{00074 }
+\DoxyCodeLine{00075         output += message + \textcolor{stringliteral}{"{}: "{}} + val + \textcolor{stringliteral}{"{}/"{}} + max + \textcolor{stringliteral}{"{} ; "{}}}
+\DoxyCodeLine{00076     output += \textcolor{stringliteral}{"{}             "{}}}
+\DoxyCodeLine{00077     \textcolor{keywordflow}{return} output}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080 \textcolor{keyword}{def }getFormatString(val):}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}\{\}"{}}.format(val)}
+\DoxyCodeLine{00082 }
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084 \textcolor{keyword}{def }complexShow():}
+\DoxyCodeLine{00085     sys.stdout.write(getDynamicString())}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087 }
+\DoxyCodeLine{00088 \textcolor{keyword}{def }complexUpdate(name, val):}
+\DoxyCodeLine{00089     dynamicDisplay[name][\textcolor{stringliteral}{"{}val"{}}] = val}
+\DoxyCodeLine{00090     complexShow()}
+\DoxyCodeLine{00091     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093 }
+\DoxyCodeLine{00094 \textcolor{keyword}{def }complexOpenCouter(name, val, max):}
+\DoxyCodeLine{00095     setDisplayInfo(name, val, max)}
+\DoxyCodeLine{00096     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099 \textcolor{keyword}{def }removeInfo(name):}
+\DoxyCodeLine{00100     \textcolor{keyword}{global} dynamicDisplay}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102     del dynamicDisplay[name]}
+\DoxyCodeLine{00103     \textcolor{comment}{\# cleanDisplay()}}
+\DoxyCodeLine{00104     complexShow()}
+\DoxyCodeLine{00105     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108 \textcolor{keyword}{def }test():}
+\DoxyCodeLine{00109     openCounter(\textcolor{stringliteral}{"{}yea"{}}, 5)}
+\DoxyCodeLine{00110     \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(5):}
+\DoxyCodeLine{00111         updateCounter(i+1)}
+\DoxyCodeLine{00112     closeCounter()}
+\DoxyCodeLine{00113     \textcolor{keywordflow}{pass}}
+
+\end{DoxyCode}

@@ -1,0 +1,283 @@
+\doxysection{Main.\+py}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} getpass \textcolor{keyword}{import} getpass}
+\DoxyCodeLine{00002 \textcolor{keyword}{import} json}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} types \textcolor{keyword}{import} FunctionType}
+\DoxyCodeLine{00004 \textcolor{keyword}{from} typing \textcolor{keyword}{import} Dict, List}
+\DoxyCodeLine{00005 \textcolor{keyword}{from} Browser.FileReader \textcolor{keyword}{import} readList}
+\DoxyCodeLine{00006 \textcolor{keyword}{from} Drive.DataBase.DataManager \textcolor{keyword}{import} RemoveDuplicateds}
+\DoxyCodeLine{00007 \textcolor{keyword}{from} Drive.DataBase.FacebookPageManager \textcolor{keyword}{import} addPage, getAllPagesNames, SearchPage, getAllPagesSheet, getPageByLink, getPageByName, getPageBySheet, updateLink, updateSheet}
+\DoxyCodeLine{00008 \textcolor{keyword}{from} Drive.DataBase.DirtyCleanerBase \textcolor{keyword}{import} cleanDirtyLinks}
+\DoxyCodeLine{00009 \textcolor{keyword}{from} Drive.LossManager \textcolor{keyword}{import} full\_recover, run\_with\_recover}
+\DoxyCodeLine{00010 \textcolor{keyword}{from} Drive.docsUpdaterBase \textcolor{keyword}{import} FullUpdate, UpdateAllQuery, UpdateAllVerifyers, VerifyUpdate, connection, fix\_all\_sheets, refreshLinksSheet, smartLockAll, update\_all, updateNewLinksSheet, updateNewLinksSheetByLink, smartLockAll}
+\DoxyCodeLine{00011 \textcolor{keyword}{from} Browser.Read \textcolor{keyword}{import} checkLogin, forgetFacebookAccount, searchForlikes}
+\DoxyCodeLine{00012 \textcolor{keyword}{from} pprint \textcolor{keyword}{import} pprint}
+\DoxyCodeLine{00013 }
+\DoxyCodeLine{00014 \textcolor{keyword}{from} Drive.OptionManager \textcolor{keyword}{import} add\_email, code, email, remove\_email, set\_code\_col, set\_names\_col}
+\DoxyCodeLine{00015 \textcolor{keyword}{from} FeedbackDisplayer \textcolor{keyword}{import} clean\_display, update\_checker}
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00017 \textcolor{keyword}{from} General.general \textcolor{keyword}{import} ExplicitWait, run\_with\_timeout\_checker, saveJSON}
+\DoxyCodeLine{00018 \textcolor{keyword}{from} General.loadingBar \textcolor{keyword}{import} show}
+\DoxyCodeLine{00019 \textcolor{keyword}{from} Drive.LossManager \textcolor{keyword}{import} get\_recover, get\_path ,recover}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021 \textcolor{comment}{\# credentials}}
+\DoxyCodeLine{00022 username = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00023 password = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025 ans = \textcolor{keyword}{True}}
+\DoxyCodeLine{00026 \textcolor{comment}{\# while True:}}
+\DoxyCodeLine{00027 \textcolor{comment}{\#     ans = input("{}Do you have 2 factor authentication?(Y or n)"{}).upper()}}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029 \textcolor{comment}{\#     if (ans in "{}YES"{}) or (ans in "{}NO"{}):}}
+\DoxyCodeLine{00030 \textcolor{comment}{\#         ans = ans in "{}YES"{}}}
+\DoxyCodeLine{00031 \textcolor{comment}{\#         break}}
+\DoxyCodeLine{00032 \textcolor{comment}{\#     elif len(ans) == 0:}}
+\DoxyCodeLine{00033 \textcolor{comment}{\#         ans = True}}
+\DoxyCodeLine{00034 \textcolor{comment}{\#     else:}}
+\DoxyCodeLine{00035 \textcolor{comment}{\#         print("{}invalid answer"{})}}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037 \textcolor{comment}{\# checkLogin(towFactor=ans)}}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039 \textcolor{comment}{\# load post}}
+\DoxyCodeLine{00040 post = readList()}
+\DoxyCodeLine{00041 \textcolor{comment}{\#post = ["{}https://www.facebook.com/DisciplesdeJesusChristenIledeFrance/photos/a.1879839242048518/4990763394289405/"{}]}}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00049 \textcolor{keyword}{def }UpdateDataBase():}
+\DoxyCodeLine{00050     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'update code'})}
+\DoxyCodeLine{00051     update\_all()}
+\DoxyCodeLine{00052     ExplicitWait(\textcolor{stringliteral}{"{}Wait code to run"{}}, 30)}
+\DoxyCodeLine{00053     clean\_display(\textcolor{stringliteral}{'update'})}
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'fixing sheets'})}
+\DoxyCodeLine{00056     fix\_all\_sheets()}
+\DoxyCodeLine{00057     ExplicitWait(\textcolor{stringliteral}{"{}Wait code to run"{}}, 30)}
+\DoxyCodeLine{00058     clean\_display(\textcolor{stringliteral}{'update'})}
+\DoxyCodeLine{00059     }
+\DoxyCodeLine{00060     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'fixing sheets'})}
+\DoxyCodeLine{00061     fix\_all\_sheets()}
+\DoxyCodeLine{00062     clean\_display(\textcolor{stringliteral}{'update'})}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'update query'})}
+\DoxyCodeLine{00065     UpdateAllQuery()}
+\DoxyCodeLine{00066     ExplicitWait(\textcolor{stringliteral}{"{}Wait for server to processe the request"{}}, 60)}
+\DoxyCodeLine{00067     clean\_display(\textcolor{stringliteral}{'update'})}
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00069     quick\_update()}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071 \textcolor{keyword}{def }quick\_update():}
+\DoxyCodeLine{00072     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'pull values from drive'})}
+\DoxyCodeLine{00073     UpdateFromDrive()}
+\DoxyCodeLine{00074     clean\_display(\textcolor{stringliteral}{'update'})}
+\DoxyCodeLine{00075     }
+\DoxyCodeLine{00076     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'Verify data base'})}
+\DoxyCodeLine{00077     VerifyDataBase()}
+\DoxyCodeLine{00078     clean\_display(\textcolor{stringliteral}{'update'})}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'Update founded'})}
+\DoxyCodeLine{00081     VerifyIgnoreLinks()}
+\DoxyCodeLine{00082     clean\_display(\textcolor{stringliteral}{'update'})}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086 \textcolor{keyword}{def }UpdateFromDrive():}
+\DoxyCodeLine{00087     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'pull values from drive'})}
+\DoxyCodeLine{00088     FullUpdate()}
+\DoxyCodeLine{00089     print(\textcolor{stringliteral}{"{}Updated"{}})}
+\DoxyCodeLine{00090     }
+\DoxyCodeLine{00091     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'pull values from drive'})}
+\DoxyCodeLine{00092     VerifyUpdate()}
+\DoxyCodeLine{00093     print(\textcolor{stringliteral}{"{}Update verified"{}})}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096 \textcolor{keyword}{def }VerifyIgnoreLinks():}
+\DoxyCodeLine{00097     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'Update founded'})}
+\DoxyCodeLine{00098     refreshLinksSheet()}
+\DoxyCodeLine{00099     print(\textcolor{stringliteral}{"{}new links vertifyed"{}})}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102 \textcolor{keyword}{def }VerifyDataBase():}
+\DoxyCodeLine{00103     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'action'}, \textcolor{stringliteral}{'Verify data base'})}
+\DoxyCodeLine{00104     cleanDirtyLinks()}
+\DoxyCodeLine{00105     \textcolor{comment}{\#RemoveDuplicateds()}}
+\DoxyCodeLine{00106     print(\textcolor{stringliteral}{"{}Database verified"{}})}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00112 \textcolor{keyword}{def }FullVerify():}
+\DoxyCodeLine{00113     VerifyDataBase()}
+\DoxyCodeLine{00114     RemoveDuplicateds()}
+\DoxyCodeLine{00115     VerifyIgnoreLinks()}
+\DoxyCodeLine{00116     clean\_display(\textcolor{stringliteral}{'update'})}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00119 }
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00125 \textcolor{keyword}{def }UpdateLikes(post:List=post):}
+\DoxyCodeLine{00126     \textcolor{comment}{\# gets all the profiles}}
+\DoxyCodeLine{00127     like\_list, done, failed, timeout\_list = searchForlikes(post)}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129     saveJSON(\textcolor{stringliteral}{"{}likeList"{}}, like\_list)}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131     \textcolor{comment}{\# feedback starts}}
+\DoxyCodeLine{00132     print(\textcolor{stringliteral}{"{}done :"{}})}
+\DoxyCodeLine{00133     pprint(done)}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135     print(\textcolor{stringliteral}{"{}\(\backslash\)n failed:"{}})}
+\DoxyCodeLine{00136     pprint(failed)}
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00138     print(\textcolor{stringliteral}{"{}\(\backslash\)n timeout list:"{}})}
+\DoxyCodeLine{00139     pprint(timeout\_list)}
+\DoxyCodeLine{00140 }
+\DoxyCodeLine{00141     run\_with\_recover(\textcolor{keyword}{lambda} : feed\_likes(like\_list))}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00148 \textcolor{keyword}{def }feed\_likes(like\_list:Dict):}
+\DoxyCodeLine{00149     updates\_failed = []}
+\DoxyCodeLine{00150     \textcolor{comment}{\# update data base}}
+\DoxyCodeLine{00151     \textcolor{keywordflow}{for} group \textcolor{keywordflow}{in} like\_list:}
+\DoxyCodeLine{00152         }
+\DoxyCodeLine{00153         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00154             spreadSheetLink = getPageByLink(group)[0][2]}
+\DoxyCodeLine{00155         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00156             print(group, end= \textcolor{stringliteral}{' : '})}
+\DoxyCodeLine{00157             print(\textcolor{stringliteral}{'failed'})}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159         \textcolor{keywordflow}{try} :}
+\DoxyCodeLine{00160             updateNewLinksSheetByLink(spreadSheetLink, profiles=like\_list[group])}
+\DoxyCodeLine{00161         \textcolor{keywordflow}{except} :}
+\DoxyCodeLine{00162             updates\_failed.append(spreadSheetLink)}
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00166 \textcolor{keyword}{def }PagePicker()-\/>List:}
+\DoxyCodeLine{00167     possible = SearchPage(input(\textcolor{stringliteral}{"{}search : "{}}))}
+\DoxyCodeLine{00168     print()}
+\DoxyCodeLine{00169     \textcolor{keywordflow}{if} len(possible)<1:}
+\DoxyCodeLine{00170         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00171     i = 0}
+\DoxyCodeLine{00172     \textcolor{keywordflow}{for} elem \textcolor{keywordflow}{in} possible:}
+\DoxyCodeLine{00173         i += 1}
+\DoxyCodeLine{00174         print(i, end = \textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00175         print(elem[0])}
+\DoxyCodeLine{00176     }
+\DoxyCodeLine{00177     print()}
+\DoxyCodeLine{00178     input(\textcolor{stringliteral}{"{}Choose : "{}})}
+\DoxyCodeLine{00179     print()}
+\DoxyCodeLine{00180     \textcolor{keywordflow}{return} possible[i-\/1][0]}
+\DoxyCodeLine{00181 }
+\DoxyCodeLine{00182 }
+\DoxyCodeLine{00184 \textcolor{keyword}{def }PageDisplayer(pageList:List):}
+\DoxyCodeLine{00185     \textcolor{keywordflow}{if} len(pageList)<1: print(\textcolor{stringliteral}{"{}No page Founded"{}})}
+\DoxyCodeLine{00186     \textcolor{keywordflow}{for} page \textcolor{keywordflow}{in} pageList:}
+\DoxyCodeLine{00187         print(\textcolor{stringliteral}{"{}Name :"{}} + page[0])}
+\DoxyCodeLine{00188         print(\textcolor{stringliteral}{"{}Link :"{}} + page[1])}
+\DoxyCodeLine{00189         print(\textcolor{stringliteral}{"{}Sheet :"{}} + page[2])}
+\DoxyCodeLine{00190         print()}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00195 \textcolor{keyword}{def }doAndWait(function:FunctionType):}
+\DoxyCodeLine{00196     print(\textcolor{stringliteral}{"{}\(\backslash\)n"{}})}
+\DoxyCodeLine{00197     function()}
+\DoxyCodeLine{00198     getpass(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nPress Enter"{}})}
+\DoxyCodeLine{00199 }
+\DoxyCodeLine{00200 \textcolor{keyword}{def }get\_input\_vals():}
+\DoxyCodeLine{00201     out = []}
+\DoxyCodeLine{00202     txt = \textcolor{stringliteral}{"{}111"{}}}
+\DoxyCodeLine{00203     \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} txt == \textcolor{stringliteral}{"{}enter"{}}:}
+\DoxyCodeLine{00204         out.append(input(\textcolor{stringliteral}{"{}(write \(\backslash\)"{}enter\(\backslash\)"{} to continue)\(\backslash\)n email:"{}}))}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00212 \textcolor{keyword}{def }menu(defList:Dict, title:str=\textcolor{stringliteral}{"{}Menu"{}}):}
+\DoxyCodeLine{00213     defList[\textcolor{stringliteral}{"{}exit"{}}]= \textcolor{stringliteral}{"{}exit"{}}}
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215     }
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217     \textcolor{keywordflow}{while} \textcolor{keyword}{True}:}
+\DoxyCodeLine{00218         \textcolor{keywordflow}{if} get\_recover():}
+\DoxyCodeLine{00219             defList[\textcolor{stringliteral}{"{}recover"{}}] = full\_recover}
+\DoxyCodeLine{00220         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00221             \textcolor{keywordflow}{if} \textcolor{stringliteral}{"{}recover"{}} \textcolor{keywordflow}{in} defList:}
+\DoxyCodeLine{00222                 defList.pop(\textcolor{stringliteral}{"{}recover"{}})}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00225             choosen = printMenu(defList, title=title)}
+\DoxyCodeLine{00226             \textcolor{keywordflow}{if} choosen == \textcolor{stringliteral}{"{}exit"{}}:}
+\DoxyCodeLine{00227                 \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00228 }
+\DoxyCodeLine{00229         \textcolor{keywordflow}{except} ValueError:}
+\DoxyCodeLine{00230             print(\textcolor{stringliteral}{"{}invalid option"{}})}
+\DoxyCodeLine{00231         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00232             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00233                 defList[choosen]()}
+\DoxyCodeLine{00234             \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} e:}
+\DoxyCodeLine{00235                 print(e)}
+\DoxyCodeLine{00236                 e.with\_traceback}
+\DoxyCodeLine{00237                 \textcolor{comment}{\#e.\_\_traceback\_\_.tb\_frame.}}
+\DoxyCodeLine{00238                 print(\textcolor{stringliteral}{"{}Operation falied"{}})}
+\DoxyCodeLine{00239 }
+\DoxyCodeLine{00240     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00246 \textcolor{keyword}{def }printMenu(optionsMenu:Dict, title:str=\textcolor{stringliteral}{"{}Menu"{}}):}
+\DoxyCodeLine{00247     print(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)n"{}} + title + \textcolor{stringliteral}{"{} :"{}})}
+\DoxyCodeLine{00248     i = 0}
+\DoxyCodeLine{00249     cache = []}
+\DoxyCodeLine{00250     \textcolor{keywordflow}{for} value \textcolor{keywordflow}{in} optionsMenu:}
+\DoxyCodeLine{00251         i += 1}
+\DoxyCodeLine{00252         cache.append(value)}
+\DoxyCodeLine{00253         print(\textcolor{stringliteral}{"{}     "{}} + str(i) + \textcolor{stringliteral}{"{} "{}} + value)}
+\DoxyCodeLine{00254 }
+\DoxyCodeLine{00255     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00256         \textcolor{keywordflow}{return} cache[(int(input(\textcolor{stringliteral}{"{}Chose : "{}}))-\/1)]}
+\DoxyCodeLine{00257     \textcolor{keywordflow}{except} IndexError:}
+\DoxyCodeLine{00258         \textcolor{keywordflow}{raise} ValueError}
+\DoxyCodeLine{00259 }
+\DoxyCodeLine{00260 }
+\DoxyCodeLine{00261 updateMenu = \{\textcolor{stringliteral}{"{}Update"{}}: UpdateDataBase,}
+\DoxyCodeLine{00262               \textcolor{stringliteral}{"{}Verify Database"{}}: VerifyDataBase,}
+\DoxyCodeLine{00263               \textcolor{stringliteral}{"{}Verify new links"{}}: VerifyIgnoreLinks,}
+\DoxyCodeLine{00264               \textcolor{stringliteral}{"{}Fix Broken Pages"{}}: fix\_all\_sheets,}
+\DoxyCodeLine{00265               \textcolor{stringliteral}{"{}Remove Duplicateds"{}} : RemoveDuplicateds,}
+\DoxyCodeLine{00266               \textcolor{stringliteral}{"{}Lock All"{}} : \textcolor{keyword}{lambda} : smartLockAll(email())\}}
+\DoxyCodeLine{00267 }
+\DoxyCodeLine{00268 }
+\DoxyCodeLine{00269 searchPageMenu = \{\textcolor{stringliteral}{"{}All Names"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : pprint(getAllPagesNames())),}
+\DoxyCodeLine{00270                   \textcolor{stringliteral}{"{}All Sheets"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : pprint(getAllPagesSheet())),}
+\DoxyCodeLine{00271                   \textcolor{stringliteral}{"{}Search Page"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : PageDisplayer(getPageByName(PagePicker()))),}
+\DoxyCodeLine{00272                   \textcolor{stringliteral}{"{}Search Page By Link"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : PageDisplayer(getPageByLink(input(\textcolor{stringliteral}{"{}Link :"{}})))),}
+\DoxyCodeLine{00273                   \textcolor{stringliteral}{"{}Search Page By Sheet"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : PageDisplayer(getPageBySheet(input(\textcolor{stringliteral}{"{}Sheet :"{}})))),}
+\DoxyCodeLine{00274                   \}}
+\DoxyCodeLine{00275 }
+\DoxyCodeLine{00276 }
+\DoxyCodeLine{00277 pagesMenu = \{\textcolor{stringliteral}{"{}Search "{}} : \textcolor{keyword}{lambda} : menu(searchPageMenu, \textcolor{stringliteral}{"{}Search"{}}),}
+\DoxyCodeLine{00278              \textcolor{stringliteral}{"{}Add Page"{}} : \textcolor{keyword}{lambda} : addPage(input(\textcolor{stringliteral}{"{}Name :"{}}), input(\textcolor{stringliteral}{"{}Link :"{}}), input(\textcolor{stringliteral}{"{}Sheet Link :"{}})),}
+\DoxyCodeLine{00279              \textcolor{stringliteral}{"{}Update Link"{}} : \textcolor{keyword}{lambda} : updateLink(PagePicker(), input(\textcolor{stringliteral}{"{}Link :"{}})),}
+\DoxyCodeLine{00280              \textcolor{stringliteral}{"{}Update Google Sheet"{}} : \textcolor{keyword}{lambda} : updateSheet(PagePicker(), input(\textcolor{stringliteral}{"{}Google Sheet :"{}})),}
+\DoxyCodeLine{00281              \}}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283 \textcolor{comment}{\# Facebook Reader Menu}}
+\DoxyCodeLine{00284 readMenu = \{\textcolor{stringliteral}{"{}Read Likes From Post's File"{}}: UpdateLikes,}
+\DoxyCodeLine{00285             \textcolor{stringliteral}{"{}Read Likes From Post"{}}: \textcolor{keyword}{lambda}: UpdateLikes(post=[input(\textcolor{stringliteral}{"{}Link:"{}})]),}
+\DoxyCodeLine{00286             \}}
+\DoxyCodeLine{00287 }
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289 option\_menu = \{\textcolor{stringliteral}{"{}Change Links Column"{}} : \textcolor{keyword}{lambda} : set\_code\_col(int(input(\textcolor{stringliteral}{"{}Choose a column (0=A, 1=B, C=3 ...) : "{}}))),}
+\DoxyCodeLine{00290                \textcolor{stringliteral}{"{}Change Names Column"{}} : \textcolor{keyword}{lambda} : set\_names\_col(int(input(\textcolor{stringliteral}{"{}Choose a column (0=A, 1=B, C=3 ...) : "{}}))),}
+\DoxyCodeLine{00291                \textcolor{stringliteral}{"{}Show emails"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : print(email())),}
+\DoxyCodeLine{00292                \textcolor{stringliteral}{"{}Add emails"{}} : \textcolor{keyword}{lambda} : add\_email(input(\textcolor{stringliteral}{"{}email:"{}})),}
+\DoxyCodeLine{00293                \textcolor{stringliteral}{"{}Remove emails"{}} : \textcolor{keyword}{lambda} : remove\_email(input(\textcolor{stringliteral}{"{}email:"{}})),}
+\DoxyCodeLine{00294             \}}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296 }
+\DoxyCodeLine{00297 defList = \{\textcolor{stringliteral}{"{}Read"{}} : \textcolor{keyword}{lambda} : menu(readMenu, \textcolor{stringliteral}{"{}Read"{}}),}
+\DoxyCodeLine{00298            \textcolor{stringliteral}{"{}Pages"{}} : \textcolor{keyword}{lambda} : menu(pagesMenu, \textcolor{stringliteral}{"{}Pages"{}}),}
+\DoxyCodeLine{00299            \textcolor{stringliteral}{"{}DataBase"{}}: \textcolor{keyword}{lambda}: menu(updateMenu, \textcolor{stringliteral}{"{}DataBase"{}}),}
+\DoxyCodeLine{00300            \textcolor{stringliteral}{"{}Options"{}} : \textcolor{keyword}{lambda}: menu(option\_menu, \textcolor{stringliteral}{"{}Options"{}}),}
+\DoxyCodeLine{00301            \textcolor{stringliteral}{"{}Forget Facebook Account"{}}: forgetFacebookAccount,}
+\DoxyCodeLine{00302            \textcolor{stringliteral}{"{}Reconect"{}} : connection,}
+\DoxyCodeLine{00303            \}}
+\DoxyCodeLine{00304 }
+\DoxyCodeLine{00305 \textcolor{comment}{\#menu(defList)}}
+
+\end{DoxyCode}

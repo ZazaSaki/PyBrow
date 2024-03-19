@@ -1,0 +1,348 @@
+\doxysection{Loss\+Manager Namespace Reference}
+\label{namespace_loss_manager}\index{LossManager@{LossManager}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+str \textbf{ get\+\_\+path} ()
+\begin{DoxyCompactList}\small\item\em Gets a path from the Last revovery file in the stack. \end{DoxyCompactList}\item 
+bool \textbf{ get\+\_\+recover} ()
+\item 
+def \textbf{ get\+\_\+all\+\_\+recover\+\_\+path} ()
+\begin{DoxyCompactList}\small\item\em get all recover paths in order of creation ~\newline
+ \end{DoxyCompactList}\item 
+def \textbf{ activate\+\_\+recover} ()
+\begin{DoxyCompactList}\small\item\em Sets recover\+\_\+need to True. \end{DoxyCompactList}\item 
+def \textbf{ deactivate\+\_\+recover} ()
+\begin{DoxyCompactList}\small\item\em Sets recover\+\_\+need to False. \end{DoxyCompactList}\item 
+str \textbf{ submit} (Function\+Type func)
+\begin{DoxyCompactList}\small\item\em Creates a recover point to a function. \end{DoxyCompactList}\item 
+def \textbf{ recover} (str path)
+\begin{DoxyCompactList}\small\item\em Recover a function from the top of the stack. \end{DoxyCompactList}\item 
+def \textbf{ full\+\_\+recover} ()
+\begin{DoxyCompactList}\small\item\em Recover all stack. \end{DoxyCompactList}\item 
+def \textbf{ clear} (str path)
+\begin{DoxyCompactList}\small\item\em Removes a function from the stack. \end{DoxyCompactList}\item 
+str \textbf{ put\+\_\+on\+\_\+hold\+\_\+path} (int hash, int i=0)
+\begin{DoxyCompactList}\small\item\em Generates a name for the recover file. \end{DoxyCompactList}\item 
+def \textbf{ run\+\_\+with\+\_\+recover} (Function\+Type func)
+\begin{DoxyCompactList}\small\item\em Creates a recover point before runs a function and removes it if the function suceed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \textbf{ stack} = [$\,$]
+\begin{DoxyCompactList}\small\item\em Stack of recovery files. \end{DoxyCompactList}\item 
+string \textbf{ extention} = \char`\"{}.pk\char`\"{}
+\begin{DoxyCompactList}\small\item\em Recover extention. \end{DoxyCompactList}\item 
+string \textbf{ name} = \char`\"{}data/recover\char`\"{}
+\begin{DoxyCompactList}\small\item\em Files\textquotesingle{} path. \end{DoxyCompactList}\item 
+string \textbf{ hold} = \char`\"{}data/recover\char`\"{}
+\item 
+bool \textbf{ recover\+\_\+need} = False
+\begin{DoxyCompactList}\small\item\em Recovery Flag. \end{DoxyCompactList}\item 
+string \textbf{ path\+\_\+on\+\_\+hold} = \char`\"{}\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespace_loss_manager_a7626b813d42059a9fceb7673c10301af}} 
+\index{LossManager@{LossManager}!activate\_recover@{activate\_recover}}
+\index{activate\_recover@{activate\_recover}!LossManager@{LossManager}}
+\doxysubsubsection{activate\_recover()}
+{\footnotesize\ttfamily def Loss\+Manager.\+activate\+\_\+recover (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets recover\+\_\+need to True. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{recover\+\_\+need}{p.}{namespace_loss_manager_ab4bf2211b05672bdc9f03e1efe6ab90c} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 58} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_a82eecf34af4dfd93ca55a941586510d6}} 
+\index{LossManager@{LossManager}!clear@{clear}}
+\index{clear@{clear}!LossManager@{LossManager}}
+\doxysubsubsection{clear()}
+{\footnotesize\ttfamily def Loss\+Manager.\+clear (\begin{DoxyParamCaption}\item[{str}]{path }\end{DoxyParamCaption})}
+
+
+
+Removes a function from the stack. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & path of the file that contains the function \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 116} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_a14b71b5b3b9cac2c65dbb7589942a33c}} 
+\index{LossManager@{LossManager}!deactivate\_recover@{deactivate\_recover}}
+\index{deactivate\_recover@{deactivate\_recover}!LossManager@{LossManager}}
+\doxysubsubsection{deactivate\_recover()}
+{\footnotesize\ttfamily def Loss\+Manager.\+deactivate\+\_\+recover (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets recover\+\_\+need to False. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{recover\+\_\+need}{p.}{namespace_loss_manager_ab4bf2211b05672bdc9f03e1efe6ab90c} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 64} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_a023fe08c0f8e196b33986aa96d69df0a}} 
+\index{LossManager@{LossManager}!full\_recover@{full\_recover}}
+\index{full\_recover@{full\_recover}!LossManager@{LossManager}}
+\doxysubsubsection{full\_recover()}
+{\footnotesize\ttfamily def Loss\+Manager.\+full\+\_\+recover (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Recover all stack. 
+
+\begin{DoxyNote}{Note}
+cleans the stack 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 110} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_abc5bafa309f29b4ec5bffd1c8678359d}} 
+\index{LossManager@{LossManager}!get\_all\_recover\_path@{get\_all\_recover\_path}}
+\index{get\_all\_recover\_path@{get\_all\_recover\_path}!LossManager@{LossManager}}
+\doxysubsubsection{get\_all\_recover\_path()}
+{\footnotesize\ttfamily def Loss\+Manager.\+get\+\_\+all\+\_\+recover\+\_\+path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+get all recover paths in order of creation ~\newline
+ 
+
+
+
+Definition at line \textbf{ 41} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_ad02d61e3b9430b189b74de7c9e9ec3ef}} 
+\index{LossManager@{LossManager}!get\_path@{get\_path}}
+\index{get\_path@{get\_path}!LossManager@{LossManager}}
+\doxysubsubsection{get\_path()}
+{\footnotesize\ttfamily str Loss\+Manager.\+get\+\_\+path (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets a path from the Last revovery file in the stack. 
+
+\begin{DoxyReturn}{Returns}
+path from the top of the stack 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Doesn\textquotesingle{}t pop the item from the stack 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 26} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_a3160359854dcc29a57644c41ac0f890c}} 
+\index{LossManager@{LossManager}!get\_recover@{get\_recover}}
+\index{get\_recover@{get\_recover}!LossManager@{LossManager}}
+\doxysubsubsection{get\_recover()}
+{\footnotesize\ttfamily bool Loss\+Manager.\+get\+\_\+recover (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+True if recover is needed or False if it doesn\textquotesingle{}t 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{recover\+\_\+need}{p.}{namespace_loss_manager_ab4bf2211b05672bdc9f03e1efe6ab90c} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 36} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_a2243e60d4b70a363cdf93ed7b81647f8}} 
+\index{LossManager@{LossManager}!put\_on\_hold\_path@{put\_on\_hold\_path}}
+\index{put\_on\_hold\_path@{put\_on\_hold\_path}!LossManager@{LossManager}}
+\doxysubsubsection{put\_on\_hold\_path()}
+{\footnotesize\ttfamily str Loss\+Manager.\+put\+\_\+on\+\_\+hold\+\_\+path (\begin{DoxyParamCaption}\item[{int}]{hash,  }\item[{int}]{i = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Generates a name for the recover file. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em hash} & hash code from the function \\
+\hline
+{\em i} & {\itshape optional} num of iteration \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+This deals with repeat names and assures no overwrites 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 129} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_afa1238718ad67c723d9a55b8f0bf006f}} 
+\index{LossManager@{LossManager}!recover@{recover}}
+\index{recover@{recover}!LossManager@{LossManager}}
+\doxysubsubsection{recover()}
+{\footnotesize\ttfamily def Loss\+Manager.\+recover (\begin{DoxyParamCaption}\item[{str}]{path }\end{DoxyParamCaption})}
+
+
+
+Recover a function from the top of the stack. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & path of the file that contains the function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+After recover the path is poped from the stack. 
+\end{DoxyNote}
+\begin{DoxyAttention}{Attention}
+If the function breaks in the midle of a recover its not poped from the list 
+\end{DoxyAttention}
+\begin{DoxyWarning}{Warning}
+Runs \doxyref{deactivate\+\_\+recover()}{p.}{namespace_loss_manager_a14b71b5b3b9cac2c65dbb7589942a33c} after recover 
+\end{DoxyWarning}
+
+
+Definition at line \textbf{ 97} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_ae1208e61724d404821efa1b3cee2f4e8}} 
+\index{LossManager@{LossManager}!run\_with\_recover@{run\_with\_recover}}
+\index{run\_with\_recover@{run\_with\_recover}!LossManager@{LossManager}}
+\doxysubsubsection{run\_with\_recover()}
+{\footnotesize\ttfamily def Loss\+Manager.\+run\+\_\+with\+\_\+recover (\begin{DoxyParamCaption}\item[{Function\+Type}]{func }\end{DoxyParamCaption})}
+
+
+
+Creates a recover point before runs a function and removes it if the function suceed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em func} & function to run with the recover system \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 140} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_a13a29ff7e71cddd43d3bb1d93afe820c}} 
+\index{LossManager@{LossManager}!submit@{submit}}
+\index{submit@{submit}!LossManager@{LossManager}}
+\doxysubsubsection{submit()}
+{\footnotesize\ttfamily str Loss\+Manager.\+submit (\begin{DoxyParamCaption}\item[{Function\+Type}]{func }\end{DoxyParamCaption})}
+
+
+
+Creates a recover point to a function. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em func} & function to insert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The path of the recover file 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+the function is serialized and saved, inserts the path of the saved file in the stack 
+\end{DoxyNote}
+\begin{DoxyWarning}{Warning}
+some objects migth not be able to be serialized 
+\end{DoxyWarning}
+
+
+Definition at line \textbf{ 74} of file \textbf{ Loss\+Manager.\+py}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{namespace_loss_manager_aeba826a8a05dc852f2160f16d7c478bf}} 
+\index{LossManager@{LossManager}!extention@{extention}}
+\index{extention@{extention}!LossManager@{LossManager}}
+\doxysubsubsection{extention}
+{\footnotesize\ttfamily string Loss\+Manager.\+extention = \char`\"{}.pk\char`\"{}}
+
+
+
+Recover extention. 
+
+
+
+Definition at line \textbf{ 9} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_a8ba7fecc30b9da7075b63b8cb2fe1490}} 
+\index{LossManager@{LossManager}!hold@{hold}}
+\index{hold@{hold}!LossManager@{LossManager}}
+\doxysubsubsection{hold}
+{\footnotesize\ttfamily string Loss\+Manager.\+hold = \char`\"{}data/recover\char`\"{}}
+
+
+
+Definition at line \textbf{ 14} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_a543a282cf5f2505b8f9026608dfe455f}} 
+\index{LossManager@{LossManager}!name@{name}}
+\index{name@{name}!LossManager@{LossManager}}
+\doxysubsubsection{name}
+{\footnotesize\ttfamily string Loss\+Manager.\+name = \char`\"{}data/recover\char`\"{}}
+
+
+
+Files\textquotesingle{} path. 
+
+
+
+Definition at line \textbf{ 12} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_aa4a41e048ca19340569e45e3f7f352ec}} 
+\index{LossManager@{LossManager}!path\_on\_hold@{path\_on\_hold}}
+\index{path\_on\_hold@{path\_on\_hold}!LossManager@{LossManager}}
+\doxysubsubsection{path\_on\_hold}
+{\footnotesize\ttfamily string Loss\+Manager.\+path\+\_\+on\+\_\+hold = \char`\"{}\char`\"{}}
+
+
+
+Definition at line \textbf{ 21} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_ab4bf2211b05672bdc9f03e1efe6ab90c}} 
+\index{LossManager@{LossManager}!recover\_need@{recover\_need}}
+\index{recover\_need@{recover\_need}!LossManager@{LossManager}}
+\doxysubsubsection{recover\_need}
+{\footnotesize\ttfamily bool Loss\+Manager.\+recover\+\_\+need = False}
+
+
+
+Recovery Flag. 
+
+\begin{DoxyNote}{Note}
+Is activated when an action breaks 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 18} of file \textbf{ Loss\+Manager.\+py}.
+
+\mbox{\label{namespace_loss_manager_abd1c2b751e846d35da928f05afb73754}} 
+\index{LossManager@{LossManager}!stack@{stack}}
+\index{stack@{stack}!LossManager@{LossManager}}
+\doxysubsubsection{stack}
+{\footnotesize\ttfamily list Loss\+Manager.\+stack = [$\,$]}
+
+
+
+Stack of recovery files. 
+
+
+
+Definition at line \textbf{ 6} of file \textbf{ Loss\+Manager.\+py}.
+

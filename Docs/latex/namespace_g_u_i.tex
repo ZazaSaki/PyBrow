@@ -1,0 +1,1189 @@
+\doxysection{GUI Namespace Reference}
+\label{namespace_g_u_i}\index{GUI@{GUI}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \textbf{ submit\+\_\+work} ()
+\begin{DoxyCompactList}\small\item\em Submits the WORKING\+\_\+\+FLAG until it is realesed. \end{DoxyCompactList}\item 
+def \textbf{ release\+\_\+core} ()
+\begin{DoxyCompactList}\small\item\em Release the WORKING\+\_\+\+FLAG. \end{DoxyCompactList}\item 
+bool \textbf{ run\+\_\+with\+\_\+work\+\_\+check} (Function\+Type function)
+\begin{DoxyCompactList}\small\item\em Runs a given function if the is not a critical task running with the WORKING\+\_\+\+FLAG realesed. \end{DoxyCompactList}\item 
+bool \textbf{ run\+\_\+alone} (Function\+Type function)
+\begin{DoxyCompactList}\small\item\em Runs and submits a given function Submits a given function to run in paralel as a critical task, if there is not a critical task running. \end{DoxyCompactList}\item 
+def \textbf{ run\+\_\+in\+\_\+paralel} (Function\+Type function, sg.\+Window \textbf{ window})
+\begin{DoxyCompactList}\small\item\em Runs and submits a given function Submits a given function to run, as a critical task, in paralel with the \doxyref{GUI}{p.}{namespace_g_u_i}, if the is not a critical task running. \end{DoxyCompactList}\item 
+def \textbf{ change} (str \textbf{ display\+\_\+id}, str \textbf{ message}, Function\+Type \textbf{ changer}, \textbf{ window})
+\begin{DoxyCompactList}\small\item\em Change pages info in the data base by the {\itshape Page Manager} menu. \end{DoxyCompactList}\item 
+sg.\+Window \textbf{ Make\+\_\+layout} (List menus, \textbf{ general\+\_\+displayer})
+\begin{DoxyCompactList}\small\item\em Creates the main menus by a list of {\itshape Py\+Simple\+GUI} elements. \end{DoxyCompactList}\item 
+str \textbf{ get\+\_\+list} (str \textbf{ name})
+\begin{DoxyCompactList}\small\item\em Get the List of Pages according to a searched name @params name name to search. \end{DoxyCompactList}\item 
+List \textbf{ get\+\_\+email\+\_\+list} ()
+\begin{DoxyCompactList}\small\item\em Get the List of emails that access the locked sheets. \end{DoxyCompactList}\item 
+Tuple[str, str] \textbf{ get\+Creds} ()
+\begin{DoxyCompactList}\small\item\em Get credencials if there is none Uses popups to get the information returns username, password. \end{DoxyCompactList}\item 
+def \textbf{ confirmation} ()
+\item 
+def \textbf{ check\+Creds} ()
+\begin{DoxyCompactList}\small\item\em Protocol to use in case of tow factor authentication. \end{DoxyCompactList}\item 
+def \textbf{ update\+\_\+table} (id, \textbf{ window}, display)
+\item 
+def \textbf{ update\+\_\+table\+\_\+stack} (id, \textbf{ window}, display)
+\item 
+def \textbf{ bar\+\_\+update} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \textbf{ TITLE} = \textquotesingle{}Auto Cruz 0.\+1.\+1\textquotesingle{}
+\item 
+string \textbf{ MENU\+\_\+\+PREFIX} = \textquotesingle{}Menu\textquotesingle{}
+\item 
+string \textbf{ MENU\+\_\+\+BUTTON\+\_\+\+PREFIX} = \textquotesingle{}Show\+\_\+\+Menu\textquotesingle{}
+\item 
+bool \textbf{ WORKING} = False
+\item 
+bool \textbf{ TRYED} = False
+\item 
+string \textbf{ WORKING\+\_\+\+FLAG} = \textquotesingle{}\textquotesingle{}
+\item 
+string \textbf{ FINISH\+\_\+\+WORD} = \textquotesingle{}FININSHED\textquotesingle{}
+\item 
+string \textbf{ FAIL\+\_\+\+WORD} = \textquotesingle{}FAILED\textquotesingle{}
+\item 
+list \textbf{ info\+\_\+displayer}
+\begin{DoxyCompactList}\small\item\em Page Information Dysplayer Layout. \end{DoxyCompactList}\item 
+list \textbf{ control\+\_\+buttons}
+\begin{DoxyCompactList}\small\item\em Page Controller Buttons layout. \end{DoxyCompactList}\item 
+list \textbf{ control\+\_\+layout}
+\begin{DoxyCompactList}\small\item\em Page Controller Layout. \end{DoxyCompactList}\item 
+list \textbf{ Add\+\_\+layout}
+\begin{DoxyCompactList}\small\item\em Add Menu Layout. \end{DoxyCompactList}\item 
+\textbf{ Add\+\_\+page\+\_\+menu} = sg.\+Column(\textbf{ Add\+\_\+layout}, key=\textquotesingle{}add\+\_\+page\+\_\+menu\textquotesingle{}, \textbf{ visible}=False, expand\+\_\+x=True)
+\begin{DoxyCompactList}\small\item\em Add Menu. \end{DoxyCompactList}\item 
+list \textbf{ Search\+\_\+layout}
+\begin{DoxyCompactList}\small\item\em Search Layout. \end{DoxyCompactList}\item 
+\textbf{ Search\+\_\+menu} = sg.\+Column(\textbf{ Search\+\_\+layout}, key=\textquotesingle{}Page Manager\textquotesingle{}, \textbf{ visible}=False, expand\+\_\+x=True)
+\begin{DoxyCompactList}\small\item\em Search Menu. \end{DoxyCompactList}\item 
+list \textbf{ Read\+\_\+all\+\_\+layout}
+\begin{DoxyCompactList}\small\item\em \doxyref{Read}{p.}{namespace_read} All Layout. \end{DoxyCompactList}\item 
+\textbf{ Read\+\_\+all} = sg.\+Column(\textbf{ Read\+\_\+all\+\_\+layout}, key=\textquotesingle{}read\+\_\+all\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em \doxyref{Read}{p.}{namespace_read} All Menu. \end{DoxyCompactList}\item 
+list \textbf{ Read\+\_\+one\+\_\+layout}
+\begin{DoxyCompactList}\small\item\em \doxyref{Read}{p.}{namespace_read} One Layout. \end{DoxyCompactList}\item 
+\textbf{ Read\+\_\+one} = sg.\+Column(\textbf{ Read\+\_\+one\+\_\+layout}, key=\textquotesingle{}Read\+\_\+one\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em \doxyref{Read}{p.}{namespace_read} One Menu. \end{DoxyCompactList}\item 
+list \textbf{ Read\+\_\+\+Displayer\+\_\+\+Layout}
+\item 
+\textbf{ Read\+\_\+\+Displayer} = sg.\+Column(\textbf{ Read\+\_\+\+Displayer\+\_\+\+Layout}, key = \textquotesingle{}read\+\_\+display\textquotesingle{}, expand\+\_\+x=True, expand\+\_\+y=True)
+\item 
+list \textbf{ Read\+\_\+\+Layout}
+\begin{DoxyCompactList}\small\item\em \doxyref{Read}{p.}{namespace_read} Menu Layout. \end{DoxyCompactList}\item 
+\textbf{ Read\+\_\+menu} = sg.\+Column(\textbf{ Read\+\_\+\+Layout}, key=\textquotesingle{}read\textquotesingle{}, \textbf{ visible}=False, expand\+\_\+x=True, expand\+\_\+y=True)
+\begin{DoxyCompactList}\small\item\em \doxyref{Read}{p.}{namespace_read} Menu. \end{DoxyCompactList}\item 
+list \textbf{ Update\+\_\+layout}
+\begin{DoxyCompactList}\small\item\em Update Menu Layout. \end{DoxyCompactList}\item 
+\textbf{ Update\+\_\+menu} = sg.\+Column(\textbf{ Update\+\_\+layout}, key=\textquotesingle{}update\textquotesingle{}, \textbf{ visible}=False, expand\+\_\+x=True)
+\begin{DoxyCompactList}\small\item\em Update Menu. \end{DoxyCompactList}\item 
+list \textbf{ Option\+\_\+layout}
+\begin{DoxyCompactList}\small\item\em Options Menu Layout. \end{DoxyCompactList}\item 
+\textbf{ Option\+\_\+menu} = sg.\+Column(\textbf{ Option\+\_\+layout}, key=\textquotesingle{}option\textquotesingle{}, \textbf{ visible}= False, expand\+\_\+x=True)
+\begin{DoxyCompactList}\small\item\em Option Menu. \end{DoxyCompactList}\item 
+list \textbf{ Recover\+\_\+layout}
+\begin{DoxyCompactList}\small\item\em Recover Menu Layout. \end{DoxyCompactList}\item 
+\textbf{ Recover\+\_\+menu} = sg.\+Column(\textbf{ Recover\+\_\+layout}, key=\textquotesingle{}recover\+\_\+menu\textquotesingle{}, \textbf{ visible}=False)
+\begin{DoxyCompactList}\small\item\em Recover Menu. \end{DoxyCompactList}\item 
+list \textbf{ general\+\_\+displayer}
+\begin{DoxyCompactList}\small\item\em General Displayer. \end{DoxyCompactList}\item 
+sg.\+Window \textbf{ window} = \textbf{ Make\+\_\+layout}([\textbf{ Read\+\_\+menu}, \textbf{ Search\+\_\+menu}, \textbf{ Update\+\_\+menu}, \textbf{ Option\+\_\+menu}, \textbf{ Recover\+\_\+menu}], \textbf{ general\+\_\+displayer})
+\begin{DoxyCompactList}\small\item\em \doxyref{GUI}{p.}{namespace_g_u_i} Window. \end{DoxyCompactList}\item 
+\textbf{ event}
+\item 
+\textbf{ values}
+\item 
+int \textbf{ base} = 1
+\item 
+string \textbf{ perfix} = \textquotesingle{}\textquotesingle{}
+\item 
+str \textbf{ name\+\_\+selected} = \textbf{ get\+\_\+list}(\textbf{ values}[\textquotesingle{}search\+\_\+input\textquotesingle{}])[\textbf{ values}[\textquotesingle{}search\+\_\+table\textquotesingle{}][0]][0]
+\item 
+\textbf{ page} = get\+Page\+By\+Name(\textbf{ name\+\_\+selected})[0]
+\item 
+\textbf{ visible}
+\item 
+\textbf{ display\+\_\+id}
+\item 
+\textbf{ message}
+\item 
+\textbf{ changer}
+\item 
+\textbf{ name} = sg.\+popup\+\_\+get\+\_\+text(f\char`\"{}\+Write the name of the spreadsheet\+: \{\textbf{ values}[\textquotesingle{}page\+\_\+name\textquotesingle{}]\}\char`\"{})
+\item 
+\textbf{ link} = \textbf{ values}[\textquotesingle{}add\+\_\+page\+\_\+link\textquotesingle{}]
+\item 
+\textbf{ spread} = \textbf{ values}[\textquotesingle{}add\+\_\+page\+\_\+spreadsheet\textquotesingle{}]
+\item 
+bool \textbf{ readed} = \textbf{ run\+\_\+with\+\_\+work\+\_\+check}(add\+Page(\textbf{ name}, \textbf{ link}, \textbf{ spread}))
+\item 
+\textbf{ index} = \textbf{ values}[\textquotesingle{}Read\+\_\+table\textquotesingle{}][0]
+\item 
+sg.\+Window \textbf{ path} = \textbf{ window}[\textquotesingle{}Read\+\_\+table\textquotesingle{}].get()[\textbf{ index}]
+\item 
+\textbf{ val} = read\+\_\+a\+\_\+list\+\_\+as\+\_\+array(\textbf{ path})
+\item 
+\textbf{ content} = \textbf{ values}[\textquotesingle{}Read\+\_\+file\+\_\+input\textquotesingle{}]
+\item 
+\textbf{ num} = None
+\item 
+\textbf{ email\+\_\+val} = sg.\+popup\+\_\+get\+\_\+text(\textquotesingle{}Insert the email\textquotesingle{})
+\item 
+string \textbf{ done} = \textquotesingle{}Yes\textquotesingle{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespace_g_u_i_ad3fb3442db48eb6e6305bd3b6653dbf8}} 
+\index{GUI@{GUI}!bar\_update@{bar\_update}}
+\index{bar\_update@{bar\_update}!GUI@{GUI}}
+\doxysubsubsection{bar\_update()}
+{\footnotesize\ttfamily def GUI.\+bar\+\_\+update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 403} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_ab4fe64ae5cf126a3b3d2f627884f1fe2}} 
+\index{GUI@{GUI}!change@{change}}
+\index{change@{change}!GUI@{GUI}}
+\doxysubsubsection{change()}
+{\footnotesize\ttfamily def GUI.\+change (\begin{DoxyParamCaption}\item[{str}]{display\+\_\+id,  }\item[{str}]{message,  }\item[{Function\+Type}]{changer,  }\item[{}]{window }\end{DoxyParamCaption})}
+
+
+
+Change pages info in the data base by the {\itshape Page Manager} menu. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em display\+\_\+id} & id of the item that displays the information to change \\
+\hline
+{\em message} & message to inform the user to insert the updated information\\
+\hline
+{\em changer} & function to updated the given information. It shall accept only one argument (the updated value) and update the data base with it\\
+\hline
+{\em window} & \doxyref{GUI}{p.}{namespace_g_u_i} Window S \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 120} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a092988a1e8c2e79e28e4e3a9ee1f3e05}} 
+\index{GUI@{GUI}!checkCreds@{checkCreds}}
+\index{checkCreds@{checkCreds}!GUI@{GUI}}
+\doxysubsubsection{checkCreds()}
+{\footnotesize\ttfamily def GUI.\+check\+Creds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Protocol to use in case of tow factor authentication. 
+
+
+
+Definition at line \textbf{ 382} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a74b6aeebabc9dbe9d49dc28d31c88749}} 
+\index{GUI@{GUI}!confirmation@{confirmation}}
+\index{confirmation@{confirmation}!GUI@{GUI}}
+\doxysubsubsection{confirmation()}
+{\footnotesize\ttfamily def GUI.\+confirmation (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 375} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_ad19f25aa87eaeee889ed2f1577c60b5c}} 
+\index{GUI@{GUI}!get\_email\_list@{get\_email\_list}}
+\index{get\_email\_list@{get\_email\_list}!GUI@{GUI}}
+\doxysubsubsection{get\_email\_list()}
+{\footnotesize\ttfamily List GUI.\+get\+\_\+email\+\_\+list (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the List of emails that access the locked sheets. 
+
+\begin{DoxyReturn}{Returns}
+table list of emails 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 299} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_acf5575ff8823fb5644e237fa278c310f}} 
+\index{GUI@{GUI}!get\_list@{get\_list}}
+\index{get\_list@{get\_list}!GUI@{GUI}}
+\doxysubsubsection{get\_list()}
+{\footnotesize\ttfamily str GUI.\+get\+\_\+list (\begin{DoxyParamCaption}\item[{str}]{name }\end{DoxyParamCaption})}
+
+
+
+Get the List of Pages according to a searched name @params name name to search. 
+
+\begin{DoxyReturn}{Returns}
+Table List of founded pages 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 160} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a06be314d3d255bdc8eca845ff4aaa090}} 
+\index{GUI@{GUI}!getCreds@{getCreds}}
+\index{getCreds@{getCreds}!GUI@{GUI}}
+\doxysubsubsection{getCreds()}
+{\footnotesize\ttfamily Tuple[str,str] GUI.\+get\+Creds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get credencials if there is none Uses popups to get the information returns username, password. 
+
+
+
+Definition at line \textbf{ 369} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a169aff4f680fa91bfe5502a969cfd437}} 
+\index{GUI@{GUI}!Make\_layout@{Make\_layout}}
+\index{Make\_layout@{Make\_layout}!GUI@{GUI}}
+\doxysubsubsection{Make\_layout()}
+{\footnotesize\ttfamily sg.\+Window GUI.\+Make\+\_\+layout (\begin{DoxyParamCaption}\item[{List}]{menus,  }\item[{}]{general\+\_\+displayer }\end{DoxyParamCaption})}
+
+
+
+Creates the main menus by a list of {\itshape Py\+Simple\+GUI} elements. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em menus} & List if menus \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+sg.\+Window 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 135} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a094f42a719c2f51ab7c6e3941518c25f}} 
+\index{GUI@{GUI}!release\_core@{release\_core}}
+\index{release\_core@{release\_core}!GUI@{GUI}}
+\doxysubsubsection{release\_core()}
+{\footnotesize\ttfamily def GUI.\+release\+\_\+core (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Release the WORKING\+\_\+\+FLAG. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{submit\+\_\+work}{p.}{namespace_g_u_i_a8432df74f7f5200de85abcf103c34093} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 47} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a90f154c6ab577e80f862a863a48842d4}} 
+\index{GUI@{GUI}!run\_alone@{run\_alone}}
+\index{run\_alone@{run\_alone}!GUI@{GUI}}
+\doxysubsubsection{run\_alone()}
+{\footnotesize\ttfamily bool GUI.\+run\+\_\+alone (\begin{DoxyParamCaption}\item[{Function\+Type}]{function }\end{DoxyParamCaption})}
+
+
+
+Runs and submits a given function Submits a given function to run in paralel as a critical task, if there is not a critical task running. 
+
+By submiting, it raises the WORKING\+\_\+\+FLAG By submitings blocks other functions run in paralel 
+\begin{DoxyParams}{Parameters}
+{\em function} & the function to run \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean if the function suceeded or not 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{run\+\_\+with\+\_\+work\+\_\+check}{p.}{namespace_g_u_i_a91b25964118082013a277315fbabec65}, \doxyref{submit\+\_\+work}{p.}{namespace_g_u_i_a8432df74f7f5200de85abcf103c34093} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 77} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_ac57b04926baa61a54c59214d77a1f8e1}} 
+\index{GUI@{GUI}!run\_in\_paralel@{run\_in\_paralel}}
+\index{run\_in\_paralel@{run\_in\_paralel}!GUI@{GUI}}
+\doxysubsubsection{run\_in\_paralel()}
+{\footnotesize\ttfamily def GUI.\+run\+\_\+in\+\_\+paralel (\begin{DoxyParamCaption}\item[{Function\+Type}]{function,  }\item[{sg.\+Window}]{window }\end{DoxyParamCaption})}
+
+
+
+Runs and submits a given function Submits a given function to run, as a critical task, in paralel with the \doxyref{GUI}{p.}{namespace_g_u_i}, if the is not a critical task running. 
+
+By submitings blocks other functions run in paralel 
+\begin{DoxyParams}{Parameters}
+{\em function} & the function to run \\
+\hline
+{\em window} & window of the \doxyref{GUI}{p.}{namespace_g_u_i} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean if the function suceeded or not 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{run\+\_\+alone}{p.}{namespace_g_u_i_a90f154c6ab577e80f862a863a48842d4} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 105} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a91b25964118082013a277315fbabec65}} 
+\index{GUI@{GUI}!run\_with\_work\_check@{run\_with\_work\_check}}
+\index{run\_with\_work\_check@{run\_with\_work\_check}!GUI@{GUI}}
+\doxysubsubsection{run\_with\_work\_check()}
+{\footnotesize\ttfamily bool GUI.\+run\+\_\+with\+\_\+work\+\_\+check (\begin{DoxyParamCaption}\item[{Function\+Type}]{function }\end{DoxyParamCaption})}
+
+
+
+Runs a given function if the is not a critical task running with the WORKING\+\_\+\+FLAG realesed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em function} & the function to run \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean if the function suceeded or not 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{run\+\_\+alone}{p.}{namespace_g_u_i_a90f154c6ab577e80f862a863a48842d4}, \doxyref{submit\+\_\+work}{p.}{namespace_g_u_i_a8432df74f7f5200de85abcf103c34093} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 57} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a8432df74f7f5200de85abcf103c34093}} 
+\index{GUI@{GUI}!submit\_work@{submit\_work}}
+\index{submit\_work@{submit\_work}!GUI@{GUI}}
+\doxysubsubsection{submit\_work()}
+{\footnotesize\ttfamily def GUI.\+submit\+\_\+work (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Submits the WORKING\+\_\+\+FLAG until it is realesed. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{release\+\_\+core}{p.}{namespace_g_u_i_a094f42a719c2f51ab7c6e3941518c25f} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 40} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_afbe3461b7105ca48f567aedb389a3ccf}} 
+\index{GUI@{GUI}!update\_table@{update\_table}}
+\index{update\_table@{update\_table}!GUI@{GUI}}
+\doxysubsubsection{update\_table()}
+{\footnotesize\ttfamily def GUI.\+update\+\_\+table (\begin{DoxyParamCaption}\item[{}]{id,  }\item[{}]{window,  }\item[{}]{display }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 386} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a3d4dbea37f5ddf6a434f24027f42eade}} 
+\index{GUI@{GUI}!update\_table\_stack@{update\_table\_stack}}
+\index{update\_table\_stack@{update\_table\_stack}!GUI@{GUI}}
+\doxysubsubsection{update\_table\_stack()}
+{\footnotesize\ttfamily def GUI.\+update\+\_\+table\+\_\+stack (\begin{DoxyParamCaption}\item[{}]{id,  }\item[{}]{window,  }\item[{}]{display }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 396} of file \textbf{ GUI.\+py}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{namespace_g_u_i_a022d5330e9cfabc770fcfcf006d37358}} 
+\index{GUI@{GUI}!Add\_layout@{Add\_layout}}
+\index{Add\_layout@{Add\_layout}!GUI@{GUI}}
+\doxysubsubsection{Add\_layout}
+{\footnotesize\ttfamily list GUI.\+Add\+\_\+layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Text(\textcolor{stringliteral}{'Name :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'add\_page\_name'}, size= 60)],}
+\DoxyCodeLine{00003     [sg.Text(\textcolor{stringliteral}{'Link :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'add\_page\_link'}, size= 60)],}
+\DoxyCodeLine{00004     [sg.Text(\textcolor{stringliteral}{'Spreadsheet :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'add\_page\_spreadsheet'}, size= 60)],}
+\DoxyCodeLine{00005     [sg.Button(\textcolor{stringliteral}{'Confirm'}, key=\textcolor{stringliteral}{'add\_page'})]}
+\DoxyCodeLine{00006 ]}
+
+\end{DoxyCode}
+
+
+Add Menu Layout. 
+
+
+
+Definition at line \textbf{ 196} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a54d74b1ed95e113ee90f5c77ba2c1911}} 
+\index{GUI@{GUI}!Add\_page\_menu@{Add\_page\_menu}}
+\index{Add\_page\_menu@{Add\_page\_menu}!GUI@{GUI}}
+\doxysubsubsection{Add\_page\_menu}
+{\footnotesize\ttfamily GUI.\+Add\+\_\+page\+\_\+menu = sg.\+Column(\textbf{ Add\+\_\+layout}, key=\textquotesingle{}add\+\_\+page\+\_\+menu\textquotesingle{}, \textbf{ visible}=False, expand\+\_\+x=True)}
+
+
+
+Add Menu. 
+
+
+
+Definition at line \textbf{ 204} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a542eee6bb2414950c503787a2689d16f}} 
+\index{GUI@{GUI}!base@{base}}
+\index{base@{base}!GUI@{GUI}}
+\doxysubsubsection{base}
+{\footnotesize\ttfamily GUI.\+base = 1}
+
+
+
+Definition at line \textbf{ 427} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_af85cbdeedada7d5743e1a940234772a1}} 
+\index{GUI@{GUI}!changer@{changer}}
+\index{changer@{changer}!GUI@{GUI}}
+\doxysubsubsection{changer}
+{\footnotesize\ttfamily GUI.\+changer}
+
+
+
+Definition at line \textbf{ 472} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a8bb429feae3f76b7e11f7412fe871172}} 
+\index{GUI@{GUI}!content@{content}}
+\index{content@{content}!GUI@{GUI}}
+\doxysubsubsection{content}
+{\footnotesize\ttfamily GUI.\+content = \textbf{ values}[\textquotesingle{}Read\+\_\+file\+\_\+input\textquotesingle{}]}
+
+
+
+Definition at line \textbf{ 551} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a5e6db58d0f56f216e2e76b2641ddf04c}} 
+\index{GUI@{GUI}!control\_buttons@{control\_buttons}}
+\index{control\_buttons@{control\_buttons}!GUI@{GUI}}
+\doxysubsubsection{control\_buttons}
+{\footnotesize\ttfamily GUI.\+control\+\_\+buttons}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Button(\textcolor{stringliteral}{'Edit Link'}, key=\textcolor{stringliteral}{'edit\_page\_link'})],}
+\DoxyCodeLine{00003     [sg.Button(\textcolor{stringliteral}{'Edit Spreadsheet'}, key=\textcolor{stringliteral}{'edit\_page\_spreadsheet'})],}
+\DoxyCodeLine{00004     [sg.Button(\textcolor{stringliteral}{'Delete'}, key=\textcolor{stringliteral}{'delete\_page'})],}
+\DoxyCodeLine{00005 ]}
+
+\end{DoxyCode}
+
+
+Page Controller Buttons layout. 
+
+Page Controller Buttons. 
+
+Definition at line \textbf{ 180} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a2584a77255640472347e06a1fb0aa2d5}} 
+\index{GUI@{GUI}!control\_layout@{control\_layout}}
+\index{control\_layout@{control\_layout}!GUI@{GUI}}
+\doxysubsubsection{control\_layout}
+{\footnotesize\ttfamily list GUI.\+control\+\_\+layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [info\_displayer, control\_buttons]}
+\DoxyCodeLine{00003 ]}
+
+\end{DoxyCode}
+
+
+Page Controller Layout. 
+
+
+
+Definition at line \textbf{ 190} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a02ae049c9529b08d1350d7f368c7ceba}} 
+\index{GUI@{GUI}!display\_id@{display\_id}}
+\index{display\_id@{display\_id}!GUI@{GUI}}
+\doxysubsubsection{display\_id}
+{\footnotesize\ttfamily GUI.\+display\+\_\+id}
+
+
+
+Definition at line \textbf{ 470} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aac9e5b06255ca33f028edd7898779629}} 
+\index{GUI@{GUI}!done@{done}}
+\index{done@{done}!GUI@{GUI}}
+\doxysubsubsection{done}
+{\footnotesize\ttfamily string GUI.\+done = \textquotesingle{}Yes\textquotesingle{}}
+
+
+
+Definition at line \textbf{ 644} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aef4c00d4125dd37e46ec4f253ba39fb7}} 
+\index{GUI@{GUI}!email\_val@{email\_val}}
+\index{email\_val@{email\_val}!GUI@{GUI}}
+\doxysubsubsection{email\_val}
+{\footnotesize\ttfamily GUI.\+email\+\_\+val = sg.\+popup\+\_\+get\+\_\+text(\textquotesingle{}Insert the email\textquotesingle{})}
+
+
+
+Definition at line \textbf{ 643} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aa9216520414163d16137fef602ec299a}} 
+\index{GUI@{GUI}!event@{event}}
+\index{event@{event}!GUI@{GUI}}
+\doxysubsubsection{event}
+{\footnotesize\ttfamily GUI.\+event}
+
+
+
+Definition at line \textbf{ 425} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a5bc941f9bd89639a688afbd2a4ac36da}} 
+\index{GUI@{GUI}!FAIL\_WORD@{FAIL\_WORD}}
+\index{FAIL\_WORD@{FAIL\_WORD}!GUI@{GUI}}
+\doxysubsubsection{FAIL\_WORD}
+{\footnotesize\ttfamily string GUI.\+FAIL\+\_\+\+WORD = \textquotesingle{}FAILED\textquotesingle{}}
+
+
+
+Definition at line \textbf{ 29} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_abaa12cc73659df563a72480c28b145a9}} 
+\index{GUI@{GUI}!FINISH\_WORD@{FINISH\_WORD}}
+\index{FINISH\_WORD@{FINISH\_WORD}!GUI@{GUI}}
+\doxysubsubsection{FINISH\_WORD}
+{\footnotesize\ttfamily string GUI.\+FINISH\+\_\+\+WORD = \textquotesingle{}FININSHED\textquotesingle{}}
+
+
+
+Definition at line \textbf{ 28} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_ac9cac1c6b8d031193912934e7fe74df3}} 
+\index{GUI@{GUI}!general\_displayer@{general\_displayer}}
+\index{general\_displayer@{general\_displayer}!GUI@{GUI}}
+\doxysubsubsection{general\_displayer}
+{\footnotesize\ttfamily list GUI.\+general\+\_\+displayer}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Table(}
+\DoxyCodeLine{00003         values=get\_checker(\textcolor{stringliteral}{'general'}), }
+\DoxyCodeLine{00004         headings=[\textcolor{stringliteral}{'General Stats'}], }
+\DoxyCodeLine{00005         key=\textcolor{stringliteral}{'general\_display'}, }
+\DoxyCodeLine{00006         auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00007         enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00008         expand\_x=\textcolor{keyword}{True},}
+\DoxyCodeLine{00009         expand\_y=\textcolor{keyword}{True}}
+\DoxyCodeLine{00010     )],}
+\DoxyCodeLine{00011     [sg.MLine(}
+\DoxyCodeLine{00012         size=(80, 12), }
+\DoxyCodeLine{00013         k=\textcolor{stringliteral}{'-\/ML-\/'}, }
+\DoxyCodeLine{00014         reroute\_stdout=\textcolor{keyword}{True},}
+\DoxyCodeLine{00015         write\_only=\textcolor{keyword}{True}, }
+\DoxyCodeLine{00016         autoscroll=\textcolor{keyword}{True}, }
+\DoxyCodeLine{00017         auto\_refresh=\textcolor{keyword}{True},}
+\DoxyCodeLine{00018         expand\_x=\textcolor{keyword}{True})],}
+\DoxyCodeLine{00019     [sg.ProgressBar(}
+\DoxyCodeLine{00020         100, }
+\DoxyCodeLine{00021         size=(20, 20), }
+\DoxyCodeLine{00022         orientation=\textcolor{stringliteral}{'h'}, }
+\DoxyCodeLine{00023         key=\textcolor{stringliteral}{'-\/bar-\/'},}
+\DoxyCodeLine{00024         expand\_x=\textcolor{keyword}{True}}
+\DoxyCodeLine{00025     )]}
+\DoxyCodeLine{00026 ]}
+
+\end{DoxyCode}
+
+
+General Displayer. 
+
+
+
+Definition at line \textbf{ 335} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a053a937045a67f80b278d601874647c2}} 
+\index{GUI@{GUI}!index@{index}}
+\index{index@{index}!GUI@{GUI}}
+\doxysubsubsection{index}
+{\footnotesize\ttfamily GUI.\+index = \textbf{ values}[\textquotesingle{}Read\+\_\+table\textquotesingle{}][0]}
+
+
+
+Definition at line \textbf{ 525} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aa1668b1b2cd798637cc2d7006104e235}} 
+\index{GUI@{GUI}!info\_displayer@{info\_displayer}}
+\index{info\_displayer@{info\_displayer}!GUI@{GUI}}
+\doxysubsubsection{info\_displayer}
+{\footnotesize\ttfamily GUI.\+info\+\_\+displayer}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Text(\textcolor{stringliteral}{'Name :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'page\_name'}, readonly=\textcolor{keyword}{True}, text\_color=\textcolor{stringliteral}{'black'}, size= 60)],}
+\DoxyCodeLine{00003     [sg.Text(\textcolor{stringliteral}{'Link :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'page\_link'}, readonly=\textcolor{keyword}{True}, text\_color=\textcolor{stringliteral}{'black'}, size= 60)],}
+\DoxyCodeLine{00004     [sg.Text(\textcolor{stringliteral}{'Spreadsheet :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'page\_spreadsheet'}, readonly=\textcolor{keyword}{True}, text\_color=\textcolor{stringliteral}{'black'}, size= 60)]}
+\DoxyCodeLine{00005 ]}
+
+\end{DoxyCode}
+
+
+Page Information Dysplayer Layout. 
+
+Page Information Dysplayer. 
+
+Definition at line \textbf{ 170} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_af0cc098bb26a17c601f45c11fc55ca47}} 
+\index{GUI@{GUI}!link@{link}}
+\index{link@{link}!GUI@{GUI}}
+\doxysubsubsection{link}
+{\footnotesize\ttfamily GUI.\+link = \textbf{ values}[\textquotesingle{}add\+\_\+page\+\_\+link\textquotesingle{}]}
+
+
+
+Definition at line \textbf{ 509} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aab4c17ef149378add1359a0615ddf2ea}} 
+\index{GUI@{GUI}!MENU\_BUTTON\_PREFIX@{MENU\_BUTTON\_PREFIX}}
+\index{MENU\_BUTTON\_PREFIX@{MENU\_BUTTON\_PREFIX}!GUI@{GUI}}
+\doxysubsubsection{MENU\_BUTTON\_PREFIX}
+{\footnotesize\ttfamily string GUI.\+MENU\+\_\+\+BUTTON\+\_\+\+PREFIX = \textquotesingle{}Show\+\_\+\+Menu\textquotesingle{}}
+
+
+
+Definition at line \textbf{ 23} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a324a9ad2e10a2963c2f7cff2908ced96}} 
+\index{GUI@{GUI}!MENU\_PREFIX@{MENU\_PREFIX}}
+\index{MENU\_PREFIX@{MENU\_PREFIX}!GUI@{GUI}}
+\doxysubsubsection{MENU\_PREFIX}
+{\footnotesize\ttfamily string GUI.\+MENU\+\_\+\+PREFIX = \textquotesingle{}Menu\textquotesingle{}}
+
+
+
+Definition at line \textbf{ 22} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a4b4220ddfac98d92ff706734d3a5add4}} 
+\index{GUI@{GUI}!message@{message}}
+\index{message@{message}!GUI@{GUI}}
+\doxysubsubsection{message}
+{\footnotesize\ttfamily GUI.\+message}
+
+
+
+Definition at line \textbf{ 471} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a036cf4b709c69c66eab02c49aa844925}} 
+\index{GUI@{GUI}!name@{name}}
+\index{name@{name}!GUI@{GUI}}
+\doxysubsubsection{name}
+{\footnotesize\ttfamily GUI.\+name = sg.\+popup\+\_\+get\+\_\+text(f\char`\"{}\+Write the name of the spreadsheet\+: \{\textbf{ values}[\textquotesingle{}page\+\_\+name\textquotesingle{}]\}\char`\"{})}
+
+
+
+Definition at line \textbf{ 493} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a992cdee159e2e3c9c91249e18a147598}} 
+\index{GUI@{GUI}!name\_selected@{name\_selected}}
+\index{name\_selected@{name\_selected}!GUI@{GUI}}
+\doxysubsubsection{name\_selected}
+{\footnotesize\ttfamily str GUI.\+name\+\_\+selected = \textbf{ get\+\_\+list}(\textbf{ values}[\textquotesingle{}search\+\_\+input\textquotesingle{}])[\textbf{ values}[\textquotesingle{}search\+\_\+table\textquotesingle{}][0]][0]}
+
+
+
+Definition at line \textbf{ 456} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a40a1523542981b68fd1369977bd930ad}} 
+\index{GUI@{GUI}!num@{num}}
+\index{num@{num}!GUI@{GUI}}
+\doxysubsubsection{num}
+{\footnotesize\ttfamily GUI.\+num = None}
+
+
+
+Definition at line \textbf{ 599} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aaf02b4287919fc9741f62162b7fa61a2}} 
+\index{GUI@{GUI}!Option\_layout@{Option\_layout}}
+\index{Option\_layout@{Option\_layout}!GUI@{GUI}}
+\doxysubsubsection{Option\_layout}
+{\footnotesize\ttfamily list GUI.\+Option\+\_\+layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Text(\textcolor{stringliteral}{'Links Column :'}), sg.Text(f\textcolor{stringliteral}{'\{code\_col("{}index"{})\}'}, size = 10, key=\textcolor{stringliteral}{'code\_col'}), sg.Button(\textcolor{stringliteral}{'Change'}, key = \textcolor{stringliteral}{'change\_code\_col'}),sg.Text(\textcolor{stringliteral}{'Names Column :'}), }
+\DoxyCodeLine{00003         sg.Text(f\textcolor{stringliteral}{'\{names\_col("{}index"{})\}'}, size = 10, key=\textcolor{stringliteral}{'names\_col'}), sg.Button(\textcolor{stringliteral}{'Change'}, key = \textcolor{stringliteral}{'change\_names\_col'}),}
+\DoxyCodeLine{00004     ],}
+\DoxyCodeLine{00005     [sg.Text(\textcolor{stringliteral}{'Highest Readed Column :'}), sg.Text(f\textcolor{stringliteral}{'\{get\_highest\_column()\}'}, size = 10, key=\textcolor{stringliteral}{'highest\_column'}), sg.Button(\textcolor{stringliteral}{'Change'}, key = \textcolor{stringliteral}{'change\_highest\_column'}),}
+\DoxyCodeLine{00006         sg.Text(\textcolor{stringliteral}{'Query :'}), sg.Text(f\textcolor{stringliteral}{'\{get\_query()\}'}, size = 50, key=\textcolor{stringliteral}{'query'}), sg.Button(\textcolor{stringliteral}{'Change'}, key = \textcolor{stringliteral}{'change\_query'})     }
+\DoxyCodeLine{00007     ],}
+\DoxyCodeLine{00008     [sg.Table(}
+\DoxyCodeLine{00009         values=get\_email\_list(), }
+\DoxyCodeLine{00010         headings=[\textcolor{stringliteral}{'emails'}], }
+\DoxyCodeLine{00011         key=\textcolor{stringliteral}{'emails\_table'}, }
+\DoxyCodeLine{00012         auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00013         enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00014         expand\_x=\textcolor{keyword}{True})],}
+\DoxyCodeLine{00015     [sg.Button(\textcolor{stringliteral}{'Add'}, key =\textcolor{stringliteral}{'add\_email'}), sg.Button(\textcolor{stringliteral}{'Remove'}, key = \textcolor{stringliteral}{'remove\_email'})],}
+\DoxyCodeLine{00016     [sg.Button(\textcolor{stringliteral}{'Forget Saved Facebook Account'}, key = \textcolor{stringliteral}{'forget\_account'}), sg.Button(\textcolor{stringliteral}{'Lock All'}, key=\textcolor{stringliteral}{'LAll'},)]}
+\DoxyCodeLine{00017 ]}
+
+\end{DoxyCode}
+
+
+Options Menu Layout. 
+
+
+
+Definition at line \textbf{ 305} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a9916bebfca72980d6476f90d3d6b577f}} 
+\index{GUI@{GUI}!Option\_menu@{Option\_menu}}
+\index{Option\_menu@{Option\_menu}!GUI@{GUI}}
+\doxysubsubsection{Option\_menu}
+{\footnotesize\ttfamily GUI.\+Option\+\_\+menu = sg.\+Column(\textbf{ Option\+\_\+layout}, key=\textquotesingle{}option\textquotesingle{}, \textbf{ visible}= False, expand\+\_\+x=True)}
+
+
+
+Option Menu. 
+
+
+
+Definition at line \textbf{ 324} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a735b6c3575f38136266ff8c4331e44ef}} 
+\index{GUI@{GUI}!page@{page}}
+\index{page@{page}!GUI@{GUI}}
+\doxysubsubsection{page}
+{\footnotesize\ttfamily GUI.\+page = get\+Page\+By\+Name(\textbf{ name\+\_\+selected})[0]}
+
+
+
+Definition at line \textbf{ 457} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a35ff64c6a208fc460ca9859e017cf6a1}} 
+\index{GUI@{GUI}!path@{path}}
+\index{path@{path}!GUI@{GUI}}
+\doxysubsubsection{path}
+{\footnotesize\ttfamily sg Window GUI.\+path = \textbf{ window}[\textquotesingle{}Read\+\_\+table\textquotesingle{}].get()[\textbf{ index}]}
+
+
+
+Definition at line \textbf{ 526} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a9c841beabceed100870367b68e9508f6}} 
+\index{GUI@{GUI}!perfix@{perfix}}
+\index{perfix@{perfix}!GUI@{GUI}}
+\doxysubsubsection{perfix}
+{\footnotesize\ttfamily GUI.\+perfix = \textquotesingle{}\textquotesingle{}}
+
+
+
+Definition at line \textbf{ 428} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a400e8f336841a886d2afa2a9edd9609f}} 
+\index{GUI@{GUI}!Read\_all@{Read\_all}}
+\index{Read\_all@{Read\_all}!GUI@{GUI}}
+\doxysubsubsection{Read\_all}
+{\footnotesize\ttfamily GUI.\+Read\+\_\+all = sg.\+Column(\textbf{ Read\+\_\+all\+\_\+layout}, key=\textquotesingle{}read\+\_\+all\textquotesingle{})}
+
+
+
+\doxyref{Read}{p.}{namespace_read} All Menu. 
+
+
+
+Definition at line \textbf{ 234} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a2ea692de10e40364f4dcf441a9b30cd1}} 
+\index{GUI@{GUI}!Read\_all\_layout@{Read\_all\_layout}}
+\index{Read\_all\_layout@{Read\_all\_layout}!GUI@{GUI}}
+\doxysubsubsection{Read\_all\_layout}
+{\footnotesize\ttfamily list GUI.\+Read\+\_\+all\+\_\+layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Button(\textcolor{stringliteral}{'Read All'})],  }
+\DoxyCodeLine{00003 ]}
+
+\end{DoxyCode}
+
+
+\doxyref{Read}{p.}{namespace_read} All Layout. 
+
+
+
+Definition at line \textbf{ 229} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a9fd1ffd79c12b9a13d18da299aaab792}} 
+\index{GUI@{GUI}!Read\_Displayer@{Read\_Displayer}}
+\index{Read\_Displayer@{Read\_Displayer}!GUI@{GUI}}
+\doxysubsubsection{Read\_Displayer}
+{\footnotesize\ttfamily GUI.\+Read\+\_\+\+Displayer = sg.\+Column(\textbf{ Read\+\_\+\+Displayer\+\_\+\+Layout}, key = \textquotesingle{}read\+\_\+display\textquotesingle{}, expand\+\_\+x=True, expand\+\_\+y=True)}
+
+
+
+Definition at line \textbf{ 265} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aebe18876fbc8e17824e7465685dcbc94}} 
+\index{GUI@{GUI}!Read\_Displayer\_Layout@{Read\_Displayer\_Layout}}
+\index{Read\_Displayer\_Layout@{Read\_Displayer\_Layout}!GUI@{GUI}}
+\doxysubsubsection{Read\_Displayer\_Layout}
+{\footnotesize\ttfamily list GUI.\+Read\+\_\+\+Displayer\+\_\+\+Layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Table(values=get\_all\_paths\_lists(), }
+\DoxyCodeLine{00003             headings=[\textcolor{stringliteral}{'Names'}], }
+\DoxyCodeLine{00004             key=\textcolor{stringliteral}{'Read\_table'}, }
+\DoxyCodeLine{00005             auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00006             enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00007             expand\_x=\textcolor{keyword}{True}}
+\DoxyCodeLine{00008         ), }
+\DoxyCodeLine{00009         sg.Multiline(}
+\DoxyCodeLine{00010             key=\textcolor{stringliteral}{'Read\_file\_input'}, }
+\DoxyCodeLine{00011             expand\_x=\textcolor{keyword}{True}, }
+\DoxyCodeLine{00012             expand\_y=\textcolor{keyword}{True})}
+\DoxyCodeLine{00013         ],}
+\DoxyCodeLine{00014     [   }
+\DoxyCodeLine{00015         sg.Button( \textcolor{stringliteral}{'Save'}, key=\textcolor{stringliteral}{'Read\_save\_file'}),}
+\DoxyCodeLine{00016         sg.Button( \textcolor{stringliteral}{'New File'}, key=\textcolor{stringliteral}{'Read\_new\_file'}),}
+\DoxyCodeLine{00017         sg.Button( \textcolor{stringliteral}{'Delete'}, key=\textcolor{stringliteral}{'Read\_delete\_file'}),}
+\DoxyCodeLine{00018     ]}
+\DoxyCodeLine{00019 ]}
+
+\end{DoxyCode}
+
+
+Definition at line \textbf{ 245} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a1f7df9459681e0078917a25fa3a02c4e}} 
+\index{GUI@{GUI}!Read\_Layout@{Read\_Layout}}
+\index{Read\_Layout@{Read\_Layout}!GUI@{GUI}}
+\doxysubsubsection{Read\_Layout}
+{\footnotesize\ttfamily list GUI.\+Read\+\_\+\+Layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [Read\_all],}
+\DoxyCodeLine{00003     [Read\_one],}
+\DoxyCodeLine{00004     [Read\_Displayer]}
+\DoxyCodeLine{00005 ]}
+
+\end{DoxyCode}
+
+
+\doxyref{Read}{p.}{namespace_read} Menu Layout. 
+
+
+
+Definition at line \textbf{ 268} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a1f5b1cae6b413065b682002048304a8c}} 
+\index{GUI@{GUI}!Read\_menu@{Read\_menu}}
+\index{Read\_menu@{Read\_menu}!GUI@{GUI}}
+\doxysubsubsection{Read\_menu}
+{\footnotesize\ttfamily GUI.\+Read\+\_\+menu = sg.\+Column(\textbf{ Read\+\_\+\+Layout}, key=\textquotesingle{}read\textquotesingle{}, \textbf{ visible}=False, expand\+\_\+x=True, expand\+\_\+y=True)}
+
+
+
+\doxyref{Read}{p.}{namespace_read} Menu. 
+
+
+
+Definition at line \textbf{ 274} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_afb244be944ac2eceb116be8522e7f257}} 
+\index{GUI@{GUI}!Read\_one@{Read\_one}}
+\index{Read\_one@{Read\_one}!GUI@{GUI}}
+\doxysubsubsection{Read\_one}
+{\footnotesize\ttfamily GUI.\+Read\+\_\+one = sg.\+Column(\textbf{ Read\+\_\+one\+\_\+layout}, key=\textquotesingle{}Read\+\_\+one\textquotesingle{})}
+
+
+
+\doxyref{Read}{p.}{namespace_read} One Menu. 
+
+
+
+Definition at line \textbf{ 243} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a729d04454eeef67c2674d72c4d90cf10}} 
+\index{GUI@{GUI}!Read\_one\_layout@{Read\_one\_layout}}
+\index{Read\_one\_layout@{Read\_one\_layout}!GUI@{GUI}}
+\doxysubsubsection{Read\_one\_layout}
+{\footnotesize\ttfamily list GUI.\+Read\+\_\+one\+\_\+layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Text(\textcolor{stringliteral}{'Link'}), sg.InputText(key = \textcolor{stringliteral}{'Read'}),sg.Button(\textcolor{stringliteral}{'Read One'})]}
+\DoxyCodeLine{00003 ]}
+
+\end{DoxyCode}
+
+
+\doxyref{Read}{p.}{namespace_read} One Layout. 
+
+
+
+Definition at line \textbf{ 238} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aa172a751a94de76751b8c8b16a1e3c97}} 
+\index{GUI@{GUI}!readed@{readed}}
+\index{readed@{readed}!GUI@{GUI}}
+\doxysubsubsection{readed}
+{\footnotesize\ttfamily bool GUI.\+readed = \textbf{ run\+\_\+with\+\_\+work\+\_\+check}(add\+Page(\textbf{ name}, \textbf{ link}, \textbf{ spread}))}
+
+
+
+Definition at line \textbf{ 512} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_ab066d36093ef729c9efcf0d7ad7ffec7}} 
+\index{GUI@{GUI}!Recover\_layout@{Recover\_layout}}
+\index{Recover\_layout@{Recover\_layout}!GUI@{GUI}}
+\doxysubsubsection{Recover\_layout}
+{\footnotesize\ttfamily list GUI.\+Recover\+\_\+layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Button(\textcolor{stringliteral}{'Recover'}, key = \textcolor{stringliteral}{'recover'})]}
+\DoxyCodeLine{00003 ]}
+
+\end{DoxyCode}
+
+
+Recover Menu Layout. 
+
+
+
+Definition at line \textbf{ 327} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a8ba8204e8d2da68a3aa25b4882204e54}} 
+\index{GUI@{GUI}!Recover\_menu@{Recover\_menu}}
+\index{Recover\_menu@{Recover\_menu}!GUI@{GUI}}
+\doxysubsubsection{Recover\_menu}
+{\footnotesize\ttfamily GUI.\+Recover\+\_\+menu = sg.\+Column(\textbf{ Recover\+\_\+layout}, key=\textquotesingle{}recover\+\_\+menu\textquotesingle{}, \textbf{ visible}=False)}
+
+
+
+Recover Menu. 
+
+
+
+Definition at line \textbf{ 332} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aba43a4582678d7dcabdb2780f5f28d48}} 
+\index{GUI@{GUI}!Search\_layout@{Search\_layout}}
+\index{Search\_layout@{Search\_layout}!GUI@{GUI}}
+\doxysubsubsection{Search\_layout}
+{\footnotesize\ttfamily list GUI.\+Search\+\_\+layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Text(\textcolor{stringliteral}{'Search'})],}
+\DoxyCodeLine{00003     [sg.Text(\textcolor{stringliteral}{'type'}), }
+\DoxyCodeLine{00004         sg.InputText(key = \textcolor{stringliteral}{'search\_input'}, enable\_events=\textcolor{keyword}{True}), }
+\DoxyCodeLine{00005     ],}
+\DoxyCodeLine{00006     [sg.Table(values=get\_list(\textcolor{stringliteral}{''}), }
+\DoxyCodeLine{00007         headings=[\textcolor{stringliteral}{'Names'}], }
+\DoxyCodeLine{00008         key=\textcolor{stringliteral}{'search\_table'}, }
+\DoxyCodeLine{00009         auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00010         enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00011         expand\_x=\textcolor{keyword}{True})],}
+\DoxyCodeLine{00012     [sg.Column(control\_layout, key=\textcolor{stringliteral}{'page\_controller'}, visible=\textcolor{keyword}{False})],}
+\DoxyCodeLine{00013     [sg.Button(\textcolor{stringliteral}{'Add Page'}, key=\textcolor{stringliteral}{'show\_add\_page\_menu'})],}
+\DoxyCodeLine{00014     [Add\_page\_menu]}
+\DoxyCodeLine{00015 ]}
+
+\end{DoxyCode}
+
+
+Search Layout. 
+
+
+
+Definition at line \textbf{ 207} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a75ade76a9fd8240505dfdd8d1707cf08}} 
+\index{GUI@{GUI}!Search\_menu@{Search\_menu}}
+\index{Search\_menu@{Search\_menu}!GUI@{GUI}}
+\doxysubsubsection{Search\_menu}
+{\footnotesize\ttfamily GUI.\+Search\+\_\+menu = sg.\+Column(\textbf{ Search\+\_\+layout}, key=\textquotesingle{}Page Manager\textquotesingle{}, \textbf{ visible}=False, expand\+\_\+x=True)}
+
+
+
+Search Menu. 
+
+
+
+Definition at line \textbf{ 225} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a584083a4166efe682a55dbdd959ad977}} 
+\index{GUI@{GUI}!spread@{spread}}
+\index{spread@{spread}!GUI@{GUI}}
+\doxysubsubsection{spread}
+{\footnotesize\ttfamily GUI.\+spread = \textbf{ values}[\textquotesingle{}add\+\_\+page\+\_\+spreadsheet\textquotesingle{}]}
+
+
+
+Definition at line \textbf{ 510} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a91363e5c9fadb6cac201dac0dd217be1}} 
+\index{GUI@{GUI}!TITLE@{TITLE}}
+\index{TITLE@{TITLE}!GUI@{GUI}}
+\doxysubsubsection{TITLE}
+{\footnotesize\ttfamily string GUI.\+TITLE = \textquotesingle{}Auto Cruz 0.\+1.\+1\textquotesingle{}}
+
+
+
+Definition at line \textbf{ 21} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a42747f71bca15d68dc9d1ede7e4407e8}} 
+\index{GUI@{GUI}!TRYED@{TRYED}}
+\index{TRYED@{TRYED}!GUI@{GUI}}
+\doxysubsubsection{TRYED}
+{\footnotesize\ttfamily bool GUI.\+TRYED = False}
+
+
+
+Definition at line \textbf{ 26} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a34f955a393396b189a8f54e5e046e005}} 
+\index{GUI@{GUI}!Update\_layout@{Update\_layout}}
+\index{Update\_layout@{Update\_layout}!GUI@{GUI}}
+\doxysubsubsection{Update\_layout}
+{\footnotesize\ttfamily list GUI.\+Update\+\_\+layout}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  [}
+\DoxyCodeLine{00002     [sg.Button(\textcolor{stringliteral}{'Update Data Base'}, key= \textcolor{stringliteral}{'UDB'}), sg.Button(\textcolor{stringliteral}{'Verify Database'}, key=\textcolor{stringliteral}{'VDB'}), sg.Button(\textcolor{stringliteral}{'Verify new links'}, key=\textcolor{stringliteral}{'VNL'})],}
+\DoxyCodeLine{00003     [sg.Button(\textcolor{stringliteral}{'Quick Update'}, key=\textcolor{stringliteral}{'QUDB'}),sg.Button(\textcolor{stringliteral}{'Fix Broken Pages'}, key=\textcolor{stringliteral}{'FBP'}), sg.Button(\textcolor{stringliteral}{'Remove Duplicateds'}, key=\textcolor{stringliteral}{'RDp'})],}
+\DoxyCodeLine{00004     [}
+\DoxyCodeLine{00005         sg.Table(}
+\DoxyCodeLine{00006             values=get\_checker(\textcolor{stringliteral}{'update'}), }
+\DoxyCodeLine{00007             headings=[\textcolor{stringliteral}{'Current stats'}], }
+\DoxyCodeLine{00008             key=\textcolor{stringliteral}{'update\_display'}, }
+\DoxyCodeLine{00009             auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00010             enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00011             expand\_x=\textcolor{keyword}{True},}
+\DoxyCodeLine{00012             expand\_y=\textcolor{keyword}{True}}
+\DoxyCodeLine{00013         )}
+\DoxyCodeLine{00014     ],}
+\DoxyCodeLine{00015 ]}
+
+\end{DoxyCode}
+
+
+Update Menu Layout. 
+
+
+
+Definition at line \textbf{ 278} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a4c017e4fe13c9e487c36a9f52c833efb}} 
+\index{GUI@{GUI}!Update\_menu@{Update\_menu}}
+\index{Update\_menu@{Update\_menu}!GUI@{GUI}}
+\doxysubsubsection{Update\_menu}
+{\footnotesize\ttfamily GUI.\+Update\+\_\+menu = sg.\+Column(\textbf{ Update\+\_\+layout}, key=\textquotesingle{}update\textquotesingle{}, \textbf{ visible}=False, expand\+\_\+x=True)}
+
+
+
+Update Menu. 
+
+
+
+Definition at line \textbf{ 295} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a405d587527b85789ef69327386315d0d}} 
+\index{GUI@{GUI}!val@{val}}
+\index{val@{val}!GUI@{GUI}}
+\doxysubsubsection{val}
+{\footnotesize\ttfamily string GUI.\+val = read\+\_\+a\+\_\+list\+\_\+as\+\_\+array(\textbf{ path})}
+
+
+
+Definition at line \textbf{ 527} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_aaaad5a79f41ef7d3432758bc8765f22c}} 
+\index{GUI@{GUI}!values@{values}}
+\index{values@{values}!GUI@{GUI}}
+\doxysubsubsection{values}
+{\footnotesize\ttfamily GUI.\+values}
+
+
+
+Definition at line \textbf{ 425} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_afc7828c41700021c9e82bdd7aefffd7e}} 
+\index{GUI@{GUI}!visible@{visible}}
+\index{visible@{visible}!GUI@{GUI}}
+\doxysubsubsection{visible}
+{\footnotesize\ttfamily GUI.\+visible}
+
+
+
+Definition at line \textbf{ 461} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_acbf2f0f4de6bd5e876d23c4f34e48737}} 
+\index{GUI@{GUI}!window@{window}}
+\index{window@{window}!GUI@{GUI}}
+\doxysubsubsection{window}
+{\footnotesize\ttfamily GUI.\+window = \textbf{ Make\+\_\+layout}([\textbf{ Read\+\_\+menu}, \textbf{ Search\+\_\+menu}, \textbf{ Update\+\_\+menu}, \textbf{ Option\+\_\+menu}, \textbf{ Recover\+\_\+menu}], \textbf{ general\+\_\+displayer})}
+
+
+
+\doxyref{GUI}{p.}{namespace_g_u_i} Window. 
+
+
+
+Definition at line \textbf{ 364} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a3c6c8d5981bd8960562336c5a1891450}} 
+\index{GUI@{GUI}!WORKING@{WORKING}}
+\index{WORKING@{WORKING}!GUI@{GUI}}
+\doxysubsubsection{WORKING}
+{\footnotesize\ttfamily int GUI.\+WORKING = False}
+
+
+
+Definition at line \textbf{ 25} of file \textbf{ GUI.\+py}.
+
+\mbox{\label{namespace_g_u_i_a1a3c216f3a53570205cf23f09807c4f5}} 
+\index{GUI@{GUI}!WORKING\_FLAG@{WORKING\_FLAG}}
+\index{WORKING\_FLAG@{WORKING\_FLAG}!GUI@{GUI}}
+\doxysubsubsection{WORKING\_FLAG}
+{\footnotesize\ttfamily string GUI.\+WORKING\+\_\+\+FLAG = \textquotesingle{}\textquotesingle{}}
+
+
+
+Definition at line \textbf{ 27} of file \textbf{ GUI.\+py}.
+

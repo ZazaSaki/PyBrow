@@ -1,0 +1,593 @@
+\doxysection{Data\+Manager.\+py}
+\label{_data_manager_8py_source}\index{DataManager.py@{DataManager.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} hashlib \textcolor{keyword}{import} sha256}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} os \textcolor{keyword}{import} link, name}
+\DoxyCodeLine{00003 \textcolor{keyword}{import} sqlite3}
+\DoxyCodeLine{00004 \textcolor{keyword}{from} typing \textcolor{keyword}{import} List, Tuple}
+\DoxyCodeLine{00005 }
+\DoxyCodeLine{00006 sqlite3.threadsafety = 2}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00008 conn = sqlite3.connect(\textcolor{stringliteral}{'./Drive/DataBase/amis.db'}, check\_same\_thread=\textcolor{keyword}{False})}
+\DoxyCodeLine{00009 \textcolor{comment}{\# conn = sqlite3.connect(':memory:')}}
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012 cursor = conn.cursor()}
+\DoxyCodeLine{00013 }
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00018 \textcolor{keyword}{def }defaultHash(doc : str)-\/>str:}
+\DoxyCodeLine{00019     \textcolor{keywordflow}{return} (sha256(doc.encode(\textcolor{stringliteral}{'utf-\/8'})).hexdigest())}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021 \textcolor{comment}{\# with conn:}}
+\DoxyCodeLine{00022 \textcolor{comment}{\#     cursor.execute("{}"{}"{}CREATE TABLE amis (}}
+\DoxyCodeLine{00023 \textcolor{comment}{\#             name text,}}
+\DoxyCodeLine{00024 \textcolor{comment}{\#             profile text,}}
+\DoxyCodeLine{00025 \textcolor{comment}{\#             invalid text}}
+\DoxyCodeLine{00026 \textcolor{comment}{\#             )"{}"{}"{})}}
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00028 \textcolor{comment}{\#     cursor.execute("{}"{}"{}CREATE TABLE invalid (}}
+\DoxyCodeLine{00029 \textcolor{comment}{\#             name text,}}
+\DoxyCodeLine{00030 \textcolor{comment}{\#             profile text,}}
+\DoxyCodeLine{00031 \textcolor{comment}{\#             verifyed intiger,}}
+\DoxyCodeLine{00032 \textcolor{comment}{\#             valid integer}}
+\DoxyCodeLine{00033 \textcolor{comment}{\#             )"{}"{}"{})}}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00041 \textcolor{keyword}{def }getNotIncludedWithHashing(profiles, table="{}amis"{}, comparatorIndex=1)-\/>List:}
+\DoxyCodeLine{00042     \textcolor{keywordflow}{if} len(profiles) < 1:}
+\DoxyCodeLine{00043         \textcolor{keywordflow}{return} profiles}
+\DoxyCodeLine{00044     notIncluded = []}
+\DoxyCodeLine{00045     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00046         \textcolor{keywordflow}{for} profile \textcolor{keywordflow}{in} profiles:}
+\DoxyCodeLine{00047             adress = defaultHash(profile[comparatorIndex])}
+\DoxyCodeLine{00048             cursor.execute((\textcolor{stringliteral}{"{}SELECT * FROM "{}} + table + \textcolor{stringliteral}{"{} WHERE profile LIKE ?"{}}), [adress])}
+\DoxyCodeLine{00049             vals = cursor.fetchall()}
+\DoxyCodeLine{00050             \textcolor{keywordflow}{if} len(vals) < 1:}
+\DoxyCodeLine{00051                 notIncluded.append(profile)}
+\DoxyCodeLine{00052     \textcolor{keywordflow}{return} notIncluded}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00062 \textcolor{keyword}{def }getNotIncluded(profiles, table="{}amis"{}, comparatorIndex=1)-\/>List:}
+\DoxyCodeLine{00063     \textcolor{keywordflow}{if} len(profiles) < 1:}
+\DoxyCodeLine{00064         \textcolor{keywordflow}{return} profiles}
+\DoxyCodeLine{00065     notIncluded = []}
+\DoxyCodeLine{00066     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00067         \textcolor{keywordflow}{for} profile \textcolor{keywordflow}{in} profiles:}
+\DoxyCodeLine{00068             adress = (profile[comparatorIndex])}
+\DoxyCodeLine{00069             cursor.execute((\textcolor{stringliteral}{"{}SELECT * FROM "{}} + table + \textcolor{stringliteral}{"{} WHERE profile LIKE ?"{}}), [adress])}
+\DoxyCodeLine{00070             vals = cursor.fetchall()}
+\DoxyCodeLine{00071             \textcolor{keywordflow}{if} len(vals) < 1:}
+\DoxyCodeLine{00072                 notIncluded.append(profile)}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074 }
+\DoxyCodeLine{00075     notIncludedHash = getNotIncludedWithHashing(profiles, table, comparatorIndex)}
+\DoxyCodeLine{00076     }
+\DoxyCodeLine{00077     notIncluded = list(filter(\textcolor{keyword}{lambda} a : a \textcolor{keywordflow}{in} notIncludedHash, notIncluded))}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079     \textcolor{keywordflow}{return} notIncluded}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082 }
+\DoxyCodeLine{00084 \textcolor{keyword}{def }getAll(table:str=\textcolor{stringliteral}{"{}amis"{}})-\/>List:}
+\DoxyCodeLine{00085     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00086         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM "{}}+table)}
+\DoxyCodeLine{00087         \textcolor{keywordflow}{return} cursor.fetchall()}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00091 \textcolor{keyword}{def }getOne(table:str=\textcolor{stringliteral}{"{}amis"{}})-\/>List:}
+\DoxyCodeLine{00092     cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM "{}} + table)}
+\DoxyCodeLine{00093     \textcolor{keywordflow}{return} cursor.fetchone()}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095 }
+\DoxyCodeLine{00096 }
+\DoxyCodeLine{00109 \textcolor{keyword}{def }hasher(t : Tuple, comparatorIndex:int = 1, table:str = \textcolor{stringliteral}{'amis'})-\/>tuple:}
+\DoxyCodeLine{00110     t = list(t)}
+\DoxyCodeLine{00111     }
+\DoxyCodeLine{00112     }
+\DoxyCodeLine{00113     \textcolor{keywordflow}{if} table==\textcolor{stringliteral}{'amis'}:}
+\DoxyCodeLine{00114         t = list(map(\textcolor{keyword}{lambda} a : defaultHash(a) \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} a == \textcolor{stringliteral}{''} \textcolor{keywordflow}{else} a, t))}
+\DoxyCodeLine{00115         }
+\DoxyCodeLine{00116     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00117         t[comparatorIndex] = defaultHash(t[comparatorIndex])}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119     t = tuple(t)}
+\DoxyCodeLine{00120     \textcolor{keywordflow}{return} t}
+\DoxyCodeLine{00121 }
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00132 \textcolor{keyword}{def }insertElems(elems:List, table:str=\textcolor{stringliteral}{"{}amis"{}}, comparatorIndex:int=1)-\/>List:}
+\DoxyCodeLine{00133     \textcolor{comment}{\#elems -\/ requested list}}
+\DoxyCodeLine{00134     \textcolor{comment}{\#toInsert -\/ list with the non included values from the requested list }}
+\DoxyCodeLine{00135 }
+\DoxyCodeLine{00136     \textcolor{comment}{\#cheking the given list}}
+\DoxyCodeLine{00137     \textcolor{keywordflow}{if} len(elems) < 1:}
+\DoxyCodeLine{00138         \textcolor{keywordflow}{return} []}
+\DoxyCodeLine{00139     }
+\DoxyCodeLine{00140     \textcolor{comment}{\#filtering the not included values to insert}}
+\DoxyCodeLine{00141     toInsert = getNotIncluded(elems, table, comparatorIndex)}
+\DoxyCodeLine{00142     \textcolor{keywordflow}{if} len(toInsert) < 1 : print(\textcolor{stringliteral}{"{}no new profiles founded"{}})}
+\DoxyCodeLine{00143     }
+\DoxyCodeLine{00144     \textcolor{comment}{\#creating the insert special string}}
+\DoxyCodeLine{00145     insertString = \textcolor{stringliteral}{"{}("{}}}
+\DoxyCodeLine{00146     \textcolor{keywordflow}{for} e \textcolor{keywordflow}{in} elems[0] :}
+\DoxyCodeLine{00147         insertString += \textcolor{stringliteral}{"{} ? ,"{}}}
+\DoxyCodeLine{00148     insertString = insertString[:-\/1]+\textcolor{stringliteral}{"{})"{}}}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150     hashedElems = list(map(\textcolor{keyword}{lambda} a : hasher(a, comparatorIndex, table), elems))}
+\DoxyCodeLine{00151     hashedToInsert = list(map(\textcolor{keyword}{lambda} a : hasher(a, comparatorIndex, table), toInsert))}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00154         command =\textcolor{stringliteral}{"{}INSERT INTO "{}} + table + \textcolor{stringliteral}{"{} VALUES "{}}+ insertString}
+\DoxyCodeLine{00155         cursor.executemany(command, hashedToInsert)}
+\DoxyCodeLine{00156     \textcolor{keywordflow}{return} list(filter(\textcolor{keyword}{lambda} a : \textcolor{keywordflow}{not} a \textcolor{keywordflow}{in} toInsert, elems))}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159 }
+\DoxyCodeLine{00160 }
+\DoxyCodeLine{00163 \textcolor{keyword}{def }IsInDataBase(profile:str)-\/>bool:}
+\DoxyCodeLine{00164     invalids =[]}
+\DoxyCodeLine{00165     valids = []}
+\DoxyCodeLine{00166 }
+\DoxyCodeLine{00167     id = defaultHash(profile)}
+\DoxyCodeLine{00168     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00169         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM amis WHERE profile LIKE ?"{}}, [id])}
+\DoxyCodeLine{00170         valids = cursor.fetchall()}
+\DoxyCodeLine{00171         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM invalid WHERE profile LIKE ?"{}}, [id])}
+\DoxyCodeLine{00172         invalids = cursor.fetchall()}
+\DoxyCodeLine{00173 }
+\DoxyCodeLine{00174         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM amis WHERE profile LIKE ?"{}}, [profile])}
+\DoxyCodeLine{00175         valids = valids + cursor.fetchall()}
+\DoxyCodeLine{00176         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM invalid WHERE profile LIKE ?"{}}, [profile])}
+\DoxyCodeLine{00177         invalids = invalids + cursor.fetchall()}
+\DoxyCodeLine{00178     }
+\DoxyCodeLine{00179     \textcolor{keywordflow}{if} len(valids)+len(invalids)<1:}
+\DoxyCodeLine{00180         \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00181     \textcolor{keywordflow}{else} :}
+\DoxyCodeLine{00182         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00183 }
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00187 \textcolor{keyword}{def }getProfile(link:str)-\/>List:}
+\DoxyCodeLine{00188     id = defaultHash(link)}
+\DoxyCodeLine{00189     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00190         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM amis WHERE profile LIKE ?"{}}, [id])}
+\DoxyCodeLine{00191         \textcolor{keywordflow}{return} cursor.fetchone()}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00197 \textcolor{keyword}{def }FillEmptyInfo(profile:List):}
+\DoxyCodeLine{00198     newName, link, newInvalid = profile}
+\DoxyCodeLine{00199 }
+\DoxyCodeLine{00200     link == defaultHash(link)}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202     name, link, invalid = getProfile(link)}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204     \textcolor{keywordflow}{if} len(name) < 1 \textcolor{keywordflow}{and} len(newName)>1:}
+\DoxyCodeLine{00205         \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00206             cursor.execute(\textcolor{stringliteral}{"{}UPDATE amis SET name = ? WHERE profile = ?"{}}, [newName, link])}
+\DoxyCodeLine{00207     }
+\DoxyCodeLine{00208     \textcolor{keywordflow}{if} len(invalid) < 1 \textcolor{keywordflow}{and} len(newInvalid)>1:}
+\DoxyCodeLine{00209         \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00210             cursor.execute(\textcolor{stringliteral}{"{}UPDATE amis SET invalid = ? WHERE profile = ?"{}}, [newName, link])}
+\DoxyCodeLine{00211 }
+\DoxyCodeLine{00212 }
+\DoxyCodeLine{00222 \textcolor{keyword}{def }insertProfiles(profiles:List)-\/>int:}
+\DoxyCodeLine{00223     left = insertElems(profiles)}
+\DoxyCodeLine{00224     \textcolor{keywordflow}{for} profile \textcolor{keywordflow}{in} left:}
+\DoxyCodeLine{00225         FillEmptyInfo(profile)}
+\DoxyCodeLine{00226     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228     \textcolor{keywordflow}{return} len(left)}
+\DoxyCodeLine{00229 }
+\DoxyCodeLine{00230 }
+\DoxyCodeLine{00234 \textcolor{keyword}{def }insertProfile(profile:List)-\/>int:}
+\DoxyCodeLine{00235     \textcolor{keywordflow}{return} insertProfiles([profile])}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00240 \textcolor{keyword}{def }insertProfileLinks(links:List)-\/>int:}
+\DoxyCodeLine{00241     profiles = list(map(\textcolor{keyword}{lambda} a: (\textcolor{stringliteral}{"{}"{}}, a, \textcolor{stringliteral}{"{}"{}}), links))}
+\DoxyCodeLine{00242     \textcolor{keywordflow}{return} insertProfiles(profiles)}
+\DoxyCodeLine{00243 }
+\DoxyCodeLine{00244 }
+\DoxyCodeLine{00248 \textcolor{keyword}{def }insertProfileLink(link:str)-\/>int:}
+\DoxyCodeLine{00249     \textcolor{keywordflow}{return} insertProfileLinks([link])}
+\DoxyCodeLine{00250 }
+\DoxyCodeLine{00251 }
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00258 \textcolor{keyword}{def }insertProfileNameNLinks(links:List)-\/>int:}
+\DoxyCodeLine{00259     profiles = list(map(\textcolor{keyword}{lambda} a: (a[0], a[1], \textcolor{stringliteral}{"{}"{}}), links))}
+\DoxyCodeLine{00260     \textcolor{keywordflow}{return} insertProfiles(profiles)}
+\DoxyCodeLine{00261 }
+\DoxyCodeLine{00262 }
+\DoxyCodeLine{00268 \textcolor{keyword}{def }insertProfileNameNLink(name:str, link:str)-\/>int:}
+\DoxyCodeLine{00269     \textcolor{keywordflow}{return} insertProfiles([name, link])}
+\DoxyCodeLine{00270 }
+\DoxyCodeLine{00271 }
+\DoxyCodeLine{00274 \textcolor{keyword}{def }findDuplicateds()-\/>List:}
+\DoxyCodeLine{00275     All = getAll()}
+\DoxyCodeLine{00276     Duplicateds = []}
+\DoxyCodeLine{00277     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00278         \textcolor{keywordflow}{for} profile \textcolor{keywordflow}{in} All:}
+\DoxyCodeLine{00279             adress = (profile[1])}
+\DoxyCodeLine{00280             cursor.execute(}
+\DoxyCodeLine{00281                 \textcolor{stringliteral}{"{}SELECT rowid, * FROM amis WHERE profile LIKE ?"{}}, [adress])}
+\DoxyCodeLine{00282             vals = cursor.fetchall()}
+\DoxyCodeLine{00283             \textcolor{keywordflow}{if} len(vals) > 1:}
+\DoxyCodeLine{00284                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} vals[0][2] \textcolor{keywordflow}{in} Duplicateds:}
+\DoxyCodeLine{00285                     Duplicateds.append(vals[0][2])}
+\DoxyCodeLine{00286 }
+\DoxyCodeLine{00287     \textcolor{keywordflow}{return} Duplicateds}
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289 }
+\DoxyCodeLine{00290 }
+\DoxyCodeLine{00293 \textcolor{keyword}{def }RemoveDuplicateds():}
+\DoxyCodeLine{00294     Dupl = findDuplicateds()}
+\DoxyCodeLine{00295     jump = []}
+\DoxyCodeLine{00296     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00297         \textcolor{keywordflow}{for} d \textcolor{keywordflow}{in} Dupl:}
+\DoxyCodeLine{00298             cursor.execute(}
+\DoxyCodeLine{00299                 \textcolor{stringliteral}{"{}SELECT rowid, * FROM amis WHERE profile LIKE ?"{}}, [d])}
+\DoxyCodeLine{00300             vals = cursor.fetchall()}
+\DoxyCodeLine{00301             (id, name, profile, inv) = vals[0]}
+\DoxyCodeLine{00302             \textcolor{keywordflow}{for} v \textcolor{keywordflow}{in} vals:}
+\DoxyCodeLine{00303                 \textcolor{keywordflow}{if} len(name) < len(v[1]):}
+\DoxyCodeLine{00304                     name = v[1]}
+\DoxyCodeLine{00305                 \textcolor{keywordflow}{if} len(inv) < len(v[3]):}
+\DoxyCodeLine{00306                     inv = v[3]}
+\DoxyCodeLine{00307                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} id == v[0]:}
+\DoxyCodeLine{00308                     cursor.execute(\textcolor{stringliteral}{"{}DELETE from amis WHERE rowid = ?"{}}, [v[0]])}
+\DoxyCodeLine{00309 }
+\DoxyCodeLine{00310             cursor.execute(}
+\DoxyCodeLine{00311                 \textcolor{stringliteral}{"{}UPDATE amis SET name = ?, invalid = ? WHERE rowid = ?"{}}, [name, inv, id])}
+\DoxyCodeLine{00312 }
+\DoxyCodeLine{00313 }
+\DoxyCodeLine{00316 \textcolor{keyword}{def }IsInCleanedLinks(profile:str)-\/>bool:}
+\DoxyCodeLine{00317     profile = defaultHash(profile)}
+\DoxyCodeLine{00318     valids = []}
+\DoxyCodeLine{00319     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00320         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM amis WHERE profile LIKE ?"{}}, [profile])}
+\DoxyCodeLine{00321         valids = cursor.fetchall()}
+\DoxyCodeLine{00322 }
+\DoxyCodeLine{00323     \textcolor{keywordflow}{if} len(valids)<1:}
+\DoxyCodeLine{00324         \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00325     \textcolor{keywordflow}{else} :}
+\DoxyCodeLine{00326         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00327 }
+\DoxyCodeLine{00328 }
+\DoxyCodeLine{00331 \textcolor{keyword}{def }IsInDirtyLinks(link:str)-\/>bool:}
+\DoxyCodeLine{00332     id = defaultHash(link)}
+\DoxyCodeLine{00333     valids = []}
+\DoxyCodeLine{00334     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00335         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM amis WHERE invalid LIKE ?"{}}, [link])}
+\DoxyCodeLine{00336         valids = cursor.fetchall()}
+\DoxyCodeLine{00337         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM amis WHERE invalid LIKE ?"{}}, [link])}
+\DoxyCodeLine{00338         valids = valids + cursor.fetchall()}
+\DoxyCodeLine{00339 }
+\DoxyCodeLine{00340     \textcolor{keywordflow}{if} len(valids)<1:}
+\DoxyCodeLine{00341         \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00342     \textcolor{keywordflow}{else} :}
+\DoxyCodeLine{00343         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00344 }
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346 \textcolor{keyword}{def }getDirtyLinks()-\/>List:}
+\DoxyCodeLine{00347     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00348         cursor.execute(\textcolor{stringliteral}{"{}SELECT invalid FROM amis"{}})}
+\DoxyCodeLine{00349         \textcolor{keywordflow}{return} list(map(\textcolor{keyword}{lambda} a : a[0], cursor.fetchall()))}
+\DoxyCodeLine{00350 }
+\DoxyCodeLine{00351 }
+\DoxyCodeLine{00356 \textcolor{keyword}{def }filterList(profiles:List, offset:int = 0)-\/>List:}
+\DoxyCodeLine{00357     validList = []}
+\DoxyCodeLine{00358     }
+\DoxyCodeLine{00359     cursor.execute(\textcolor{stringliteral}{"{}SELECT profile FROM amis"{}})}
+\DoxyCodeLine{00360     validList = list(map(\textcolor{keyword}{lambda} a : a[0], cursor.fetchall()))}
+\DoxyCodeLine{00361 }
+\DoxyCodeLine{00362     \textcolor{keywordflow}{return} list(filter(\textcolor{keyword}{lambda} a : (\textcolor{keywordflow}{not} (defaultHash(a[offset])) \textcolor{keywordflow}{in} validList), profiles))}
+\DoxyCodeLine{00363 }
+\DoxyCodeLine{00364 }
+\DoxyCodeLine{00368 \textcolor{keyword}{def }getInvalidProfile(link:str)-\/>List:}
+\DoxyCodeLine{00369     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00370         cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM invalid WHERE profile LIKE ?"{}}, [link])}
+\DoxyCodeLine{00371         \textcolor{keywordflow}{return} cursor.fetchone()}
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373 }
+\DoxyCodeLine{00377 \textcolor{keyword}{def }FillEmptyInfoInvalid(profile:List):}
+\DoxyCodeLine{00378     newName, link, v, vv = profile}
+\DoxyCodeLine{00379 }
+\DoxyCodeLine{00380     dataSample = getInvalidProfile(link)}
+\DoxyCodeLine{00381 }
+\DoxyCodeLine{00382     \textcolor{keywordflow}{if} dataSample == \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00383         dataSample = getInvalidProfile(defaultHash(link))}
+\DoxyCodeLine{00384     }
+\DoxyCodeLine{00385     name, link, v, vv = dataSample}
+\DoxyCodeLine{00386 }
+\DoxyCodeLine{00387 }
+\DoxyCodeLine{00388     \textcolor{keywordflow}{if} len(name) < 1 \textcolor{keywordflow}{and} len(newName)>1:}
+\DoxyCodeLine{00389         \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00390             cursor.execute(\textcolor{stringliteral}{"{}UPDATE invalid SET name = ? WHERE profile = ?"{}}, [defaultHash(newName), link])}
+\DoxyCodeLine{00391     }
+\DoxyCodeLine{00392 }
+\DoxyCodeLine{00404 \textcolor{keyword}{def }insertInvalid(profiles:List)-\/>int:}
+\DoxyCodeLine{00405     dt = getDirtyLinks()}
+\DoxyCodeLine{00406     ins = list(filter(\textcolor{keyword}{lambda} a : \textcolor{keywordflow}{not} defaultHash(a[1]) \textcolor{keywordflow}{in} dt, profiles))}
+\DoxyCodeLine{00407     left = insertElems(ins, table=\textcolor{stringliteral}{"{}invalid"{}}, comparatorIndex=1)}
+\DoxyCodeLine{00408     \textcolor{keywordflow}{for} profile \textcolor{keywordflow}{in} left:}
+\DoxyCodeLine{00409         FillEmptyInfoInvalid(profile)}
+\DoxyCodeLine{00410     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00411     \textcolor{keywordflow}{return} len(left)}
+\DoxyCodeLine{00412 }
+\DoxyCodeLine{00413 }
+\DoxyCodeLine{00423 \textcolor{keyword}{def }insertInvalidProfiles(profiles:List)-\/>int:}
+\DoxyCodeLine{00424     invalids = list(map(\textcolor{keyword}{lambda} a: (a[0],a[1] , 0, 0), profiles))}
+\DoxyCodeLine{00425     \textcolor{keywordflow}{return} insertInvalid(invalids)}
+\DoxyCodeLine{00426 }
+\DoxyCodeLine{00427 }
+\DoxyCodeLine{00433 \textcolor{keyword}{def }insertInvalidProfile(name:str, profile:str)-\/>int:}
+\DoxyCodeLine{00434     \textcolor{keywordflow}{return} insertInvalidProfiles([[name, profile]])}
+\DoxyCodeLine{00435 }
+\DoxyCodeLine{00436 }
+\DoxyCodeLine{00440 \textcolor{keyword}{def }insertInvalidLinks(profiles:List)-\/>int:}
+\DoxyCodeLine{00441     invalids = list(map(\textcolor{keyword}{lambda} a: (\textcolor{stringliteral}{"{}"{}}, a, 0, 0), profiles))}
+\DoxyCodeLine{00442     \textcolor{keywordflow}{return} insertInvalid(invalids)}
+\DoxyCodeLine{00443 }
+\DoxyCodeLine{00444 }
+\DoxyCodeLine{00448 \textcolor{keyword}{def }insertInvalidLink(profile:str)-\/>int:}
+\DoxyCodeLine{00449     \textcolor{keywordflow}{return} insertInvalidLinks([profile])}
+\DoxyCodeLine{00450 }
+\DoxyCodeLine{00451 }
+\DoxyCodeLine{00459 \textcolor{keyword}{def }validate(dirtyProfile:str, valid:bool, name:str = \textcolor{keywordtype}{None}, validLink:str=\textcolor{keywordtype}{None}):}
+\DoxyCodeLine{00460     \textcolor{keywordflow}{if} valid:}
+\DoxyCodeLine{00461         v = 1}
+\DoxyCodeLine{00462         \textcolor{keywordflow}{if} IsInCleanedLinks(validLink):}
+\DoxyCodeLine{00463             \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00464                 cursor.execute(\textcolor{stringliteral}{"{}UPDATE amis set invalid = ? WHERE profile LIKE ?"{}}, [dirtyProfile, validLink])}
+\DoxyCodeLine{00465         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00466             insertProfile((name, validLink, dirtyProfile))}
+\DoxyCodeLine{00467     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00468         v = 0}
+\DoxyCodeLine{00469 }
+\DoxyCodeLine{00470     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00471         cursor.execute(\textcolor{stringliteral}{"{}UPDATE invalid set verifyed = 1, valid = ? WHERE profile LIKE ?"{}}, [v, dirtyProfile])}
+\DoxyCodeLine{00472 }
+\DoxyCodeLine{00473 }
+\DoxyCodeLine{00475 \textcolor{keyword}{def }removeValids():}
+\DoxyCodeLine{00476     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00477         cursor.execute(\textcolor{stringliteral}{"{}DELETE FROM invalid WHERE verifyed = 1 AND valid = 1"{}})}
+\DoxyCodeLine{00478     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00479 }
+\DoxyCodeLine{00480 }
+\DoxyCodeLine{00482 \textcolor{keyword}{def }getUnVerifyed()-\/>List:}
+\DoxyCodeLine{00483     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00484         cursor.execute(\textcolor{stringliteral}{"{}SELECT name, profile FROM invalid WHERE verifyed = 0"{}})}
+\DoxyCodeLine{00485         \textcolor{keywordflow}{return} cursor.fetchall()}
+\DoxyCodeLine{00486 \textcolor{comment}{\# test}}
+\DoxyCodeLine{00487 }
+\DoxyCodeLine{00488 \textcolor{keyword}{def }getInvalid()-\/>List:}
+\DoxyCodeLine{00489     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00490         cursor.execute(\textcolor{stringliteral}{"{}SELECT name, profile FROM invalid WHERE valid = 0 AND verifyed = 1"{}})}
+\DoxyCodeLine{00491         \textcolor{keywordflow}{return} cursor.fetchall()}
+\DoxyCodeLine{00492 }
+\DoxyCodeLine{00493 \textcolor{keyword}{def }hashInvalids():}
+\DoxyCodeLine{00494     }
+\DoxyCodeLine{00495     \textcolor{keyword}{with} conn : }
+\DoxyCodeLine{00496         mem = getInvalid()}
+\DoxyCodeLine{00497         \textcolor{keywordflow}{for} elem \textcolor{keywordflow}{in} mem:}
+\DoxyCodeLine{00498             cursor.execute(\textcolor{stringliteral}{"{}UPDATE invalid set profile = ? WHERE profile LIKE ? AND valid = 0 AND verifyed = 1"{}}, [defaultHash(elem[1]), elem[1]])}
+\DoxyCodeLine{00499             cursor.execute(\textcolor{stringliteral}{"{}UPDATE invalid set name = ? WHERE profile LIKE ? AND valid = 0 AND verifyed = 1"{}}, [defaultHash(elem[0]), defaultHash(elem[1])])}
+\DoxyCodeLine{00500 }
+\DoxyCodeLine{00501 }
+\DoxyCodeLine{00502         cursor.execute(\textcolor{stringliteral}{"{}UPDATE invalid set verifyed = -\/1 WHERE valid = 0 AND verifyed = 1"{}})}
+\DoxyCodeLine{00503     }
+\DoxyCodeLine{00504     \textcolor{comment}{\# with conn:}}
+\DoxyCodeLine{00505     \textcolor{comment}{\#     cursor.execute("{}SELECT profile,name,invalid FROM amis"{})}}
+\DoxyCodeLine{00506     \textcolor{comment}{\#     amis = cursor.fetchall()}}
+\DoxyCodeLine{00507     \textcolor{comment}{\#     i = 0}}
+\DoxyCodeLine{00508     \textcolor{comment}{\#     for ami in amis:}}
+\DoxyCodeLine{00509     \textcolor{comment}{\#         i+=1}}
+\DoxyCodeLine{00510             }
+\DoxyCodeLine{00511     \textcolor{comment}{\#         if not ami[2] == '' and not ami[1] == '':}}
+\DoxyCodeLine{00512     \textcolor{comment}{\#             cursor.execute("{}UPDATE amis SET profile = ?, name = ?, invalid = ?  WHERE profile LIKE ?"{}, [defaultHash(ami[0]),defaultHash(ami[1]),defaultHash(ami[2]), ami[0]])}}
+\DoxyCodeLine{00513     \textcolor{comment}{\#         elif not ami[2] == '':}}
+\DoxyCodeLine{00514     \textcolor{comment}{\#             cursor.execute("{}UPDATE amis SET profile = ?, invalid = ? WHERE profile LIKE ?"{}, [defaultHash(ami[0]),defaultHash(ami[2]), ami[0]])}}
+\DoxyCodeLine{00515     \textcolor{comment}{\#         elif not ami[1] == '':}}
+\DoxyCodeLine{00516     \textcolor{comment}{\#             cursor.execute("{}UPDATE amis SET profile = ?, name = ? WHERE profile LIKE ?"{}, [defaultHash(ami[0]),defaultHash(ami[1]), ami[0]])}}
+\DoxyCodeLine{00517     \textcolor{comment}{\#         else:}}
+\DoxyCodeLine{00518     \textcolor{comment}{\#             cursor.execute("{}UPDATE amis SET profile = ? WHERE profile LIKE ?"{}, [defaultHash(ami[0]), ami[0]])}}
+\DoxyCodeLine{00519 }
+\DoxyCodeLine{00520     }
+\DoxyCodeLine{00521     }
+\DoxyCodeLine{00522     }
+\DoxyCodeLine{00523 }
+\DoxyCodeLine{00524 \textcolor{keyword}{def }test():}
+\DoxyCodeLine{00525     many\_amis = [}
+\DoxyCodeLine{00526         (\textcolor{stringliteral}{'nom'}, \textcolor{stringliteral}{'pro'}, \textcolor{stringliteral}{'inv'}),}
+\DoxyCodeLine{00527         (\textcolor{stringliteral}{'nom'}, \textcolor{stringliteral}{'prof'}, \textcolor{stringliteral}{'inv'}),}
+\DoxyCodeLine{00528         (\textcolor{stringliteral}{'other'}, \textcolor{stringliteral}{'hubfgoiuer'}, \textcolor{stringliteral}{'inv'}),}
+\DoxyCodeLine{00529         (\textcolor{stringliteral}{'nom'}, \textcolor{stringliteral}{'pro'}, \textcolor{stringliteral}{'inviushogivseul'}),}
+\DoxyCodeLine{00530         (\textcolor{stringliteral}{'nom'}, \textcolor{stringliteral}{'pro'}, \textcolor{stringliteral}{'inv'})}
+\DoxyCodeLine{00531     ]}
+\DoxyCodeLine{00532 }
+\DoxyCodeLine{00533     many\_invalid = [}
+\DoxyCodeLine{00534         (\textcolor{stringliteral}{"{}name1"{}}, \textcolor{stringliteral}{"{}prof1"{}}, 0, 0),}
+\DoxyCodeLine{00535         (\textcolor{stringliteral}{"{}name2"{}}, \textcolor{stringliteral}{"{}prof2"{}}, 1, 1),}
+\DoxyCodeLine{00536         (\textcolor{stringliteral}{"{}name3"{}}, \textcolor{stringliteral}{"{}prof3"{}}, 1, 0),}
+\DoxyCodeLine{00537         (\textcolor{stringliteral}{"{}name4"{}}, \textcolor{stringliteral}{"{}prof4"{}}, 0, 0)}
+\DoxyCodeLine{00538     ]}
+\DoxyCodeLine{00539 }
+\DoxyCodeLine{00540     insertInvalid(many\_invalid)}
+\DoxyCodeLine{00541     insertProfiles(many\_amis)}
+\DoxyCodeLine{00542 }
+\DoxyCodeLine{00543     AllRecords = getAll()}
+\DoxyCodeLine{00544     AllInvalids = getAll(\textcolor{stringliteral}{"{}invalid"{}})}
+\DoxyCodeLine{00545 }
+\DoxyCodeLine{00546     print(\textcolor{stringliteral}{"{}List Test"{}})}
+\DoxyCodeLine{00547 }
+\DoxyCodeLine{00548     \textcolor{comment}{\# repeat list}}
+\DoxyCodeLine{00549     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00550         print(\textcolor{stringliteral}{"{}Refusing repeat List :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00551         insertProfiles(many\_amis)}
+\DoxyCodeLine{00552         insertProfileLinks([many\_amis[1][1], many\_amis[2][1]])}
+\DoxyCodeLine{00553         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} len(AllRecords) == len(getAll()):}
+\DoxyCodeLine{00554             print(\textcolor{stringliteral}{"{}failed, didn't filter"{}})}
+\DoxyCodeLine{00555             print(getAll())}
+\DoxyCodeLine{00556         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00557             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00558 }
+\DoxyCodeLine{00559     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00560         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00561 }
+\DoxyCodeLine{00562     \textcolor{comment}{\# repeated value}}
+\DoxyCodeLine{00563     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00564         print(\textcolor{stringliteral}{"{}Refusing repeat profile :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00565         insertProfile(many\_amis[1])}
+\DoxyCodeLine{00566         insertProfileLink(many\_amis[3][1])}
+\DoxyCodeLine{00567         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} len(AllRecords) == len(getAll()):}
+\DoxyCodeLine{00568             print(\textcolor{stringliteral}{"{}failed, didn't filter"{}})}
+\DoxyCodeLine{00569             print(getAll())}
+\DoxyCodeLine{00570         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00571             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00572 }
+\DoxyCodeLine{00573     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00574         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00575 }
+\DoxyCodeLine{00576     \textcolor{comment}{\# new value}}
+\DoxyCodeLine{00577     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00578         print(\textcolor{stringliteral}{"{}Add profile :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00579         insertProfiles([(\textcolor{stringliteral}{'pro'}, \textcolor{stringliteral}{'praaaa'}, \textcolor{stringliteral}{''})])}
+\DoxyCodeLine{00580         insertProfileLinks([\textcolor{stringliteral}{"{}peia"{}}, \textcolor{stringliteral}{"{}novo"{}}])}
+\DoxyCodeLine{00581         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} (len(AllRecords)+3) == len(getAll()):}
+\DoxyCodeLine{00582             print(\textcolor{stringliteral}{"{}didn't added"{}})}
+\DoxyCodeLine{00583             print(getAll())}
+\DoxyCodeLine{00584         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00585             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00586 }
+\DoxyCodeLine{00587     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00588         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00589 }
+\DoxyCodeLine{00590     AllRecords = getAll()}
+\DoxyCodeLine{00591 }
+\DoxyCodeLine{00592     \textcolor{comment}{\# new value mixed with repeated value}}
+\DoxyCodeLine{00593     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00594         print(\textcolor{stringliteral}{"{}Add profile and refuse repeated :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00595         insertProfiles([(\textcolor{stringliteral}{'pro'}, \textcolor{stringliteral}{'pra'}, \textcolor{stringliteral}{'inv'}), many\_amis[1], (\textcolor{stringliteral}{'pro'}, \textcolor{stringliteral}{'novo'}, \textcolor{stringliteral}{'qualquer'})])}
+\DoxyCodeLine{00596         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} (len(AllRecords)+1) == len(getAll()):}
+\DoxyCodeLine{00597             print(\textcolor{stringliteral}{"{}didn't filter or added"{}})}
+\DoxyCodeLine{00598             print(getAll())}
+\DoxyCodeLine{00599         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00600             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00601 }
+\DoxyCodeLine{00602     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00603         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00604 }
+\DoxyCodeLine{00605     AllRecords = getAll()}
+\DoxyCodeLine{00606 }
+\DoxyCodeLine{00607     \textcolor{comment}{\# delete duplicated values}}
+\DoxyCodeLine{00608     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00609         print(\textcolor{stringliteral}{"{}delete repeated :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00610         RemoveDuplicateds()}
+\DoxyCodeLine{00611         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} (len(AllRecords)-\/2) == len(getAll()):}
+\DoxyCodeLine{00612             print(\textcolor{stringliteral}{"{}didn't delete"{}})}
+\DoxyCodeLine{00613             print(getAll())}
+\DoxyCodeLine{00614         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00615             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00616 }
+\DoxyCodeLine{00617     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00618         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00619 }
+\DoxyCodeLine{00620     AllRecords = getAll()}
+\DoxyCodeLine{00621     \textcolor{comment}{\# duplicated values over delete}}
+\DoxyCodeLine{00622     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00623         print(\textcolor{stringliteral}{"{}refuse over delete :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00624         RemoveDuplicateds()}
+\DoxyCodeLine{00625         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} (len(AllRecords) == len(getAll())):}
+\DoxyCodeLine{00626             print(\textcolor{stringliteral}{"{}over delete"{}})}
+\DoxyCodeLine{00627             print(getAll())}
+\DoxyCodeLine{00628         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00629             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00630 }
+\DoxyCodeLine{00631     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00632         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00633 }
+\DoxyCodeLine{00634      \textcolor{comment}{\# repeat list}}
+\DoxyCodeLine{00635 }
+\DoxyCodeLine{00636     \textcolor{comment}{\# Inavlid Table tests-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00637     \textcolor{comment}{\# refuse repeated list}}
+\DoxyCodeLine{00638     print(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nInvalid Lists tests\(\backslash\)n"{}})}
+\DoxyCodeLine{00639     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00640         print(\textcolor{stringliteral}{"{}Refusing repeat List :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00641         insertInvalid(many\_invalid)}
+\DoxyCodeLine{00642         insertInvalidLinks([many\_invalid[0][1], many\_invalid[1][1]])}
+\DoxyCodeLine{00643         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} len(AllInvalids) == len(getAll(\textcolor{stringliteral}{"{}invalid"{}})):}
+\DoxyCodeLine{00644             print(\textcolor{stringliteral}{"{}failed, didn't filter"{}})}
+\DoxyCodeLine{00645             print(getAll(\textcolor{stringliteral}{"{}invalid"{}}))}
+\DoxyCodeLine{00646         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00647             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00648 }
+\DoxyCodeLine{00649     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00650         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00651 }
+\DoxyCodeLine{00652     \textcolor{comment}{\# repeated value}}
+\DoxyCodeLine{00653     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00654         print(\textcolor{stringliteral}{"{}Refusing repeat profile :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00655         insertInvalid([many\_invalid[1]])}
+\DoxyCodeLine{00656         insertInvalidLink(many\_invalid[1][1])}
+\DoxyCodeLine{00657         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} len(AllInvalids) == len(getAll(\textcolor{stringliteral}{"{}invalid"{}})):}
+\DoxyCodeLine{00658             print(\textcolor{stringliteral}{"{}failed, didn't filter"{}})}
+\DoxyCodeLine{00659             print(getAll(\textcolor{stringliteral}{"{}invalid"{}}))}
+\DoxyCodeLine{00660         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00661             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00662 }
+\DoxyCodeLine{00663     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00664         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00665 }
+\DoxyCodeLine{00666     \textcolor{comment}{\# new value}}
+\DoxyCodeLine{00667     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00668         print(\textcolor{stringliteral}{"{}Add profile :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00669         insertInvalid([(\textcolor{stringliteral}{"{}"{}}, \textcolor{stringliteral}{'peia'}, 0, 0)])}
+\DoxyCodeLine{00670         insertInvalidLink(\textcolor{stringliteral}{"{}prof5"{}})}
+\DoxyCodeLine{00671         insertInvalid([(\textcolor{stringliteral}{"{}name"{}}, \textcolor{stringliteral}{'peia'}, 0, 0)])}
+\DoxyCodeLine{00672         insertInvalidProfile(\textcolor{stringliteral}{"{}name"{}},\textcolor{stringliteral}{"{}prof5"{}})}
+\DoxyCodeLine{00673         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} (len(AllInvalids)+2) == len(getAll(\textcolor{stringliteral}{"{}invalid"{}})):}
+\DoxyCodeLine{00674             print(\textcolor{stringliteral}{"{}didn't added"{}})}
+\DoxyCodeLine{00675             print(getAll(\textcolor{stringliteral}{"{}invalid"{}}))}
+\DoxyCodeLine{00676         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00677             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00678 }
+\DoxyCodeLine{00679     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00680         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00681 }
+\DoxyCodeLine{00682     AllInvalids = getAll(\textcolor{stringliteral}{"{}invalid"{}})}
+\DoxyCodeLine{00683 }
+\DoxyCodeLine{00684     \textcolor{comment}{\# new value mixed with repeated value}}
+\DoxyCodeLine{00685     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00686         print(\textcolor{stringliteral}{"{}Add profile and refuse repeated :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00687         insertInvalid([(\textcolor{stringliteral}{"{}name"{}}, \textcolor{stringliteral}{'proa'}, 0, 0), many\_invalid[1]])}
+\DoxyCodeLine{00688         insertInvalidLinks([\textcolor{stringliteral}{"{}prof6"{}}, many\_invalid[2][1]])}
+\DoxyCodeLine{00689         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} (len(AllInvalids)+2) == len(getAll(\textcolor{stringliteral}{"{}invalid"{}})):}
+\DoxyCodeLine{00690             print(\textcolor{stringliteral}{"{}didn't filter or added"{}})}
+\DoxyCodeLine{00691             print(getAll())}
+\DoxyCodeLine{00692         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00693             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00694 }
+\DoxyCodeLine{00695     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00696         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00697 }
+\DoxyCodeLine{00698     AllInvalids = getAll(\textcolor{stringliteral}{"{}invalid"{}})}
+\DoxyCodeLine{00699 }
+\DoxyCodeLine{00700     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00701         print(\textcolor{stringliteral}{"{}Validating one and Removing invalids :"{}}, end=\textcolor{stringliteral}{"{} "{}})}
+\DoxyCodeLine{00702         validate(\textcolor{stringliteral}{"{}proa"{}}, 0)}
+\DoxyCodeLine{00703         validate(\textcolor{stringliteral}{"{}peia"{}}, 1, \textcolor{stringliteral}{"{}newLink"{}})}
+\DoxyCodeLine{00704         removeValids()}
+\DoxyCodeLine{00705         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} (len(AllInvalids)-\/2) == len(getAll(\textcolor{stringliteral}{"{}invalid"{}})):}
+\DoxyCodeLine{00706             print(\textcolor{stringliteral}{"{}not removed or not validated"{}})}
+\DoxyCodeLine{00707             print(getAll())}
+\DoxyCodeLine{00708         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00709             print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00710 }
+\DoxyCodeLine{00711     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00712         print(\textcolor{stringliteral}{"{}failed run time error"{}})}
+\DoxyCodeLine{00713 }
+\DoxyCodeLine{00714 }
+\DoxyCodeLine{00715 \textcolor{comment}{\# test()}}
+
+\end{DoxyCode}

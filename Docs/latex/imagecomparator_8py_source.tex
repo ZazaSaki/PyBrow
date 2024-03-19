@@ -1,0 +1,83 @@
+\doxysection{imagecomparator.\+py}
+\label{imagecomparator_8py_source}\index{imagecomparator.py@{imagecomparator.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} email.mime \textcolor{keyword}{import} image}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} PIL \textcolor{keyword}{import} Image, ImageChops}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} numpy \textcolor{keyword}{import} asanyarray, asarray}
+\DoxyCodeLine{00004 \textcolor{keyword}{import} urllib.request \textcolor{keyword}{as} req}
+\DoxyCodeLine{00005 }
+\DoxyCodeLine{00006 Mem = \{\}}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00008 \textcolor{keyword}{def }compare(im1:Image, im2:image):}
+\DoxyCodeLine{00009 }
+\DoxyCodeLine{00010     dif = ImageChops.difference(im1, im2)}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012     dif = asarray(dif)}
+\DoxyCodeLine{00013 }
+\DoxyCodeLine{00014     \textcolor{comment}{\# dif = asanyarray(Image.open('General/image.png'))}}
+\DoxyCodeLine{00015     acumulator = 0}
+\DoxyCodeLine{00016     counter = 0}
+\DoxyCodeLine{00017     \textcolor{keywordflow}{for} line \textcolor{keywordflow}{in} dif:}
+\DoxyCodeLine{00018         \textcolor{keywordflow}{for} pixel \textcolor{keywordflow}{in} line:}
+\DoxyCodeLine{00019             ccounter = 0}
+\DoxyCodeLine{00020             pacumulator = 0}
+\DoxyCodeLine{00021 }
+\DoxyCodeLine{00022             \textcolor{keywordflow}{for} cord \textcolor{keywordflow}{in} pixel: }
+\DoxyCodeLine{00023                 ccounter += 1}
+\DoxyCodeLine{00024                 pacumulator += cord}
+\DoxyCodeLine{00025             }
+\DoxyCodeLine{00026             acumulator += pacumulator/ccounter}
+\DoxyCodeLine{00027             counter += 1}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029         }
+\DoxyCodeLine{00030     val = (250 -\/ acumulator/counter)/250}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032     \textcolor{keywordflow}{return} val}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035 \textcolor{keyword}{def }compareFromLink(link, path2):}
+\DoxyCodeLine{00036     buffer = req.urlopen(link)}
+\DoxyCodeLine{00037     im1 = Image.open(buffer)}
+\DoxyCodeLine{00038     im2 = Image.open(path2)}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040     compare(im1,im2)}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043 \textcolor{keyword}{def }RecgnReact(link):}
+\DoxyCodeLine{00044     nameList = [\textcolor{stringliteral}{'like'}, \textcolor{stringliteral}{'love'}, \textcolor{stringliteral}{'care'}, \textcolor{stringliteral}{'haha'}, \textcolor{stringliteral}{'wow'}, \textcolor{stringliteral}{'sad'}, \textcolor{stringliteral}{'angry'}]}
+\DoxyCodeLine{00045     dir = \textcolor{stringliteral}{'ReactImages'}}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047     res = 0}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049     ans = \textcolor{stringliteral}{''}}
+\DoxyCodeLine{00050 }
+\DoxyCodeLine{00051     buffer = req.urlopen(link)}
+\DoxyCodeLine{00052     im1 = Image.open(buffer)}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054     \textcolor{keywordflow}{for} react \textcolor{keywordflow}{in} nameList:}
+\DoxyCodeLine{00055         reactpath =  dir + \textcolor{stringliteral}{'/'} + react + \textcolor{stringliteral}{'.png'}}
+\DoxyCodeLine{00056         im2 = Image.open(reactpath)}
+\DoxyCodeLine{00057         sim = compare(im1, im2)}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059         \textcolor{keywordflow}{if} sim > res :}
+\DoxyCodeLine{00060             res = sim}
+\DoxyCodeLine{00061             ans = react}
+\DoxyCodeLine{00062     }
+\DoxyCodeLine{00063     \textcolor{keywordflow}{return} ans}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065 }
+\DoxyCodeLine{00066 \textcolor{keyword}{def }getReact(link):}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068     val = Mem.get(link)}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070     \textcolor{keywordflow}{if} val :}
+\DoxyCodeLine{00071         \textcolor{keywordflow}{return} val}
+\DoxyCodeLine{00072     \textcolor{keywordflow}{else} : }
+\DoxyCodeLine{00073         val = RecgnReact(link)}
+\DoxyCodeLine{00074 }
+\DoxyCodeLine{00075         Mem[link] = val}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077         \textcolor{keywordflow}{return} val}
+
+\end{DoxyCode}

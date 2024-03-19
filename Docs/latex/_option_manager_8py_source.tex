@@ -1,0 +1,175 @@
+\doxysection{Option\+Manager.\+py}
+\label{_option_manager_8py_source}\index{OptionManager.py@{OptionManager.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} typing \textcolor{keyword}{import} List}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} General.general \textcolor{keyword}{import} saveJSON, get\_col\_by\_num}
+\DoxyCodeLine{00003 \textcolor{keyword}{import} json}
+\DoxyCodeLine{00004 }
+\DoxyCodeLine{00005 }
+\DoxyCodeLine{00006 options=\{\}}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00023 \textcolor{keyword}{def }set\_col(col\_index:int=2)-\/>dict:}
+\DoxyCodeLine{00024     letter = get\_col\_by\_num(col\_index)}
+\DoxyCodeLine{00025     \textcolor{keywordflow}{return} \{\textcolor{stringliteral}{"{}column"{}} : \{}
+\DoxyCodeLine{00026                 \textcolor{stringliteral}{"{}index"{}} : col\_index,}
+\DoxyCodeLine{00027                 \textcolor{stringliteral}{"{}number"{}} : col\_index + 1,}
+\DoxyCodeLine{00028                 \textcolor{stringliteral}{"{}letter"{}} : letter,}
+\DoxyCodeLine{00029                 \textcolor{stringliteral}{"{}location"{}} : letter + \textcolor{stringliteral}{"{}:"{}} +letter}
+\DoxyCodeLine{00030             \},}
+\DoxyCodeLine{00031             }
+\DoxyCodeLine{00032             \textcolor{stringliteral}{"{}title\_location"{}} : letter + \textcolor{stringliteral}{"{}1"{}}}
+\DoxyCodeLine{00033         \}}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00044 \textcolor{keyword}{def }build\_script(col\_index:int=0)-\/>str:}
+\DoxyCodeLine{00045     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}=GetUrl("{}} + get\_col\_by\_num(col\_index) + \textcolor{stringliteral}{"{}:"{}} + get\_col\_by\_num(col\_index) + \textcolor{stringliteral}{"{})"{}}}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00096 \textcolor{keyword}{def }setup():}
+\DoxyCodeLine{00097     \textcolor{keyword}{global} options}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099     my\_email = json.load(open(\textcolor{stringliteral}{"{}creds.json"{}}, \textcolor{stringliteral}{"{}r"{}}))[\textcolor{stringliteral}{"{}client\_email"{}}]}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101     emails = [my\_email]}
+\DoxyCodeLine{00102 }
+\DoxyCodeLine{00103     all\_likes\_name = \textcolor{stringliteral}{"{}All Likes"{}}}
+\DoxyCodeLine{00104     new\_profiles\_name = \textcolor{stringliteral}{"{}New Profiles From Ads"{}}}
+\DoxyCodeLine{00105 }
+\DoxyCodeLine{00106     ignore\_titles = [\textcolor{stringliteral}{"{}paste here"{}}, all\_likes\_name.lower(), new\_profiles\_name.lower(), \textcolor{stringliteral}{"{}all leads"{}}, \textcolor{stringliteral}{"{}lead ad references"{}}, \textcolor{stringliteral}{"{}grand est références d'avril"{}}]}
+\DoxyCodeLine{00107     ignore\_words = [\textcolor{stringliteral}{"{}références"{}}, \textcolor{stringliteral}{"{}!"{}}]}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109     script = build\_script()}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111     options = \{}
+\DoxyCodeLine{00112         \textcolor{stringliteral}{"{}code"{}}: set\_col(2),}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114         \textcolor{stringliteral}{"{}names"{}}: set\_col(0),}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116         \textcolor{stringliteral}{"{}ignore"{}} : \{}
+\DoxyCodeLine{00117             \textcolor{stringliteral}{"{}titles"{}} : ignore\_titles,}
+\DoxyCodeLine{00118             \textcolor{stringliteral}{"{}words"{}} : ignore\_words}
+\DoxyCodeLine{00119         \},}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121         \textcolor{stringliteral}{"{}email"{}} : emails,}
+\DoxyCodeLine{00122 }
+\DoxyCodeLine{00123         \textcolor{stringliteral}{"{}sheets"{}} : \{}
+\DoxyCodeLine{00124             \textcolor{stringliteral}{"{}all likes"{}} : all\_likes\_name,}
+\DoxyCodeLine{00125             \textcolor{stringliteral}{"{}new profiles"{}} : new\_profiles\_name,}
+\DoxyCodeLine{00126             \textcolor{stringliteral}{'query language selector'} : \textcolor{stringliteral}{'"{}select * where Col1 is not null order by Col3, Col2, Col7, Col1"{}'},}
+\DoxyCodeLine{00127             \textcolor{stringliteral}{'highest column readed'} : 7}
+\DoxyCodeLine{00128         \},}
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130         \textcolor{stringliteral}{"{}script"{}} : script}
+\DoxyCodeLine{00131     \}}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00135 \textcolor{keyword}{def }restore():}
+\DoxyCodeLine{00136     setup()}
+\DoxyCodeLine{00137     saveJSON(\textcolor{stringliteral}{"{}options"{}}, options)}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00141 \textcolor{keyword}{def }load():}
+\DoxyCodeLine{00142     \textcolor{keyword}{global} options}
+\DoxyCodeLine{00143 }
+\DoxyCodeLine{00144     \textcolor{keywordflow}{try} :}
+\DoxyCodeLine{00145         options = json.load(open(\textcolor{stringliteral}{"{}data/options.json"{}}))[\textcolor{stringliteral}{"{}data"{}}]}
+\DoxyCodeLine{00146     \textcolor{keywordflow}{except} FileNotFoundError:}
+\DoxyCodeLine{00147         restore()}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149 load()}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151 \textcolor{keyword}{def }get\_query():}
+\DoxyCodeLine{00152     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}sheets"{}}][\textcolor{stringliteral}{'query language selector'}]}
+\DoxyCodeLine{00153 }
+\DoxyCodeLine{00154 \textcolor{keyword}{def }set\_query(new\_query):}
+\DoxyCodeLine{00155     options[\textcolor{stringliteral}{"{}sheets"{}}][\textcolor{stringliteral}{'query language selector'}] = new\_query}
+\DoxyCodeLine{00156     save()}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158 \textcolor{keyword}{def }get\_highest\_column():}
+\DoxyCodeLine{00159     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}sheets"{}}][\textcolor{stringliteral}{'highest column readed'}]}
+\DoxyCodeLine{00160 }
+\DoxyCodeLine{00161 \textcolor{keyword}{def }set\_highest\_column(highest\_column):}
+\DoxyCodeLine{00162     options[\textcolor{stringliteral}{"{}sheets"{}}][\textcolor{stringliteral}{'highest column readed'}] = highest\_column}
+\DoxyCodeLine{00163     save()}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165 }
+\DoxyCodeLine{00170 \textcolor{keyword}{def }set\_code\_col(col\_index:int=2):}
+\DoxyCodeLine{00171     options[\textcolor{stringliteral}{"{}code"{}}] = set\_col(col\_index)}
+\DoxyCodeLine{00172     save()}
+\DoxyCodeLine{00173 }
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00177 \textcolor{keyword}{def }code()-\/>dict:}
+\DoxyCodeLine{00178     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}code"{}}]}
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00184 \textcolor{keyword}{def }code\_col(prop:str)-\/>str:}
+\DoxyCodeLine{00185     \textcolor{keywordflow}{return} code()[\textcolor{stringliteral}{"{}column"{}}][prop]}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187 }
+\DoxyCodeLine{00190 \textcolor{keyword}{def }code\_title()-\/>str:}
+\DoxyCodeLine{00191     \textcolor{keywordflow}{return} code()[\textcolor{stringliteral}{"{}title\_location"{}}]}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194 }
+\DoxyCodeLine{00199 \textcolor{keyword}{def }set\_names\_col(col\_index:int=0):}
+\DoxyCodeLine{00200     options[\textcolor{stringliteral}{"{}names"{}}] = set\_col(col\_index)}
+\DoxyCodeLine{00201     options[\textcolor{stringliteral}{"{}script"{}}] = build\_script(col\_index)}
+\DoxyCodeLine{00202     save()}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205 \textcolor{keyword}{def }names()-\/>dict:}
+\DoxyCodeLine{00206     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}names"{}}]}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00212 \textcolor{keyword}{def }names\_col(prop:str)-\/>str:}
+\DoxyCodeLine{00213     \textcolor{keywordflow}{return} names()[\textcolor{stringliteral}{"{}column"{}}][prop]}
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215 \textcolor{comment}{\# Get names column title location property in A1 Notation}}
+\DoxyCodeLine{00216 \textcolor{comment}{\# @return property in string format}}
+\DoxyCodeLine{00217 \textcolor{comment}{\# @see set\_col(int)}}
+\DoxyCodeLine{00218 \textcolor{keyword}{def }names\_title()-\/>str:}
+\DoxyCodeLine{00219     \textcolor{keywordflow}{return} names()[\textcolor{stringliteral}{"{}title\_location"{}}]}
+\DoxyCodeLine{00220 }
+\DoxyCodeLine{00221 }
+\DoxyCodeLine{00224 \textcolor{keyword}{def }script()-\/>str:}
+\DoxyCodeLine{00225     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}script"{}}]}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228 \textcolor{comment}{\#email}}
+\DoxyCodeLine{00229 }
+\DoxyCodeLine{00231 \textcolor{keyword}{def }add\_email(email:str):}
+\DoxyCodeLine{00232     options[\textcolor{stringliteral}{"{}email"{}}].append(email)}
+\DoxyCodeLine{00233     save()}
+\DoxyCodeLine{00234 }
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00237 \textcolor{keyword}{def }remove\_email(email:str):}
+\DoxyCodeLine{00238     options[\textcolor{stringliteral}{"{}email"{}}].remove(email)}
+\DoxyCodeLine{00239     save()}
+\DoxyCodeLine{00240 }
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00243 \textcolor{keyword}{def }email()-\/>List:}
+\DoxyCodeLine{00244     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}email"{}}]}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246 }
+\DoxyCodeLine{00247 }
+\DoxyCodeLine{00249 \textcolor{keyword}{def }get\_ignore\_titles()-\/>List:}
+\DoxyCodeLine{00250     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}ignore"{}}][\textcolor{stringliteral}{"{}titles"{}}]}
+\DoxyCodeLine{00251 }
+\DoxyCodeLine{00252 }
+\DoxyCodeLine{00255 \textcolor{keyword}{def }get\_ignore\_words()-\/>List:}
+\DoxyCodeLine{00256     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}ignore"{}}][\textcolor{stringliteral}{"{}words"{}}]}
+\DoxyCodeLine{00257 }
+\DoxyCodeLine{00258 }
+\DoxyCodeLine{00259 \textcolor{keyword}{def }save():}
+\DoxyCodeLine{00260     saveJSON(\textcolor{stringliteral}{"{}options"{}}, options)}
+\DoxyCodeLine{00261 }
+\DoxyCodeLine{00262 }
+\DoxyCodeLine{00263 \textcolor{keyword}{def }get\_all\_likes\_name()-\/>str:}
+\DoxyCodeLine{00264     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}sheets"{}}][\textcolor{stringliteral}{"{}all likes"{}}]}
+\DoxyCodeLine{00265 }
+\DoxyCodeLine{00266 }
+\DoxyCodeLine{00267 \textcolor{keyword}{def }get\_new\_profiles\_name()-\/>str:}
+\DoxyCodeLine{00268     \textcolor{keywordflow}{return} options[\textcolor{stringliteral}{"{}sheets"{}}][\textcolor{stringliteral}{"{}new profiles"{}}]}
+
+\end{DoxyCode}

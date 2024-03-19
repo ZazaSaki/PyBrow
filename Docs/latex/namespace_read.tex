@@ -1,0 +1,406 @@
+\doxysection{Read Namespace Reference}
+\label{namespace_read}\index{Read@{Read}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \textbf{ forget\+Facebook\+Account} ()
+\begin{DoxyCompactList}\small\item\em Forget saved cookies. \end{DoxyCompactList}\item 
+def \textbf{ get\+Browser} ()
+\item 
+def \textbf{ open\+Browser} ()
+\item 
+def \textbf{ close\+Browser} ()
+\item 
+def \textbf{ get\+Creds} ()
+\item 
+def \textbf{ check\+Login} (bool tow\+Factor=False, tow\+Factor\+Confirmation=lambda \+:input(\char`\"{}Ready to proceed?\char`\"{}), get\+Creds=\textbf{ get\+Creds})
+\begin{DoxyCompactList}\small\item\em Checks if there is valid cookies stored. \end{DoxyCompactList}\item 
+def \textbf{ login} (tow\+Factor=False, tow\+Factor\+Confirmation=lambda \+:input(\char`\"{}Ready to proceed?\char`\"{}), get\+Creds=\textbf{ get\+Creds})
+\item 
+def \textbf{ get\+Chilren} (list)
+\item 
+def \textbf{ scroll\+Bottom} (list)
+\item 
+def \textbf{ scroll\+All} (list, max)
+\item 
+def \textbf{ read\+Profile\+List} (input\+List, total)
+\item 
+def \textbf{ load\+And\+Read} (path\+List, total)
+\item 
+def \textbf{ get\+Button\+List\+Post} (\textbf{ driver}, \textbf{ Core\+File}, mode, special=False)
+\item 
+def \textbf{ get\+Parentby\+Path} (path, rec=1)
+\item 
+def \textbf{ get\+Cousinby\+Path} (str path, bool force=False)
+\item 
+def \textbf{ get\+Page\+Reacts\+Post} (\textbf{ driver}, ipost, atempt=2)
+\item 
+Dict \textbf{ search\+Forlikes} (List post)
+\begin{DoxyCompactList}\small\item\em Reads a list of posts\textquotesingle{} links and returns the reaction lists. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+list \textbf{ failed} = [$\,$]
+\begin{DoxyCompactList}\small\item\em Failed list. \end{DoxyCompactList}\item 
+bool \textbf{ timeout\+\_\+flag} = False
+\item 
+list \textbf{ timeout\+\_\+list} = [$\,$]
+\item 
+string \textbf{ timeout\+\_\+readed} = \textquotesingle{}\textquotesingle{}
+\item 
+string \textbf{ username} = \char`\"{}\char`\"{}
+\item 
+string \textbf{ password} = \char`\"{}\char`\"{}
+\item 
+string \textbf{ cookies\+Dir} = \char`\"{}./Browser/browser\+\_\+data/cookies.\+pkl\char`\"{}
+\item 
+\textbf{ scroll\+File} = load\+Scroller()
+\item 
+\textbf{ Core\+File} = json.\+load(open(\textquotesingle{}./Browser/browser\+\_\+data/work\+Sheet.\+json\textquotesingle{}))
+\item 
+\textbf{ opt} = Options()
+\item 
+string \textbf{ PATH} = \char`\"{}./chromedriver.\+exe\char`\"{}
+\item 
+\textbf{ driver} = None
+\item 
+string \textbf{ angry\+Src} = \char`\"{}https\+://scontent.\+xx.\+fbcdn.\+net/m1/v/t6/An8ph2gw\+H6\+Wsv\+W6pxu\+Yz\+Gzr\+W8\+Cdp\+QXACl5\+PKb5e3\+I8y\+S82d\+PyO-\/c\+Hlp\+ZDGDHu\+NFUBIPS8\+\_\+r\+Jmr6\+L5\+JKI6gp\+Od6\+GVgh3s\+LHS6q\+MD\+\_\+fv-\/qg6\+Fo\+JAz\+ZC2k.\+png\char`\"{}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespace_read_abc8d4f6d6148c331b0a37e0a6eb57383}} 
+\index{Read@{Read}!checkLogin@{checkLogin}}
+\index{checkLogin@{checkLogin}!Read@{Read}}
+\doxysubsubsection{checkLogin()}
+{\footnotesize\ttfamily def Read.\+check\+Login (\begin{DoxyParamCaption}\item[{bool}]{tow\+Factor = {\ttfamily False},  }\item[{}]{tow\+Factor\+Confirmation = {\ttfamily lambda~\+:~input(\char`\"{}Ready~to~proceed?\char`\"{})},  }\item[{}]{get\+Creds = {\ttfamily \textbf{ get\+Creds}} }\end{DoxyParamCaption})}
+
+
+
+Checks if there is valid cookies stored. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em tow\+Factor} & if true the program will wait for user input to save the cookies\\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+If the is no cookies, login credentials will be requested 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 87} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a26ec88d1d5a4c3c5797628a25549876a}} 
+\index{Read@{Read}!closeBrowser@{closeBrowser}}
+\index{closeBrowser@{closeBrowser}!Read@{Read}}
+\doxysubsubsection{closeBrowser()}
+{\footnotesize\ttfamily def Read.\+close\+Browser (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 70} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_ada4ec1b756943ed6e3081fece545379b}} 
+\index{Read@{Read}!forgetFacebookAccount@{forgetFacebookAccount}}
+\index{forgetFacebookAccount@{forgetFacebookAccount}!Read@{Read}}
+\doxysubsubsection{forgetFacebookAccount()}
+{\footnotesize\ttfamily def Read.\+forget\+Facebook\+Account (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Forget saved cookies. 
+
+
+
+Definition at line \textbf{ 52} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a964ef1867bbe5eb229a4e56fc2419792}} 
+\index{Read@{Read}!getBrowser@{getBrowser}}
+\index{getBrowser@{getBrowser}!Read@{Read}}
+\doxysubsubsection{getBrowser()}
+{\footnotesize\ttfamily def Read.\+get\+Browser (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 59} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a79fe0cf883272d21c901f48f7a245d91}} 
+\index{Read@{Read}!getButtonListPost@{getButtonListPost}}
+\index{getButtonListPost@{getButtonListPost}!Read@{Read}}
+\doxysubsubsection{getButtonListPost()}
+{\footnotesize\ttfamily def Read.\+get\+Button\+List\+Post (\begin{DoxyParamCaption}\item[{}]{driver,  }\item[{}]{Core\+File,  }\item[{}]{mode,  }\item[{}]{special = {\ttfamily False} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 288} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a0c02f289e2099a57b8b42db57d6a2d92}} 
+\index{Read@{Read}!getChilren@{getChilren}}
+\index{getChilren@{getChilren}!Read@{Read}}
+\doxysubsubsection{getChilren()}
+{\footnotesize\ttfamily def Read.\+get\+Chilren (\begin{DoxyParamCaption}\item[{}]{list }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 153} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a37327de951307ff001ed55f3dd5d82ab}} 
+\index{Read@{Read}!getCousinbyPath@{getCousinbyPath}}
+\index{getCousinbyPath@{getCousinbyPath}!Read@{Read}}
+\doxysubsubsection{getCousinbyPath()}
+{\footnotesize\ttfamily def Read.\+get\+Cousinby\+Path (\begin{DoxyParamCaption}\item[{str}]{path,  }\item[{bool }]{force = {\ttfamily False} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 359} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a01fa0c840c6ede568d7e1b1e700fa805}} 
+\index{Read@{Read}!getCreds@{getCreds}}
+\index{getCreds@{getCreds}!Read@{Read}}
+\doxysubsubsection{getCreds()}
+{\footnotesize\ttfamily def Read.\+get\+Creds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 78} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a4dc2fdda903532ce0f708892c68725e7}} 
+\index{Read@{Read}!getPageReactsPost@{getPageReactsPost}}
+\index{getPageReactsPost@{getPageReactsPost}!Read@{Read}}
+\doxysubsubsection{getPageReactsPost()}
+{\footnotesize\ttfamily def Read.\+get\+Page\+Reacts\+Post (\begin{DoxyParamCaption}\item[{}]{driver,  }\item[{}]{ipost,  }\item[{}]{atempt = {\ttfamily 2} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 383} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a05089819c73dddc10cdf6efa948a5398}} 
+\index{Read@{Read}!getParentbyPath@{getParentbyPath}}
+\index{getParentbyPath@{getParentbyPath}!Read@{Read}}
+\doxysubsubsection{getParentbyPath()}
+{\footnotesize\ttfamily def Read.\+get\+Parentby\+Path (\begin{DoxyParamCaption}\item[{}]{path,  }\item[{}]{rec = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 353} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_ae759ba6a7fffd611a731519c10192c37}} 
+\index{Read@{Read}!loadAndRead@{loadAndRead}}
+\index{loadAndRead@{loadAndRead}!Read@{Read}}
+\doxysubsubsection{loadAndRead()}
+{\footnotesize\ttfamily def Read.\+load\+And\+Read (\begin{DoxyParamCaption}\item[{}]{path\+List,  }\item[{}]{total }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 268} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_ae7d8ac4470f4877dd2df4de33880e1ce}} 
+\index{Read@{Read}!login@{login}}
+\index{login@{login}!Read@{Read}}
+\doxysubsubsection{login()}
+{\footnotesize\ttfamily def Read.\+login (\begin{DoxyParamCaption}\item[{}]{tow\+Factor = {\ttfamily False},  }\item[{}]{tow\+Factor\+Confirmation = {\ttfamily lambda~\+:~input(\char`\"{}Ready~to~proceed?\char`\"{})},  }\item[{}]{get\+Creds = {\ttfamily \textbf{ get\+Creds}} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 93} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_aedd51128acd42f1b7ce85699954d6793}} 
+\index{Read@{Read}!openBrowser@{openBrowser}}
+\index{openBrowser@{openBrowser}!Read@{Read}}
+\doxysubsubsection{openBrowser()}
+{\footnotesize\ttfamily def Read.\+open\+Browser (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 65} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a3dba197527a94e613f445b3ce051c818}} 
+\index{Read@{Read}!readProfileList@{readProfileList}}
+\index{readProfileList@{readProfileList}!Read@{Read}}
+\doxysubsubsection{readProfileList()}
+{\footnotesize\ttfamily def Read.\+read\+Profile\+List (\begin{DoxyParamCaption}\item[{}]{input\+List,  }\item[{}]{total }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 215} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_aa03af4e9cfa2bef1f92a142622ef6ced}} 
+\index{Read@{Read}!scrollAll@{scrollAll}}
+\index{scrollAll@{scrollAll}!Read@{Read}}
+\doxysubsubsection{scrollAll()}
+{\footnotesize\ttfamily def Read.\+scroll\+All (\begin{DoxyParamCaption}\item[{}]{list,  }\item[{}]{max }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 164} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_ac429b8a7310c238de9e1dc00f4214bf4}} 
+\index{Read@{Read}!scrollBottom@{scrollBottom}}
+\index{scrollBottom@{scrollBottom}!Read@{Read}}
+\doxysubsubsection{scrollBottom()}
+{\footnotesize\ttfamily def Read.\+scroll\+Bottom (\begin{DoxyParamCaption}\item[{}]{list }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 158} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_ae52a7c5ce84654021431d14deee9f5dd}} 
+\index{Read@{Read}!searchForlikes@{searchForlikes}}
+\index{searchForlikes@{searchForlikes}!Read@{Read}}
+\doxysubsubsection{searchForlikes()}
+{\footnotesize\ttfamily Dict Read.\+search\+Forlikes (\begin{DoxyParamCaption}\item[{List}]{post }\end{DoxyParamCaption})}
+
+
+
+Reads a list of posts\textquotesingle{} links and returns the reaction lists. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em post} & posts\textquotesingle{} list\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+dictionary of reaction\textquotesingle{}s lists organized by page of collection 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 452} of file \textbf{ Read.\+py}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{namespace_read_af510c84bef5011487b18ba53ddc44a49}} 
+\index{Read@{Read}!angrySrc@{angrySrc}}
+\index{angrySrc@{angrySrc}!Read@{Read}}
+\doxysubsubsection{angrySrc}
+{\footnotesize\ttfamily string Read.\+angry\+Src = \char`\"{}https\+://scontent.\+xx.\+fbcdn.\+net/m1/v/t6/An8ph2gw\+H6\+Wsv\+W6pxu\+Yz\+Gzr\+W8\+Cdp\+QXACl5\+PKb5e3\+I8y\+S82d\+PyO-\/c\+Hlp\+ZDGDHu\+NFUBIPS8\+\_\+r\+Jmr6\+L5\+JKI6gp\+Od6\+GVgh3s\+LHS6q\+MD\+\_\+fv-\/qg6\+Fo\+JAz\+ZC2k.\+png\char`\"{}}
+
+
+
+Definition at line \textbf{ 47} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a81304d38c9d3f9553d1f11cb5c0eec3d}} 
+\index{Read@{Read}!cookiesDir@{cookiesDir}}
+\index{cookiesDir@{cookiesDir}!Read@{Read}}
+\doxysubsubsection{cookiesDir}
+{\footnotesize\ttfamily string Read.\+cookies\+Dir = \char`\"{}./Browser/browser\+\_\+data/cookies.\+pkl\char`\"{}}
+
+
+
+Definition at line \textbf{ 29} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a1766cdb9a3f1b7924972386f4d5f05a6}} 
+\index{Read@{Read}!CoreFile@{CoreFile}}
+\index{CoreFile@{CoreFile}!Read@{Read}}
+\doxysubsubsection{CoreFile}
+{\footnotesize\ttfamily Read.\+Core\+File = json.\+load(open(\textquotesingle{}./Browser/browser\+\_\+data/work\+Sheet.\+json\textquotesingle{}))}
+
+
+
+Definition at line \textbf{ 35} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_ac6051087f67bb6219e36c41afb1398fd}} 
+\index{Read@{Read}!driver@{driver}}
+\index{driver@{driver}!Read@{Read}}
+\doxysubsubsection{driver}
+{\footnotesize\ttfamily Read.\+driver = None}
+
+
+
+Definition at line \textbf{ 45} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a34c19516af4c08d12a9fbdf6a51bbc01}} 
+\index{Read@{Read}!failed@{failed}}
+\index{failed@{failed}!Read@{Read}}
+\doxysubsubsection{failed}
+{\footnotesize\ttfamily list Read.\+failed = [$\,$]}
+
+
+
+Failed list. 
+
+
+
+Definition at line \textbf{ 21} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a7da60b0bd723329fc1235f2087fbb829}} 
+\index{Read@{Read}!opt@{opt}}
+\index{opt@{opt}!Read@{Read}}
+\doxysubsubsection{opt}
+{\footnotesize\ttfamily Read.\+opt = Options()}
+
+
+
+Definition at line \textbf{ 38} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a5ddaac0e27e4c098ed9dceb750631f53}} 
+\index{Read@{Read}!password@{password}}
+\index{password@{password}!Read@{Read}}
+\doxysubsubsection{password}
+{\footnotesize\ttfamily string Read.\+password = \char`\"{}\char`\"{}}
+
+
+
+Definition at line \textbf{ 27} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a6caeb1f94ef039cb961b78f6d2567e18}} 
+\index{Read@{Read}!PATH@{PATH}}
+\index{PATH@{PATH}!Read@{Read}}
+\doxysubsubsection{PATH}
+{\footnotesize\ttfamily string Read.\+PATH = \char`\"{}./chromedriver.\+exe\char`\"{}}
+
+
+
+Definition at line \textbf{ 43} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_aa3b2ef6b1f87d62078af7f154059206f}} 
+\index{Read@{Read}!scrollFile@{scrollFile}}
+\index{scrollFile@{scrollFile}!Read@{Read}}
+\doxysubsubsection{scrollFile}
+{\footnotesize\ttfamily Read.\+scroll\+File = load\+Scroller()}
+
+
+
+Definition at line \textbf{ 32} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a795321aeb2858a4d3817f298e1a3ecc1}} 
+\index{Read@{Read}!timeout\_flag@{timeout\_flag}}
+\index{timeout\_flag@{timeout\_flag}!Read@{Read}}
+\doxysubsubsection{timeout\_flag}
+{\footnotesize\ttfamily bool Read.\+timeout\+\_\+flag = False}
+
+
+
+Definition at line \textbf{ 22} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_ae2aa15f296cccf4bc33e3db583026451}} 
+\index{Read@{Read}!timeout\_list@{timeout\_list}}
+\index{timeout\_list@{timeout\_list}!Read@{Read}}
+\doxysubsubsection{timeout\_list}
+{\footnotesize\ttfamily list Read.\+timeout\+\_\+list = [$\,$]}
+
+
+
+Definition at line \textbf{ 23} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_a80e985a9682f5de2167820b41a7b801b}} 
+\index{Read@{Read}!timeout\_readed@{timeout\_readed}}
+\index{timeout\_readed@{timeout\_readed}!Read@{Read}}
+\doxysubsubsection{timeout\_readed}
+{\footnotesize\ttfamily string Read.\+timeout\+\_\+readed = \textquotesingle{}\textquotesingle{}}
+
+
+
+Definition at line \textbf{ 24} of file \textbf{ Read.\+py}.
+
+\mbox{\label{namespace_read_afe4ddd848a7658ebdb8fda8b8f49fa07}} 
+\index{Read@{Read}!username@{username}}
+\index{username@{username}!Read@{Read}}
+\doxysubsubsection{username}
+{\footnotesize\ttfamily string Read.\+username = \char`\"{}\char`\"{}}
+
+
+
+Definition at line \textbf{ 26} of file \textbf{ Read.\+py}.
+

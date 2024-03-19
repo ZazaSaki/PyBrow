@@ -1,0 +1,663 @@
+\doxysection{GUI.\+py}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} ast \textcolor{keyword}{import} withitem}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} asyncore \textcolor{keyword}{import} read}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} pickle \textcolor{keyword}{import} FALSE, TRUE}
+\DoxyCodeLine{00004 \textcolor{keyword}{from} sys \textcolor{keyword}{import} prefix}
+\DoxyCodeLine{00005 \textcolor{keyword}{import} time}
+\DoxyCodeLine{00006 \textcolor{keyword}{from} turtle \textcolor{keyword}{import} title}
+\DoxyCodeLine{00007 \textcolor{keyword}{from} types \textcolor{keyword}{import} FunctionType}
+\DoxyCodeLine{00008 \textcolor{keyword}{from} typing \textcolor{keyword}{import} Dict, List, Tuple}
+\DoxyCodeLine{00009 \textcolor{keyword}{import} PySimpleGUI \textcolor{keyword}{as} sg}
+\DoxyCodeLine{00010 \textcolor{keyword}{from} PySimpleGUI.PySimpleGUI \textcolor{keyword}{import} popup\_yes\_no}
+\DoxyCodeLine{00011 \textcolor{keyword}{from} Browser.Read \textcolor{keyword}{import} checkLogin, forgetFacebookAccount}
+\DoxyCodeLine{00012 \textcolor{keyword}{from} Drive.DataBase.DataManager \textcolor{keyword}{import} IsInDataBase, RemoveDuplicateds, getProfile, hashInvalids, insertProfileLink}
+\DoxyCodeLine{00013 \textcolor{keyword}{from} Drive.DataBase.FacebookPageManager \textcolor{keyword}{import} addPage, getAllPagesNames, SearchPage, getAllPagesSheet, getPageByLink, getPageByName, getPageBySheet, removePage, updateLink, updateSheet}
+\DoxyCodeLine{00014 \textcolor{keyword}{from} Drive.LossManager \textcolor{keyword}{import} full\_recover, get\_all\_recover\_path, get\_recover}
+\DoxyCodeLine{00015 \textcolor{keyword}{from} Drive.OptionManager \textcolor{keyword}{import} add\_email, code\_col, email, get\_highest\_column, get\_query, names\_col, remove\_email, set\_code\_col, set\_highest\_column, set\_names\_col, set\_query}
+\DoxyCodeLine{00016 \textcolor{keyword}{from} Drive.docsUpdaterBase \textcolor{keyword}{import} UpdateAllQuery, fix\_all\_sheets, smartLockAll}
+\DoxyCodeLine{00017 \textcolor{keyword}{from} FeedbackDisplayer \textcolor{keyword}{import} get\_checker, get\_stack, remove\_value\_from, update\_all\_checkers, update\_checker}
+\DoxyCodeLine{00018 \textcolor{keyword}{from} ListManager \textcolor{keyword}{import} create\_new\_list, delete\_list, get\_all\_paths\_lists, get\_list\_from\_index, get\_name\_by\_path, get\_path\_by\_index, read\_a\_list, read\_a\_list\_as\_array, save\_a\_list}
+\DoxyCodeLine{00019 \textcolor{keyword}{from} Main \textcolor{keyword}{import} UpdateDataBase, UpdateLikes, VerifyDataBase, VerifyIgnoreLinks, quick\_update}
+\DoxyCodeLine{00020 \textcolor{keyword}{import} Drive.DataBase.FacebookPageManager}
+\DoxyCodeLine{00021 TITLE = \textcolor{stringliteral}{'Auto Cruz 0.1.1'}}
+\DoxyCodeLine{00022 MENU\_PREFIX = \textcolor{stringliteral}{'Menu'}}
+\DoxyCodeLine{00023 MENU\_BUTTON\_PREFIX = \textcolor{stringliteral}{'Show\_Menu'}}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025 WORKING = \textcolor{keyword}{False}}
+\DoxyCodeLine{00026 TRYED = \textcolor{keyword}{False}}
+\DoxyCodeLine{00027 WORKING\_FLAG = \textcolor{stringliteral}{''}}
+\DoxyCodeLine{00028 FINISH\_WORD = \textcolor{stringliteral}{'FININSHED'}}
+\DoxyCodeLine{00029 FAIL\_WORD = \textcolor{stringliteral}{'FAILED'}}
+\DoxyCodeLine{00030 sg.theme(\textcolor{stringliteral}{'DarkAmber'})}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034 get\_all\_recover\_path()}
+\DoxyCodeLine{00035 \textcolor{keyword}{True}}
+\DoxyCodeLine{00036 \textcolor{comment}{\#Sequencial runs manager-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00040 \textcolor{keyword}{def }submit\_work():}
+\DoxyCodeLine{00041     \textcolor{keyword}{global} WORKING, WORKING\_FLAG, FINISH\_WORD}
+\DoxyCodeLine{00042     WORKING\_FLAG = FINISH\_WORD}
+\DoxyCodeLine{00043     WORKING=\textcolor{keyword}{True}}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00047 \textcolor{keyword}{def }release\_core():}
+\DoxyCodeLine{00048     \textcolor{keyword}{global} WORKING\_FLAG, WORKING}
+\DoxyCodeLine{00049     WORKING = 0==1}
+\DoxyCodeLine{00050     WORKING\_FLAG = \textcolor{stringliteral}{''}}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00057 \textcolor{keyword}{def }run\_with\_work\_check(function:FunctionType)-\/>bool:}
+\DoxyCodeLine{00058     \textcolor{keyword}{global} WORKING, TRYED}
+\DoxyCodeLine{00059     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} WORKING:}
+\DoxyCodeLine{00060         \textcolor{keywordflow}{try} :}
+\DoxyCodeLine{00061             function()}
+\DoxyCodeLine{00062         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00063             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00064         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00065     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00066         TRYED = \textcolor{keyword}{True}}
+\DoxyCodeLine{00067         \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00077 \textcolor{keyword}{def }run\_alone(function:FunctionType)-\/>bool:}
+\DoxyCodeLine{00078     \textcolor{keyword}{global} WORKING, TRYED, WORKING\_FLAG}
+\DoxyCodeLine{00079     TRYED = \textcolor{keyword}{True}}
+\DoxyCodeLine{00080     \textcolor{keywordflow}{try} :}
+\DoxyCodeLine{00081         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} WORKING:}
+\DoxyCodeLine{00082             remove\_value\_from(name=\textcolor{stringliteral}{'general'},id=\textcolor{stringliteral}{'error'})}
+\DoxyCodeLine{00083             update\_checker(name=\textcolor{stringliteral}{'general'},id=\textcolor{stringliteral}{'action\_state'}, val=\textcolor{stringliteral}{'RUNNING'})}
+\DoxyCodeLine{00084             submit\_work()}
+\DoxyCodeLine{00085             TRYED = \textcolor{keyword}{False}}
+\DoxyCodeLine{00086             function()}
+\DoxyCodeLine{00087             update\_checker(name=\textcolor{stringliteral}{'general'},id=\textcolor{stringliteral}{'action\_state'}, val=\textcolor{stringliteral}{'SUCCEEDED'})}
+\DoxyCodeLine{00088             release\_core()}
+\DoxyCodeLine{00089         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00090     \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} e:}
+\DoxyCodeLine{00091         release\_core()}
+\DoxyCodeLine{00092         update\_checker(name=\textcolor{stringliteral}{'general'},id=\textcolor{stringliteral}{'action\_state'}, val=\textcolor{stringliteral}{'FAILED'})}
+\DoxyCodeLine{00093         update\_checker(name=\textcolor{stringliteral}{'general'},id=\textcolor{stringliteral}{'error'}, val=f\textcolor{stringliteral}{'\{e\}'})}
+\DoxyCodeLine{00094         sg.popup(\textcolor{stringliteral}{'Action failed \(\backslash\)n check the General Stats for more'})}
+\DoxyCodeLine{00095         \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00096 }
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00105 \textcolor{keyword}{def }run\_in\_paralel(function:FunctionType, window:sg.Window):}
+\DoxyCodeLine{00106     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} WORKING\_FLAG == FINISH\_WORD:}
+\DoxyCodeLine{00107         window.perform\_long\_operation(\textcolor{keyword}{lambda} : run\_alone(function), FINISH\_WORD)}
+\DoxyCodeLine{00108     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00109         window.perform\_long\_operation(\textcolor{keyword}{lambda} : run\_alone(function), FAIL\_WORD)}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00120 \textcolor{keyword}{def }change(display\_id:str, message:str, changer:FunctionType, window):}
+\DoxyCodeLine{00121     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} sg.popup\_ok\_cancel(\textcolor{stringliteral}{'Are you sure?'}) == \textcolor{stringliteral}{'OK'}:}
+\DoxyCodeLine{00122             \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00123     val = sg.popup\_get\_text(message)}
+\DoxyCodeLine{00124     Advice2 = \textcolor{stringliteral}{'changing to the wrong link may cause issues'}}
+\DoxyCodeLine{00125     Advice1 = \textcolor{stringliteral}{'Are you sure you want to change to this link:'}}
+\DoxyCodeLine{00126     confirmation = f\textcolor{stringliteral}{'\{Advice1\} \(\backslash\)n\(\backslash\)n\{val\} \(\backslash\)n\(\backslash\)n\{Advice2\}'}}
+\DoxyCodeLine{00127     \textcolor{keywordflow}{if} (\textcolor{keywordflow}{not} val == \textcolor{keywordtype}{None}):}
+\DoxyCodeLine{00128         \textcolor{keywordflow}{if} sg.popup\_ok\_cancel(confirmation) == \textcolor{stringliteral}{'OK'}:}
+\DoxyCodeLine{00129             \textcolor{keywordflow}{if} run\_with\_work\_check(\textcolor{keyword}{lambda} : changer(val)) :}
+\DoxyCodeLine{00130                 window[display\_id].update(str(val))}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00135 \textcolor{keyword}{def }Make\_layout(menus:List, general\_displayer)-\/>sg.Window:}
+\DoxyCodeLine{00136     i=0}
+\DoxyCodeLine{00137     }
+\DoxyCodeLine{00138     row\_of\_buttons = []}
+\DoxyCodeLine{00139     row\_of\_menus   = []}
+\DoxyCodeLine{00140     \textcolor{keywordflow}{for} menu \textcolor{keywordflow}{in} menus:}
+\DoxyCodeLine{00141 }
+\DoxyCodeLine{00142         name          = menu.Key}
+\DoxyCodeLine{00143         menu.Key      = f\textcolor{stringliteral}{'\{MENU\_PREFIX\}\{i\}'}}
+\DoxyCodeLine{00144         }
+\DoxyCodeLine{00145         button = sg.Button(name, key =f\textcolor{stringliteral}{'\{MENU\_BUTTON\_PREFIX\}\{i\}'}, button\_color=\textcolor{stringliteral}{'\#ffb27a'},pad=0, expand\_x=\textcolor{keyword}{True})}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147         row\_of\_buttons.append(button)}
+\DoxyCodeLine{00148         row\_of\_menus.append(menu)}
+\DoxyCodeLine{00149         i+=1}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151      }
+\DoxyCodeLine{00152     my\_layout = [[row\_of\_buttons, row\_of\_menus], [general\_displayer]]}
+\DoxyCodeLine{00153     \textcolor{keywordflow}{return} sg.Window(TITLE, my\_layout, margins=(10, 10), resizable = \textcolor{keyword}{True}, size=(900,600))}
+\DoxyCodeLine{00154 }
+\DoxyCodeLine{00155 }
+\DoxyCodeLine{00156 \textcolor{comment}{\#-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00160 \textcolor{keyword}{def }get\_list(name:str)-\/>str:}
+\DoxyCodeLine{00161     candidates = SearchPage(name)}
+\DoxyCodeLine{00162     list\_layout = []}
+\DoxyCodeLine{00163     \textcolor{keywordflow}{for} candidate \textcolor{keywordflow}{in} candidates:}
+\DoxyCodeLine{00164         }
+\DoxyCodeLine{00165         list\_layout.append([candidate[0]])}
+\DoxyCodeLine{00166 }
+\DoxyCodeLine{00167     \textcolor{keywordflow}{return} list\_layout}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169 }
+\DoxyCodeLine{00170 info\_displayer = [}
+\DoxyCodeLine{00171     [sg.Text(\textcolor{stringliteral}{'Name :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'page\_name'}, readonly=\textcolor{keyword}{True}, text\_color=\textcolor{stringliteral}{'black'}, size= 60)],}
+\DoxyCodeLine{00172     [sg.Text(\textcolor{stringliteral}{'Link :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'page\_link'}, readonly=\textcolor{keyword}{True}, text\_color=\textcolor{stringliteral}{'black'}, size= 60)],}
+\DoxyCodeLine{00173     [sg.Text(\textcolor{stringliteral}{'Spreadsheet :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'page\_spreadsheet'}, readonly=\textcolor{keyword}{True}, text\_color=\textcolor{stringliteral}{'black'}, size= 60)]}
+\DoxyCodeLine{00174 ]}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177 info\_displayer = sg.Column(info\_displayer, key=\textcolor{stringliteral}{'displayer'})}
+\DoxyCodeLine{00178 }
+\DoxyCodeLine{00179 }
+\DoxyCodeLine{00180 control\_buttons = [}
+\DoxyCodeLine{00181     [sg.Button(\textcolor{stringliteral}{'Edit Link'}, key=\textcolor{stringliteral}{'edit\_page\_link'})],}
+\DoxyCodeLine{00182     [sg.Button(\textcolor{stringliteral}{'Edit Spreadsheet'}, key=\textcolor{stringliteral}{'edit\_page\_spreadsheet'})],}
+\DoxyCodeLine{00183     [sg.Button(\textcolor{stringliteral}{'Delete'}, key=\textcolor{stringliteral}{'delete\_page'})],}
+\DoxyCodeLine{00184 ]}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187 control\_buttons = sg.Column(control\_buttons, key=\textcolor{stringliteral}{'control\_buttons'})}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189 }
+\DoxyCodeLine{00190 control\_layout = [}
+\DoxyCodeLine{00191     [info\_displayer, control\_buttons]}
+\DoxyCodeLine{00192 ]}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194 }
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196 Add\_layout = [}
+\DoxyCodeLine{00197     [sg.Text(\textcolor{stringliteral}{'Name :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'add\_page\_name'}, size= 60)],}
+\DoxyCodeLine{00198     [sg.Text(\textcolor{stringliteral}{'Link :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'add\_page\_link'}, size= 60)],}
+\DoxyCodeLine{00199     [sg.Text(\textcolor{stringliteral}{'Spreadsheet :'}, size=10),sg.InputText(\textcolor{stringliteral}{''}, key=\textcolor{stringliteral}{'add\_page\_spreadsheet'}, size= 60)],}
+\DoxyCodeLine{00200     [sg.Button(\textcolor{stringliteral}{'Confirm'}, key=\textcolor{stringliteral}{'add\_page'})]}
+\DoxyCodeLine{00201 ]}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204 Add\_page\_menu = sg.Column(Add\_layout, key=\textcolor{stringliteral}{'add\_page\_menu'}, visible=\textcolor{keyword}{False}, expand\_x=\textcolor{keyword}{True})}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207 Search\_layout = [}
+\DoxyCodeLine{00208     [sg.Text(\textcolor{stringliteral}{'Search'})],}
+\DoxyCodeLine{00209     [sg.Text(\textcolor{stringliteral}{'type'}), }
+\DoxyCodeLine{00210         sg.InputText(key = \textcolor{stringliteral}{'search\_input'}, enable\_events=\textcolor{keyword}{True}), }
+\DoxyCodeLine{00211     ],}
+\DoxyCodeLine{00212     [sg.Table(values=get\_list(\textcolor{stringliteral}{''}), }
+\DoxyCodeLine{00213         headings=[\textcolor{stringliteral}{'Names'}], }
+\DoxyCodeLine{00214         key=\textcolor{stringliteral}{'search\_table'}, }
+\DoxyCodeLine{00215         auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00216         enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00217         expand\_x=\textcolor{keyword}{True})],}
+\DoxyCodeLine{00218     [sg.Column(control\_layout, key=\textcolor{stringliteral}{'page\_controller'}, visible=\textcolor{keyword}{False})],}
+\DoxyCodeLine{00219     [sg.Button(\textcolor{stringliteral}{'Add Page'}, key=\textcolor{stringliteral}{'show\_add\_page\_menu'})],}
+\DoxyCodeLine{00220     [Add\_page\_menu]}
+\DoxyCodeLine{00221 ]     }
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224 }
+\DoxyCodeLine{00225 Search\_menu = sg.Column(Search\_layout, key=\textcolor{stringliteral}{'Page Manager'}, visible=\textcolor{keyword}{False}, expand\_x=\textcolor{keyword}{True})}
+\DoxyCodeLine{00226 \textcolor{comment}{\#-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228 }
+\DoxyCodeLine{00229 Read\_all\_layout = [}
+\DoxyCodeLine{00230     [sg.Button(\textcolor{stringliteral}{'Read All'})],  }
+\DoxyCodeLine{00231 ] }
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234 Read\_all = sg.Column(Read\_all\_layout, key=\textcolor{stringliteral}{'read\_all'})}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00238 Read\_one\_layout = [}
+\DoxyCodeLine{00239     [sg.Text(\textcolor{stringliteral}{'Link'}), sg.InputText(key = \textcolor{stringliteral}{'Read'}),sg.Button(\textcolor{stringliteral}{'Read One'})]}
+\DoxyCodeLine{00240 ] }
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242 }
+\DoxyCodeLine{00243 Read\_one = sg.Column(Read\_one\_layout, key=\textcolor{stringliteral}{'Read\_one'})}
+\DoxyCodeLine{00244 }
+\DoxyCodeLine{00245 Read\_Displayer\_Layout = [}
+\DoxyCodeLine{00246     [sg.Table(values=get\_all\_paths\_lists(), }
+\DoxyCodeLine{00247             headings=[\textcolor{stringliteral}{'Names'}], }
+\DoxyCodeLine{00248             key=\textcolor{stringliteral}{'Read\_table'}, }
+\DoxyCodeLine{00249             auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00250             enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00251             expand\_x=\textcolor{keyword}{True}}
+\DoxyCodeLine{00252         ), }
+\DoxyCodeLine{00253         sg.Multiline(}
+\DoxyCodeLine{00254             key=\textcolor{stringliteral}{'Read\_file\_input'}, }
+\DoxyCodeLine{00255             expand\_x=\textcolor{keyword}{True}, }
+\DoxyCodeLine{00256             expand\_y=\textcolor{keyword}{True})}
+\DoxyCodeLine{00257         ],}
+\DoxyCodeLine{00258     [   }
+\DoxyCodeLine{00259         sg.Button( \textcolor{stringliteral}{'Save'}, key=\textcolor{stringliteral}{'Read\_save\_file'}),}
+\DoxyCodeLine{00260         sg.Button( \textcolor{stringliteral}{'New File'}, key=\textcolor{stringliteral}{'Read\_new\_file'}),}
+\DoxyCodeLine{00261         sg.Button( \textcolor{stringliteral}{'Delete'}, key=\textcolor{stringliteral}{'Read\_delete\_file'}),}
+\DoxyCodeLine{00262     ]}
+\DoxyCodeLine{00263 ]}
+\DoxyCodeLine{00264 }
+\DoxyCodeLine{00265 Read\_Displayer = sg.Column(Read\_Displayer\_Layout, key = \textcolor{stringliteral}{'read\_display'}, expand\_x=\textcolor{keyword}{True}, expand\_y=\textcolor{keyword}{True})}
+\DoxyCodeLine{00266 }
+\DoxyCodeLine{00267 }
+\DoxyCodeLine{00268 Read\_Layout = [}
+\DoxyCodeLine{00269     [Read\_all],}
+\DoxyCodeLine{00270     [Read\_one],}
+\DoxyCodeLine{00271     [Read\_Displayer]}
+\DoxyCodeLine{00272 ]}
+\DoxyCodeLine{00273 }
+\DoxyCodeLine{00274 Read\_menu = sg.Column(Read\_Layout, key=\textcolor{stringliteral}{'read'}, visible=\textcolor{keyword}{False}, expand\_x=\textcolor{keyword}{True}, expand\_y=\textcolor{keyword}{True})}
+\DoxyCodeLine{00275 \textcolor{comment}{\#-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00276 }
+\DoxyCodeLine{00277 }
+\DoxyCodeLine{00278 Update\_layout = [}
+\DoxyCodeLine{00279     [sg.Button(\textcolor{stringliteral}{'Update Data Base'}, key= \textcolor{stringliteral}{'UDB'}), sg.Button(\textcolor{stringliteral}{'Verify Database'}, key=\textcolor{stringliteral}{'VDB'}), sg.Button(\textcolor{stringliteral}{'Verify new links'}, key=\textcolor{stringliteral}{'VNL'})],}
+\DoxyCodeLine{00280     [sg.Button(\textcolor{stringliteral}{'Quick Update'}, key=\textcolor{stringliteral}{'QUDB'}),sg.Button(\textcolor{stringliteral}{'Fix Broken Pages'}, key=\textcolor{stringliteral}{'FBP'}), sg.Button(\textcolor{stringliteral}{'Remove Duplicateds'}, key=\textcolor{stringliteral}{'RDp'})],}
+\DoxyCodeLine{00281     [}
+\DoxyCodeLine{00282         sg.Table(}
+\DoxyCodeLine{00283             values=get\_checker(\textcolor{stringliteral}{'update'}), }
+\DoxyCodeLine{00284             headings=[\textcolor{stringliteral}{'Current stats'}], }
+\DoxyCodeLine{00285             key=\textcolor{stringliteral}{'update\_display'}, }
+\DoxyCodeLine{00286             auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00287             enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00288             expand\_x=\textcolor{keyword}{True},}
+\DoxyCodeLine{00289             expand\_y=\textcolor{keyword}{True}}
+\DoxyCodeLine{00290         )}
+\DoxyCodeLine{00291     ],}
+\DoxyCodeLine{00292 ]}
+\DoxyCodeLine{00293 }
+\DoxyCodeLine{00294 }
+\DoxyCodeLine{00295 Update\_menu = sg.Column(Update\_layout, key=\textcolor{stringliteral}{'update'}, visible=\textcolor{keyword}{False}, expand\_x=\textcolor{keyword}{True})}
+\DoxyCodeLine{00296 }
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00299 \textcolor{keyword}{def }get\_email\_list()-\/>List:}
+\DoxyCodeLine{00300     \textcolor{keywordflow}{return} list(map(\textcolor{keyword}{lambda} a : [a], email()))}
+\DoxyCodeLine{00301 }
+\DoxyCodeLine{00302 }
+\DoxyCodeLine{00303 }
+\DoxyCodeLine{00304 }
+\DoxyCodeLine{00305 Option\_layout = [}
+\DoxyCodeLine{00306     [sg.Text(\textcolor{stringliteral}{'Links Column :'}), sg.Text(f\textcolor{stringliteral}{'\{code\_col("{}index"{})\}'}, size = 10, key=\textcolor{stringliteral}{'code\_col'}), sg.Button(\textcolor{stringliteral}{'Change'}, key = \textcolor{stringliteral}{'change\_code\_col'}),sg.Text(\textcolor{stringliteral}{'Names Column :'}), }
+\DoxyCodeLine{00307         sg.Text(f\textcolor{stringliteral}{'\{names\_col("{}index"{})\}'}, size = 10, key=\textcolor{stringliteral}{'names\_col'}), sg.Button(\textcolor{stringliteral}{'Change'}, key = \textcolor{stringliteral}{'change\_names\_col'}),}
+\DoxyCodeLine{00308     ],}
+\DoxyCodeLine{00309     [sg.Text(\textcolor{stringliteral}{'Highest Readed Column :'}), sg.Text(f\textcolor{stringliteral}{'\{get\_highest\_column()\}'}, size = 10, key=\textcolor{stringliteral}{'highest\_column'}), sg.Button(\textcolor{stringliteral}{'Change'}, key = \textcolor{stringliteral}{'change\_highest\_column'}),}
+\DoxyCodeLine{00310         sg.Text(\textcolor{stringliteral}{'Query :'}), sg.Text(f\textcolor{stringliteral}{'\{get\_query()\}'}, size = 50, key=\textcolor{stringliteral}{'query'}), sg.Button(\textcolor{stringliteral}{'Change'}, key = \textcolor{stringliteral}{'change\_query'})     }
+\DoxyCodeLine{00311     ],}
+\DoxyCodeLine{00312     [sg.Table(}
+\DoxyCodeLine{00313         values=get\_email\_list(), }
+\DoxyCodeLine{00314         headings=[\textcolor{stringliteral}{'emails'}], }
+\DoxyCodeLine{00315         key=\textcolor{stringliteral}{'emails\_table'}, }
+\DoxyCodeLine{00316         auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00317         enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00318         expand\_x=\textcolor{keyword}{True})],}
+\DoxyCodeLine{00319     [sg.Button(\textcolor{stringliteral}{'Add'}, key =\textcolor{stringliteral}{'add\_email'}), sg.Button(\textcolor{stringliteral}{'Remove'}, key = \textcolor{stringliteral}{'remove\_email'})],}
+\DoxyCodeLine{00320     [sg.Button(\textcolor{stringliteral}{'Forget Saved Facebook Account'}, key = \textcolor{stringliteral}{'forget\_account'}), sg.Button(\textcolor{stringliteral}{'Lock All'}, key=\textcolor{stringliteral}{'LAll'},)]}
+\DoxyCodeLine{00321 ]}
+\DoxyCodeLine{00322 }
+\DoxyCodeLine{00323 }
+\DoxyCodeLine{00324 Option\_menu = sg.Column(Option\_layout, key=\textcolor{stringliteral}{'option'}, visible= \textcolor{keyword}{False}, expand\_x=\textcolor{keyword}{True})}
+\DoxyCodeLine{00325 }
+\DoxyCodeLine{00326 }
+\DoxyCodeLine{00327 Recover\_layout = [}
+\DoxyCodeLine{00328     [sg.Button(\textcolor{stringliteral}{'Recover'}, key = \textcolor{stringliteral}{'recover'})]}
+\DoxyCodeLine{00329 ]}
+\DoxyCodeLine{00330 }
+\DoxyCodeLine{00331 }
+\DoxyCodeLine{00332 Recover\_menu = sg.Column(Recover\_layout, key=\textcolor{stringliteral}{'recover\_menu'}, visible=\textcolor{keyword}{False})}
+\DoxyCodeLine{00333 }
+\DoxyCodeLine{00334 }
+\DoxyCodeLine{00335 general\_displayer = [}
+\DoxyCodeLine{00336     [sg.Table(}
+\DoxyCodeLine{00337         values=get\_checker(\textcolor{stringliteral}{'general'}), }
+\DoxyCodeLine{00338         headings=[\textcolor{stringliteral}{'General Stats'}], }
+\DoxyCodeLine{00339         key=\textcolor{stringliteral}{'general\_display'}, }
+\DoxyCodeLine{00340         auto\_size\_columns=\textcolor{keyword}{True},}
+\DoxyCodeLine{00341         enable\_events = \textcolor{keyword}{True},}
+\DoxyCodeLine{00342         expand\_x=\textcolor{keyword}{True},}
+\DoxyCodeLine{00343         expand\_y=\textcolor{keyword}{True}}
+\DoxyCodeLine{00344     )],}
+\DoxyCodeLine{00345     [sg.MLine(}
+\DoxyCodeLine{00346         size=(80, 12), }
+\DoxyCodeLine{00347         k=\textcolor{stringliteral}{'-\/ML-\/'}, }
+\DoxyCodeLine{00348         reroute\_stdout=\textcolor{keyword}{True},}
+\DoxyCodeLine{00349         write\_only=\textcolor{keyword}{True}, }
+\DoxyCodeLine{00350         autoscroll=\textcolor{keyword}{True}, }
+\DoxyCodeLine{00351         auto\_refresh=\textcolor{keyword}{True},}
+\DoxyCodeLine{00352         expand\_x=\textcolor{keyword}{True})],}
+\DoxyCodeLine{00353     [sg.ProgressBar(}
+\DoxyCodeLine{00354         100, }
+\DoxyCodeLine{00355         size=(20, 20), }
+\DoxyCodeLine{00356         orientation=\textcolor{stringliteral}{'h'}, }
+\DoxyCodeLine{00357         key=\textcolor{stringliteral}{'-\/bar-\/'},}
+\DoxyCodeLine{00358         expand\_x=\textcolor{keyword}{True}}
+\DoxyCodeLine{00359     )]}
+\DoxyCodeLine{00360 ]}
+\DoxyCodeLine{00361 }
+\DoxyCodeLine{00362 }
+\DoxyCodeLine{00363 }
+\DoxyCodeLine{00364 window = Make\_layout([Read\_menu, Search\_menu, Update\_menu, Option\_menu, Recover\_menu], general\_displayer)}
+\DoxyCodeLine{00365 }
+\DoxyCodeLine{00366 }
+\DoxyCodeLine{00369 \textcolor{keyword}{def }getCreds()-\/>Tuple[str,str]:}
+\DoxyCodeLine{00370     username = sg.popup\_get\_text(\textcolor{stringliteral}{"{}username : "{}})}
+\DoxyCodeLine{00371     password = sg.popup\_get\_text(\textcolor{stringliteral}{"{}password : "{}}, password\_char=\textcolor{stringliteral}{'*'})}
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373     \textcolor{keywordflow}{return} username, password}
+\DoxyCodeLine{00374 }
+\DoxyCodeLine{00375 \textcolor{keyword}{def }confirmation():}
+\DoxyCodeLine{00376     \textcolor{keywordflow}{while} \textcolor{keyword}{True} : }
+\DoxyCodeLine{00377         \textcolor{keywordflow}{if} sg.popup\_yes\_no(\textcolor{stringliteral}{'Continue'}) == \textcolor{stringliteral}{'Yes'}:}
+\DoxyCodeLine{00378             \textcolor{keywordflow}{break} }
+\DoxyCodeLine{00379 }
+\DoxyCodeLine{00380 }
+\DoxyCodeLine{00381 }
+\DoxyCodeLine{00382 \textcolor{keyword}{def }checkCreds():}
+\DoxyCodeLine{00383     ask = sg.popup\_yes\_no(\textcolor{stringliteral}{"{}Towfactor Autentication?"{}})}
+\DoxyCodeLine{00384     checkLogin(ask==\textcolor{stringliteral}{'Yes'}, confirmation, getCreds)}
+\DoxyCodeLine{00385 }
+\DoxyCodeLine{00386 \textcolor{keyword}{def }update\_table(id,window,display):}
+\DoxyCodeLine{00387     time.sleep(5)}
+\DoxyCodeLine{00388     \textcolor{keywordflow}{while} \textcolor{keyword}{True} :}
+\DoxyCodeLine{00389         time.sleep(1)}
+\DoxyCodeLine{00390         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} window[id].get() == get\_checker(display):}
+\DoxyCodeLine{00391             \textcolor{keywordflow}{try} :}
+\DoxyCodeLine{00392                 window[id].update(get\_checker(display))}
+\DoxyCodeLine{00393             \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00394                 \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00395 }
+\DoxyCodeLine{00396 \textcolor{keyword}{def }update\_table\_stack(id,window,display):}
+\DoxyCodeLine{00397     time.sleep(5)}
+\DoxyCodeLine{00398     \textcolor{keywordflow}{while} \textcolor{keyword}{True} :}
+\DoxyCodeLine{00399         time.sleep(1)}
+\DoxyCodeLine{00400         \textcolor{keywordflow}{if} WORKING :}
+\DoxyCodeLine{00401             window[id].update(get\_stack(display))}
+\DoxyCodeLine{00402 }
+\DoxyCodeLine{00403 \textcolor{keyword}{def }bar\_update():}
+\DoxyCodeLine{00404     i = 0}
+\DoxyCodeLine{00405     \textcolor{keywordflow}{while} \textcolor{keyword}{True} :}
+\DoxyCodeLine{00406         time.sleep(0.01)}
+\DoxyCodeLine{00407         \textcolor{keywordflow}{if} WORKING :}
+\DoxyCodeLine{00408             window[\textcolor{stringliteral}{'-\/bar-\/'}].update\_bar(i,1000)}
+\DoxyCodeLine{00409             i=i+10}
+\DoxyCodeLine{00410             \textcolor{keywordflow}{if} i > 1000 : i = 0}
+\DoxyCodeLine{00411         \textcolor{keywordflow}{elif} \textcolor{keywordflow}{not} i == 0:}
+\DoxyCodeLine{00412             time.sleep(1)}
+\DoxyCodeLine{00413             i=0}
+\DoxyCodeLine{00414             window[\textcolor{stringliteral}{'-\/bar-\/'}].update\_bar(i,10)}
+\DoxyCodeLine{00415 }
+\DoxyCodeLine{00416 }
+\DoxyCodeLine{00417 \textcolor{comment}{\# hashInvalids()}}
+\DoxyCodeLine{00418 \textcolor{comment}{\# m = IsInDataBase('https://www.facebook.com/joao.dacruz.961')}}
+\DoxyCodeLine{00419 \textcolor{comment}{\# m = IsInDataBase('https://www.facebook.com/mehdi.oo.1')}}
+\DoxyCodeLine{00420 \textcolor{comment}{\# m = IsInDataBase('bob')}}
+\DoxyCodeLine{00421 \textcolor{comment}{\# m = getProfile('https://www.facebook.com/isac.cruz.99')}}
+\DoxyCodeLine{00422 \textcolor{comment}{\# m = getProfile('bob')}}
+\DoxyCodeLine{00423 \textcolor{comment}{\# insertProfileLink('bob')}}
+\DoxyCodeLine{00424 }
+\DoxyCodeLine{00425 event, values = window.read()}
+\DoxyCodeLine{00426 checkCreds()}
+\DoxyCodeLine{00427 base = 1}
+\DoxyCodeLine{00428 perfix = \textcolor{stringliteral}{''}}
+\DoxyCodeLine{00429 window.perform\_long\_operation(\textcolor{keyword}{lambda} : update\_table(\textcolor{stringliteral}{'update\_display'}, window, \textcolor{stringliteral}{'update'}),\textcolor{stringliteral}{'update\_display'})}
+\DoxyCodeLine{00430 window.perform\_long\_operation(\textcolor{keyword}{lambda} : update\_table(\textcolor{stringliteral}{'general\_display'}, window, \textcolor{stringliteral}{'general'}),\textcolor{stringliteral}{'general\_display'})}
+\DoxyCodeLine{00431 window.perform\_long\_operation(bar\_update,\textcolor{stringliteral}{'bar\_display'})}
+\DoxyCodeLine{00432 \textcolor{comment}{\#window['Read\_table'].update()}}
+\DoxyCodeLine{00433 }
+\DoxyCodeLine{00434 }
+\DoxyCodeLine{00435 }
+\DoxyCodeLine{00436 \textcolor{keywordflow}{while} \textcolor{keyword}{True}: }
+\DoxyCodeLine{00437     }
+\DoxyCodeLine{00438     event, values = window.read()}
+\DoxyCodeLine{00439     \textcolor{comment}{\# print(event)}}
+\DoxyCodeLine{00440     \textcolor{comment}{\# print(values)}}
+\DoxyCodeLine{00441     \textcolor{keywordflow}{if} event == sg.WIN\_CLOSED \textcolor{keywordflow}{or} event == \textcolor{stringliteral}{'Cancel'}:}
+\DoxyCodeLine{00442         \textcolor{keywordflow}{if} WORKING :}
+\DoxyCodeLine{00443             \textcolor{keywordflow}{if} popup\_yes\_no(\textcolor{stringliteral}{'A task is being done, are you sure you want to close'}) == \textcolor{stringliteral}{'Yes'}:}
+\DoxyCodeLine{00444                 \textcolor{keywordflow}{break} }
+\DoxyCodeLine{00445             \textcolor{keywordflow}{else} :}
+\DoxyCodeLine{00446                 event, values = window.read()}
+\DoxyCodeLine{00447                 \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00448         \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00449 }
+\DoxyCodeLine{00450     \textcolor{comment}{\# Search Page-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00451     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'search\_input'}:}
+\DoxyCodeLine{00452         window[\textcolor{stringliteral}{'search\_table'}].update(values = get\_list(values[\textcolor{stringliteral}{'search\_input'}]))}
+\DoxyCodeLine{00453 }
+\DoxyCodeLine{00454     \textcolor{comment}{\# Search Table Selector}}
+\DoxyCodeLine{00455     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'search\_table'} \textcolor{keywordflow}{and} len(values[\textcolor{stringliteral}{'search\_table'}])==1:}
+\DoxyCodeLine{00456         name\_selected = get\_list(values[\textcolor{stringliteral}{'search\_input'}])[values[\textcolor{stringliteral}{'search\_table'}][0]][0]}
+\DoxyCodeLine{00457         page = getPageByName(name\_selected)[0]}
+\DoxyCodeLine{00458         window[\textcolor{stringliteral}{'page\_name'}].update(str(page[0]))}
+\DoxyCodeLine{00459         window[\textcolor{stringliteral}{'page\_link'}].update(str(page[1]))}
+\DoxyCodeLine{00460         window[\textcolor{stringliteral}{'page\_spreadsheet'}].update(str(page[2]))}
+\DoxyCodeLine{00461         window[\textcolor{stringliteral}{'page\_controller'}].update(visible = \textcolor{keyword}{True})}
+\DoxyCodeLine{00462 }
+\DoxyCodeLine{00463     \textcolor{comment}{\# Page Controller killer}}
+\DoxyCodeLine{00464     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} values[\textcolor{stringliteral}{'search\_table'}] == \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00465         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} len(values[\textcolor{stringliteral}{'search\_table'}])==1 : }
+\DoxyCodeLine{00466             window[\textcolor{stringliteral}{'page\_controller'}].update(visible = \textcolor{keyword}{False})}
+\DoxyCodeLine{00467 }
+\DoxyCodeLine{00468     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'edit\_page\_link'}:}
+\DoxyCodeLine{00469         change(}
+\DoxyCodeLine{00470             display\_id=\textcolor{stringliteral}{'page\_link'},}
+\DoxyCodeLine{00471             message=\textcolor{stringliteral}{"{}New Page Link : "{}},}
+\DoxyCodeLine{00472             changer= \textcolor{keyword}{lambda} val: updateLink(values[\textcolor{stringliteral}{'page\_name'}], val),}
+\DoxyCodeLine{00473             window=window}
+\DoxyCodeLine{00474         )}
+\DoxyCodeLine{00475         }
+\DoxyCodeLine{00476         \textcolor{comment}{\# if not sg.popup\_ok\_cancel('Are you sure?') == 'OK':}}
+\DoxyCodeLine{00477         \textcolor{comment}{\#     continue}}
+\DoxyCodeLine{00478         \textcolor{comment}{\# link = sg.popup\_get\_text("{}New Page Link : "{})}}
+\DoxyCodeLine{00479         \textcolor{comment}{\# if run\_with\_work\_check(lambda : updateLink(values['page\_name'], link)) and not link == None:}}
+\DoxyCodeLine{00480         \textcolor{comment}{\#     window['page\_link'].update(str(link))}}
+\DoxyCodeLine{00481 }
+\DoxyCodeLine{00482     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'edit\_page\_spreadsheet'}:}
+\DoxyCodeLine{00483         change(}
+\DoxyCodeLine{00484             display\_id = \textcolor{stringliteral}{'page\_spreadsheet'}, }
+\DoxyCodeLine{00485             message = \textcolor{stringliteral}{"{}New Page Spreadsheet : "{}}, }
+\DoxyCodeLine{00486             changer = \textcolor{keyword}{lambda} val : updateSheet(values[\textcolor{stringliteral}{'page\_name'}], val),}
+\DoxyCodeLine{00487             window = window}
+\DoxyCodeLine{00488         )}
+\DoxyCodeLine{00489 }
+\DoxyCodeLine{00490     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'delete\_page'}:}
+\DoxyCodeLine{00491         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} sg.popup\_ok\_cancel(\textcolor{stringliteral}{'Are you sure?'}) == \textcolor{stringliteral}{'OK'}:}
+\DoxyCodeLine{00492             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00493         name = sg.popup\_get\_text(f\textcolor{stringliteral}{"{}Write the name of the spreadsheet: \{values['page\_name']\}"{}})}
+\DoxyCodeLine{00494         \textcolor{keywordflow}{if} name == values[\textcolor{stringliteral}{'page\_name'}]:}
+\DoxyCodeLine{00495             run\_with\_work\_check(removePage(values[\textcolor{stringliteral}{'page\_name'}]))}
+\DoxyCodeLine{00496         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00497             sg.popup(\textcolor{stringliteral}{'Name was not correct'})}
+\DoxyCodeLine{00498 }
+\DoxyCodeLine{00499         window[\textcolor{stringliteral}{'search\_table'}].update(values = get\_list(values[\textcolor{stringliteral}{'search\_input'}]))}
+\DoxyCodeLine{00500 }
+\DoxyCodeLine{00501     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'show\_add\_page\_menu'}:}
+\DoxyCodeLine{00502         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} window[\textcolor{stringliteral}{'add\_page\_menu'}].visible :}
+\DoxyCodeLine{00503             window[\textcolor{stringliteral}{'add\_page\_menu'}].update(visible = \textcolor{keyword}{True})}
+\DoxyCodeLine{00504         \textcolor{keywordflow}{else} : }
+\DoxyCodeLine{00505             window[\textcolor{stringliteral}{'add\_page\_menu'}].update(visible = \textcolor{keyword}{False})}
+\DoxyCodeLine{00506 }
+\DoxyCodeLine{00507     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'add\_page'}: }
+\DoxyCodeLine{00508         name = values[\textcolor{stringliteral}{'add\_page\_name'}]}
+\DoxyCodeLine{00509         link = values[\textcolor{stringliteral}{'add\_page\_link'}]}
+\DoxyCodeLine{00510         spread = values[\textcolor{stringliteral}{'add\_page\_spreadsheet'}]}
+\DoxyCodeLine{00511 }
+\DoxyCodeLine{00512         readed = run\_with\_work\_check(addPage(name, link, spread))}
+\DoxyCodeLine{00513 }
+\DoxyCodeLine{00514         window[\textcolor{stringliteral}{'search\_table'}].update(values = get\_list(values[\textcolor{stringliteral}{'search\_input'}]))}
+\DoxyCodeLine{00515         }
+\DoxyCodeLine{00516         \textcolor{keywordflow}{if} readed : }
+\DoxyCodeLine{00517             window[\textcolor{stringliteral}{'add\_page\_name'}].update(\textcolor{stringliteral}{''})}
+\DoxyCodeLine{00518             window[\textcolor{stringliteral}{'add\_page\_link'}].update(\textcolor{stringliteral}{''})}
+\DoxyCodeLine{00519             window[\textcolor{stringliteral}{'add\_page\_spreadsheet'}].update(\textcolor{stringliteral}{''})}
+\DoxyCodeLine{00520 }
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522     \textcolor{comment}{\# Read -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00523     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'Read All'}:}
+\DoxyCodeLine{00524         \textcolor{keywordflow}{if} len(values[\textcolor{stringliteral}{'Read\_table'}]) > 0:}
+\DoxyCodeLine{00525             index = values[\textcolor{stringliteral}{'Read\_table'}][0]}
+\DoxyCodeLine{00526             path = window[\textcolor{stringliteral}{'Read\_table'}].get()[index]}
+\DoxyCodeLine{00527             val = read\_a\_list\_as\_array(path)}
+\DoxyCodeLine{00528 }
+\DoxyCodeLine{00529             run\_in\_paralel(\textcolor{keyword}{lambda} : UpdateLikes(val), window)}
+\DoxyCodeLine{00530         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00531             sg.popup(\textcolor{stringliteral}{'select a list'})}
+\DoxyCodeLine{00532         }
+\DoxyCodeLine{00533 }
+\DoxyCodeLine{00534     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'Read One'}:}
+\DoxyCodeLine{00535         run\_in\_paralel(\textcolor{keyword}{lambda} : UpdateLikes([values[\textcolor{stringliteral}{'Read'}]]), window)}
+\DoxyCodeLine{00536 }
+\DoxyCodeLine{00537     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'Read\_table'}:}
+\DoxyCodeLine{00538         \textcolor{keywordflow}{if} len(values[\textcolor{stringliteral}{'Read\_table'}]) > 0:}
+\DoxyCodeLine{00539             index = values[\textcolor{stringliteral}{'Read\_table'}][0]}
+\DoxyCodeLine{00540             path = window[\textcolor{stringliteral}{'Read\_table'}].get()[index]}
+\DoxyCodeLine{00541             val = read\_a\_list(path)}
+\DoxyCodeLine{00542         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00543             val = \textcolor{stringliteral}{''}}
+\DoxyCodeLine{00544         }
+\DoxyCodeLine{00545         window[\textcolor{stringliteral}{'Read\_file\_input'}].update(val)}
+\DoxyCodeLine{00546 }
+\DoxyCodeLine{00547     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'Read\_save\_file'}:}
+\DoxyCodeLine{00548 }
+\DoxyCodeLine{00549         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} len(values[\textcolor{stringliteral}{'Read\_table'}])<1:}
+\DoxyCodeLine{00550             index = values[\textcolor{stringliteral}{'Read\_table'}][0]}
+\DoxyCodeLine{00551             content = values[\textcolor{stringliteral}{'Read\_file\_input'}]}
+\DoxyCodeLine{00552             path = window[\textcolor{stringliteral}{'Read\_table'}].get()[index]}
+\DoxyCodeLine{00553             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} path == \textcolor{keywordtype}{None} :}
+\DoxyCodeLine{00554                 save\_a\_list(get\_name\_by\_path(path), content)}
+\DoxyCodeLine{00555             \textcolor{keywordflow}{else} : }
+\DoxyCodeLine{00556                 sg.popup(\textcolor{stringliteral}{'ficheiro invalido'})}
+\DoxyCodeLine{00557 }
+\DoxyCodeLine{00558     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'Read\_new\_file'}:}
+\DoxyCodeLine{00559         name = sg.popup\_get\_text(\textcolor{stringliteral}{'nome do ficheiro'})}
+\DoxyCodeLine{00560 }
+\DoxyCodeLine{00561         \textcolor{keywordflow}{if} (\textcolor{keywordflow}{not} name == \textcolor{keywordtype}{None}) \textcolor{keywordflow}{or} name == \textcolor{stringliteral}{''} :}
+\DoxyCodeLine{00562             create\_new\_list(name)}
+\DoxyCodeLine{00563             window[\textcolor{stringliteral}{'Read\_table'}].update(get\_all\_paths\_lists())}
+\DoxyCodeLine{00564     }
+\DoxyCodeLine{00565     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'Read\_delete\_file'}:}
+\DoxyCodeLine{00566         index = values[\textcolor{stringliteral}{'Read\_table'}][0]}
+\DoxyCodeLine{00567         path = window[\textcolor{stringliteral}{'Read\_table'}].get()[index]}
+\DoxyCodeLine{00568         delete\_list(get\_name\_by\_path(path))}
+\DoxyCodeLine{00569         }
+\DoxyCodeLine{00570         window[\textcolor{stringliteral}{'Read\_table'}].update(get\_all\_paths\_lists())}
+\DoxyCodeLine{00571 }
+\DoxyCodeLine{00572 }
+\DoxyCodeLine{00573     \textcolor{comment}{\# Update -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00574     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'UDB'}:}
+\DoxyCodeLine{00575         run\_in\_paralel(UpdateDataBase, window)}
+\DoxyCodeLine{00576 }
+\DoxyCodeLine{00577     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'QUDB'}:}
+\DoxyCodeLine{00578         run\_in\_paralel(quick\_update, window)}
+\DoxyCodeLine{00579 }
+\DoxyCodeLine{00580     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'VDB'}:}
+\DoxyCodeLine{00581         run\_in\_paralel(VerifyDataBase, window)}
+\DoxyCodeLine{00582 }
+\DoxyCodeLine{00583     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'VNL'}:}
+\DoxyCodeLine{00584         run\_in\_paralel(VerifyIgnoreLinks, window)}
+\DoxyCodeLine{00585 }
+\DoxyCodeLine{00586     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'FBP'}:}
+\DoxyCodeLine{00587         run\_in\_paralel(fix\_all\_sheets, window)}
+\DoxyCodeLine{00588     }
+\DoxyCodeLine{00589     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'RDp'}:}
+\DoxyCodeLine{00590         run\_in\_paralel(RemoveDuplicateds, window)}
+\DoxyCodeLine{00591 }
+\DoxyCodeLine{00592     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'LAll'}:}
+\DoxyCodeLine{00593         run\_in\_paralel(\textcolor{keyword}{lambda} : smartLockAll(email()), window)}
+\DoxyCodeLine{00594         }
+\DoxyCodeLine{00595 }
+\DoxyCodeLine{00596     \textcolor{comment}{\# Options -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00597 }
+\DoxyCodeLine{00598     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'change\_names\_col'}:}
+\DoxyCodeLine{00599         num = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00600         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00601             num = int(sg.popup\_get\_text(\textcolor{stringliteral}{'change Names Colum'}))}
+\DoxyCodeLine{00602         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00603             sg.popup(\textcolor{stringliteral}{'Invalid Number'})}
+\DoxyCodeLine{00604             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00605 }
+\DoxyCodeLine{00606         run\_with\_work\_check(\textcolor{keyword}{lambda} : set\_names\_col(num))}
+\DoxyCodeLine{00607         window[\textcolor{stringliteral}{'names\_col'}].update(names\_col(\textcolor{stringliteral}{'index'}))}
+\DoxyCodeLine{00608     }
+\DoxyCodeLine{00609     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'change\_code\_col'}:}
+\DoxyCodeLine{00610         num = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00611         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00612             num = int(sg.popup\_get\_text(\textcolor{stringliteral}{'change Names Colum'}))}
+\DoxyCodeLine{00613         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00614             sg.popup(\textcolor{stringliteral}{'Invalid Number'})}
+\DoxyCodeLine{00615             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00616 }
+\DoxyCodeLine{00617         run\_with\_work\_check(\textcolor{keyword}{lambda} : set\_code\_col(num))}
+\DoxyCodeLine{00618         window[\textcolor{stringliteral}{'code\_col'}].update(code\_col(\textcolor{stringliteral}{'index'}))}
+\DoxyCodeLine{00619 }
+\DoxyCodeLine{00620     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'change\_highest\_column'}:}
+\DoxyCodeLine{00621         num = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00622         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00623             num = int(sg.popup\_get\_text(\textcolor{stringliteral}{'change Highest Readed Colum'}))}
+\DoxyCodeLine{00624         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00625             sg.popup(\textcolor{stringliteral}{'Invalid Number'})}
+\DoxyCodeLine{00626             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00627 }
+\DoxyCodeLine{00628         run\_with\_work\_check(\textcolor{keyword}{lambda} : set\_highest\_column(num))}
+\DoxyCodeLine{00629         window[\textcolor{stringliteral}{'highest\_column'}].update(get\_highest\_column())}
+\DoxyCodeLine{00630 }
+\DoxyCodeLine{00631     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'change\_query'}:}
+\DoxyCodeLine{00632         num = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00633         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00634             num = sg.popup\_get\_text(\textcolor{stringliteral}{'change Query (change only if you know the full system)'})}
+\DoxyCodeLine{00635         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00636             sg.popup(\textcolor{stringliteral}{'Invalid Number'})}
+\DoxyCodeLine{00637             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00638 }
+\DoxyCodeLine{00639         run\_with\_work\_check(\textcolor{keyword}{lambda} : set\_query(num))}
+\DoxyCodeLine{00640         window[\textcolor{stringliteral}{'query'}].update(get\_query())}
+\DoxyCodeLine{00641 }
+\DoxyCodeLine{00642     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'add\_email'}:}
+\DoxyCodeLine{00643         email\_val =  sg.popup\_get\_text(\textcolor{stringliteral}{'Insert the email'})}
+\DoxyCodeLine{00644         done = sg.PopupYesNo(f\textcolor{stringliteral}{'Are you sure to add \{email\_val\} to the list?'}) == \textcolor{stringliteral}{'Yes'}}
+\DoxyCodeLine{00645 }
+\DoxyCodeLine{00646         \textcolor{keywordflow}{if} done : run\_with\_work\_check(\textcolor{keyword}{lambda} : add\_email(email\_val))}
+\DoxyCodeLine{00647 }
+\DoxyCodeLine{00648         window[\textcolor{stringliteral}{'emails\_table'}].update(get\_email\_list())}
+\DoxyCodeLine{00649     }
+\DoxyCodeLine{00650     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'remove\_email'} \textcolor{keywordflow}{and} len(values[\textcolor{stringliteral}{'emails\_table'}])==1:}
+\DoxyCodeLine{00651         email\_val =  email()[values[\textcolor{stringliteral}{'emails\_table'}][0]]}
+\DoxyCodeLine{00652         done = sg.PopupYesNo(f\textcolor{stringliteral}{'Are you sure to add \{email\_val\} to the list?'}) == \textcolor{stringliteral}{'Yes'}}
+\DoxyCodeLine{00653 }
+\DoxyCodeLine{00654         \textcolor{keywordflow}{if} done : run\_with\_work\_check(\textcolor{keyword}{lambda} : remove\_email(email\_val))}
+\DoxyCodeLine{00655         window[\textcolor{stringliteral}{'emails\_table'}].update(get\_email\_list())}
+\DoxyCodeLine{00656 }
+\DoxyCodeLine{00657     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'forget\_account'} :}
+\DoxyCodeLine{00658         \textcolor{keywordflow}{if} sg.popup\_yes\_no(\textcolor{stringliteral}{'Are you sure you want to delete the account credencials?'}) == \textcolor{stringliteral}{'Yes'}:}
+\DoxyCodeLine{00659             }
+\DoxyCodeLine{00660             run\_with\_work\_check(forgetFacebookAccount)}
+\DoxyCodeLine{00661             checkCreds()}
+\DoxyCodeLine{00662             WORKING = 0==1}
+\DoxyCodeLine{00663             WORKING\_FLAG = \textcolor{stringliteral}{''}}
+\DoxyCodeLine{00664             }
+\DoxyCodeLine{00665 }
+\DoxyCodeLine{00666     \textcolor{comment}{\#Recover-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00667     \textcolor{keywordflow}{if} event == \textcolor{stringliteral}{'recover'}:}
+\DoxyCodeLine{00668         \textcolor{keywordflow}{if} get\_recover():}
+\DoxyCodeLine{00669             run\_in\_paralel(full\_recover, window)}
+\DoxyCodeLine{00670         \textcolor{keywordflow}{else} : }
+\DoxyCodeLine{00671             sg.popup(\textcolor{stringliteral}{'No Recover to do'})}
+\DoxyCodeLine{00672 }
+\DoxyCodeLine{00673     \textcolor{comment}{\#Flags managment}}
+\DoxyCodeLine{00674     \textcolor{keywordflow}{if} (TRYED \textcolor{keywordflow}{and} WORKING) \textcolor{keywordflow}{or} event == FAIL\_WORD: }
+\DoxyCodeLine{00675         sg.popup(\textcolor{stringliteral}{'working : can not preform task until finish the current one'})}
+\DoxyCodeLine{00676         TRYED = \textcolor{keyword}{False}}
+\DoxyCodeLine{00677 }
+\DoxyCodeLine{00678     \textcolor{keywordflow}{if} event == FINISH\_WORD:}
+\DoxyCodeLine{00679         release\_core()}
+\DoxyCodeLine{00680     \textcolor{comment}{\# Menu Switcher}}
+\DoxyCodeLine{00681     \textcolor{keywordflow}{if} MENU\_BUTTON\_PREFIX \textcolor{keywordflow}{in} event:}
+\DoxyCodeLine{00682         }
+\DoxyCodeLine{00683          }
+\DoxyCodeLine{00684         window[f\textcolor{stringliteral}{'\{perfix\}\{MENU\_PREFIX\}\{base\}'}].update(visible=\textcolor{keyword}{False})}
+\DoxyCodeLine{00685 }
+\DoxyCodeLine{00686         base = int(event.split(MENU\_BUTTON\_PREFIX)[1])}
+\DoxyCodeLine{00687         perfix = event.split(MENU\_BUTTON\_PREFIX)[0]}
+\DoxyCodeLine{00688 }
+\DoxyCodeLine{00689 }
+\DoxyCodeLine{00690         window[f\textcolor{stringliteral}{'\{perfix\}\{MENU\_PREFIX\}\{base\}'}].update(visible=\textcolor{keyword}{True})}
+\DoxyCodeLine{00691 }
+\DoxyCodeLine{00692     \textcolor{comment}{\#print('You entered ', values)}}
+\DoxyCodeLine{00693     \textcolor{comment}{\#print(event)}}
+
+\end{DoxyCode}

@@ -1,0 +1,522 @@
+\doxysection{Read.\+py}
+\label{_read_8py_source}\index{Read.py@{Read.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} cgitb \textcolor{keyword}{import} text}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} getpass \textcolor{keyword}{import} getpass}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} pprint \textcolor{keyword}{import} pprint \textcolor{keyword}{as} pp}
+\DoxyCodeLine{00004 \textcolor{keyword}{import} pickle}
+\DoxyCodeLine{00005 \textcolor{keyword}{import} os}
+\DoxyCodeLine{00006 \textcolor{keyword}{from} typing \textcolor{keyword}{import} Dict, List}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00008 \textcolor{keyword}{from} selenium \textcolor{keyword}{import} webdriver}
+\DoxyCodeLine{00009 }
+\DoxyCodeLine{00010 \textcolor{keyword}{from} selenium.webdriver.chrome.options \textcolor{keyword}{import} Options}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012 \textcolor{keyword}{from} selenium.webdriver.common.by \textcolor{keyword}{import} By}
+\DoxyCodeLine{00013 }
+\DoxyCodeLine{00014 \textcolor{keyword}{from} Browser.FileReader \textcolor{keyword}{import} loadScroller}
+\DoxyCodeLine{00015 \textcolor{keyword}{from} General.general \textcolor{keyword}{import} ExplicitWait, getAplicableCleanList, wait\_secs, linkparse}
+\DoxyCodeLine{00016 \textcolor{keyword}{import} json}
+\DoxyCodeLine{00017 \textcolor{keyword}{from} General.imagecomparator \textcolor{keyword}{import} getReact}
+\DoxyCodeLine{00018 \textcolor{keyword}{import} General.loadingBar \textcolor{keyword}{as} loadingBar}
+\DoxyCodeLine{00019 }
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021 failed = []}
+\DoxyCodeLine{00022 timeout\_flag = \textcolor{keyword}{False}}
+\DoxyCodeLine{00023 timeout\_list = []}
+\DoxyCodeLine{00024 timeout\_readed = \textcolor{stringliteral}{''}}
+\DoxyCodeLine{00025 }
+\DoxyCodeLine{00026 username = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00027 password = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029 cookiesDir = \textcolor{stringliteral}{"{}./Browser/browser\_data/cookies.pkl"{}}}
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031 \textcolor{comment}{\# load scroll script}}
+\DoxyCodeLine{00032 scrollFile = loadScroller()}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034 \textcolor{comment}{\# load}}
+\DoxyCodeLine{00035 CoreFile = json.load(open(\textcolor{stringliteral}{'./Browser/browser\_data/workSheet.json'}))}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037 \textcolor{comment}{\# setting browser settings}}
+\DoxyCodeLine{00038 opt = Options()}
+\DoxyCodeLine{00039 opt.add\_argument(\textcolor{stringliteral}{"{}-\/-\/disable-\/notifications"{}})}
+\DoxyCodeLine{00040 opt.add\_argument(\textcolor{stringliteral}{"{}-\/-\/disable-\/cookies"{}})}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042 \textcolor{comment}{\# setting driver path}}
+\DoxyCodeLine{00043 PATH = \textcolor{stringliteral}{"{}./chromedriver.exe"{}}}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045 driver = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047 angrySrc = \textcolor{stringliteral}{"{}https://scontent.xx.fbcdn.net/m1/v/t6/An8ph2gwH6WsvW6pxuYzGzrW8CdpQXACl5PKb5e3I8yS82dPyO-\/cHlpZDGDHuNFUBIPS8\_rJmr6L5JKI6gpOd6GVgh3sLHS6qMD\_fv-\/qg6FoJAzZC2k.png"{}}}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050 }
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052 \textcolor{keyword}{def }forgetFacebookAccount():}
+\DoxyCodeLine{00053     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00054         os.remove(cookiesDir)}
+\DoxyCodeLine{00055     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00056         print(\textcolor{stringliteral}{"{}previous session not founded"{}})}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059 \textcolor{keyword}{def }getBrowser():}
+\DoxyCodeLine{00060     \textcolor{keyword}{global} driver}
+\DoxyCodeLine{00061     \textcolor{keywordflow}{return} driver}
+\DoxyCodeLine{00062 \textcolor{comment}{\# open automated browser}}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065 \textcolor{keyword}{def }openBrowser():}
+\DoxyCodeLine{00066     \textcolor{keyword}{global} driver}
+\DoxyCodeLine{00067     driver = webdriver.Chrome(chrome\_options=opt, executable\_path=PATH)}
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070 \textcolor{keyword}{def }closeBrowser():}
+\DoxyCodeLine{00071     \textcolor{keyword}{global} driver}
+\DoxyCodeLine{00072     driver.close()}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074 \textcolor{comment}{\# -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00075 \textcolor{comment}{\# general function}}
+\DoxyCodeLine{00076 }
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078 \textcolor{keyword}{def }getCreds():}
+\DoxyCodeLine{00079     \textcolor{keywordflow}{return} input(\textcolor{stringliteral}{'username : '}), getpass(\textcolor{stringliteral}{"{}pass : "{}})}
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00087 \textcolor{keyword}{def }checkLogin(towFactor:bool=\textcolor{keyword}{False}, towFactorConfirmation = \textcolor{keyword}{lambda} : input(\textcolor{stringliteral}{"{}Ready to proceed?"{}}),getCreds = getCreds):}
+\DoxyCodeLine{00088     openBrowser()}
+\DoxyCodeLine{00089     login(towFactor, towFactorConfirmation, getCreds)}
+\DoxyCodeLine{00090     closeBrowser()}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092 }
+\DoxyCodeLine{00093 \textcolor{keyword}{def }login(towFactor=False, towFactorConfirmation = lambda : input(\textcolor{stringliteral}{"{}Ready to proceed?"{}}),getCreds = getCreds):}
+\DoxyCodeLine{00094     \textcolor{keyword}{global} username, password}
+\DoxyCodeLine{00095     \textcolor{comment}{\# open website}}
+\DoxyCodeLine{00096     driver.get(\textcolor{stringliteral}{"{}https://www.facebook.com"{}})}
+\DoxyCodeLine{00097     previousSession = \textcolor{keyword}{False}}
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00099     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00100         cookies = pickle.load(open(cookiesDir, \textcolor{stringliteral}{"{}rb"{}}))}
+\DoxyCodeLine{00101         \textcolor{keywordflow}{for} cookie \textcolor{keywordflow}{in} cookies:}
+\DoxyCodeLine{00102             driver.add\_cookie(cookie)}
+\DoxyCodeLine{00103         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105         previousSession = \textcolor{keyword}{True}}
+\DoxyCodeLine{00106     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00107         print(\textcolor{stringliteral}{"{}cookies not readed"{}})}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109     driver.get(\textcolor{stringliteral}{"{}https://www.facebook.com"{}})}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} previousSession:}
+\DoxyCodeLine{00112         closeBrowser()}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114         username, password = getCreds()}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116         openBrowser()}
+\DoxyCodeLine{00117 }
+\DoxyCodeLine{00118         \textcolor{comment}{\# open website}}
+\DoxyCodeLine{00119         driver.get(\textcolor{stringliteral}{"{}https://www.facebook.com"{}})}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121         \textcolor{comment}{\# get xpaths}}
+\DoxyCodeLine{00122         cookieButton = driver.find\_element(By.XPATH,}
+\DoxyCodeLine{00123             \textcolor{stringliteral}{"{}/html/body/div[3]/div[2]/div/div/div/div/div[3]/button[2]"{}})}
+\DoxyCodeLine{00124         usernameSpace = driver.find\_element(By.XPATH,}
+\DoxyCodeLine{00125             \textcolor{stringliteral}{"{}/html/body/div[1]/div[2]/div[1]/div/div/div/div[2]/div/div[1]/form/div[1]/div[1]/input"{}})}
+\DoxyCodeLine{00126         passwordSpace = driver.find\_element(By.XPATH,}
+\DoxyCodeLine{00127             \textcolor{stringliteral}{"{}/html/body/div[1]/div[2]/div[1]/div/div/div/div[2]/div/div[1]/form/div[1]/div[2]/div/input"{}})}
+\DoxyCodeLine{00128         loginButton = driver.find\_element(By.XPATH,}
+\DoxyCodeLine{00129             \textcolor{stringliteral}{"{}/html/body/div[1]/div[2]/div[1]/div/div/div/div[2]/div/div[1]/form/div[2]/button"{}})}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131         \textcolor{comment}{\# Execute Login}}
+\DoxyCodeLine{00132         cookieButton.click()}
+\DoxyCodeLine{00133         usernameSpace.send\_keys(username)}
+\DoxyCodeLine{00134         passwordSpace.send\_keys(password)}
+\DoxyCodeLine{00135         loginButton.click()}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137         username = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00138         password = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00139 }
+\DoxyCodeLine{00140         \textcolor{keywordflow}{if} towFactor:}
+\DoxyCodeLine{00141             towFactorConfirmation()}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143         ExplicitWait(secs=10, message=\textcolor{stringliteral}{"{}waiting for page"{}})}
+\DoxyCodeLine{00144         pickle.dump(driver.get\_cookies(), open(}
+\DoxyCodeLine{00145             cookiesDir, \textcolor{stringliteral}{"{}wb"{}}))}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149 \textcolor{comment}{\# -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00150 \textcolor{comment}{\# List functions}}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153 \textcolor{keyword}{def }getChilren(list):}
+\DoxyCodeLine{00154     \textcolor{keywordflow}{return} list.find\_elements(By.XPATH,\textcolor{stringliteral}{'//*[@style="{}padding-\/left: 8px; padding-\/right: 8px;"{}]'})}
+\DoxyCodeLine{00155     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00156 }
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158 \textcolor{keyword}{def }scrollBottom(list):}
+\DoxyCodeLine{00159     \textcolor{comment}{\# inject scroll script}}
+\DoxyCodeLine{00160     driver.execute\_script(scrollFile, list)}
+\DoxyCodeLine{00161     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164 \textcolor{keyword}{def }scrollAll(list, max):}
+\DoxyCodeLine{00165     \textcolor{keyword}{global} timeout\_flag}
+\DoxyCodeLine{00166     \textcolor{comment}{\# iniciating screen counter}}
+\DoxyCodeLine{00167     loadingBar.openCounter(\textcolor{stringliteral}{"{}Scrolling"{}}, max)}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169     \textcolor{comment}{\# scroll while list is not completly loaded}}
+\DoxyCodeLine{00170     \textcolor{keywordflow}{while} len(getChilren(list)) < max:}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172         \textcolor{comment}{\# measure list before scroll}}
+\DoxyCodeLine{00173         last = len(getChilren(list))}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175         \textcolor{comment}{\# debug print}}
+\DoxyCodeLine{00176         \textcolor{comment}{\#print(str(last) + "{}/"{} + str(max))}}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178         \textcolor{comment}{\# scrolling}}
+\DoxyCodeLine{00179         scrollBottom(list)}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181         \textcolor{comment}{\# start timeout counter}}
+\DoxyCodeLine{00182         timeout = 0}
+\DoxyCodeLine{00183 }
+\DoxyCodeLine{00184         \textcolor{comment}{\# wait while new items are not loaded}}
+\DoxyCodeLine{00185         \textcolor{keywordflow}{while} last == len(getChilren(list)):}
+\DoxyCodeLine{00186             \textcolor{comment}{\# safety waiting time}}
+\DoxyCodeLine{00187             waiTime = 3}
+\DoxyCodeLine{00188             wait\_secs(waiTime)}
+\DoxyCodeLine{00189 }
+\DoxyCodeLine{00190             \textcolor{comment}{\# update screen counter}}
+\DoxyCodeLine{00191             loadingBar.updateCounter(last)}
+\DoxyCodeLine{00192 }
+\DoxyCodeLine{00193             \textcolor{comment}{\# check and raise timeout exception}}
+\DoxyCodeLine{00194             timeout += 1}
+\DoxyCodeLine{00195             \textcolor{keywordflow}{if} timeout*waiTime > 30:}
+\DoxyCodeLine{00196                 timeout\_flag = \textcolor{keyword}{True}}
+\DoxyCodeLine{00197                 \textcolor{keywordflow}{raise} Exception(\textcolor{stringliteral}{"{}Site does not respond"{}})}
+\DoxyCodeLine{00198             \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00199 }
+\DoxyCodeLine{00200         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202     \textcolor{comment}{\# safety srcolls}}
+\DoxyCodeLine{00203     scrollBottom(list)}
+\DoxyCodeLine{00204     wait\_secs(1)}
+\DoxyCodeLine{00205     scrollBottom(list)}
+\DoxyCodeLine{00206     wait\_secs(1)}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208     \textcolor{comment}{\# dynamic counter last update}}
+\DoxyCodeLine{00209     loadingBar.updateCounter(len(getChilren(list))-\/30)}
+\DoxyCodeLine{00210     \textcolor{comment}{\# closing used counter}}
+\DoxyCodeLine{00211     loadingBar.closeCounter()}
+\DoxyCodeLine{00212     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214 }
+\DoxyCodeLine{00215 \textcolor{keyword}{def }readProfileList(inputList, total):}
+\DoxyCodeLine{00216     \textcolor{keyword}{global} timeout\_readed}
+\DoxyCodeLine{00217     \textcolor{comment}{\# read all profiles}}
+\DoxyCodeLine{00218     profilesList = []}
+\DoxyCodeLine{00219 }
+\DoxyCodeLine{00220     \textcolor{comment}{\# inicializating screen counter}}
+\DoxyCodeLine{00221     loadingBar.openCounter(\textcolor{stringliteral}{"{}reading"{}}, total)}
+\DoxyCodeLine{00222     count = 0}
+\DoxyCodeLine{00223     \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(total+1):}
+\DoxyCodeLine{00224         \textcolor{comment}{\# debug print}}
+\DoxyCodeLine{00225         \textcolor{comment}{\# print(i)}}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00228             \textcolor{comment}{\# get list item by xpath}}
+\DoxyCodeLine{00229             item = inputList.find\_element(By.XPATH,\textcolor{stringliteral}{'.//div['} + str(i) + \textcolor{stringliteral}{"{}]"{}})}
+\DoxyCodeLine{00230 }
+\DoxyCodeLine{00231             \textcolor{comment}{\# get link attributed elements}}
+\DoxyCodeLine{00232             refList = item.find\_elements(By.XPATH,\textcolor{stringliteral}{"{}.//*[@role='link']"{}})}
+\DoxyCodeLine{00233             }
+\DoxyCodeLine{00234             react = getReact(refList[0].find\_element(By.TAG\_NAME,\textcolor{stringliteral}{"{}img"{}}).get\_attribute(\textcolor{stringliteral}{'src'})) }
+\DoxyCodeLine{00235             \textcolor{keywordflow}{if} react == \textcolor{stringliteral}{'angry'} \textcolor{keywordflow}{or} react == \textcolor{stringliteral}{'haha'}:}
+\DoxyCodeLine{00236                 \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00237             }
+\DoxyCodeLine{00238             \textcolor{comment}{\# choosing write link}}
+\DoxyCodeLine{00239             href = refList[1].get\_attribute(\textcolor{stringliteral}{'href'})}
+\DoxyCodeLine{00240             name = refList[1].text}
+\DoxyCodeLine{00241             }
+\DoxyCodeLine{00242             \textcolor{comment}{\# cleaning link}}
+\DoxyCodeLine{00243             href = linkparse(href)}
+\DoxyCodeLine{00244 }
+\DoxyCodeLine{00245             \textcolor{comment}{\# debug print}}
+\DoxyCodeLine{00246             \textcolor{comment}{\# print(href)}}
+\DoxyCodeLine{00247 }
+\DoxyCodeLine{00248             \textcolor{comment}{\# storing parsed link}}
+\DoxyCodeLine{00249             profilesList.append([href,name, react])}
+\DoxyCodeLine{00250 }
+\DoxyCodeLine{00251         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00252             count += 1}
+\DoxyCodeLine{00253             \textcolor{comment}{\# deal with unreadable items}}
+\DoxyCodeLine{00254             \textcolor{comment}{\#print('\(\backslash\)n.//div[' + str(i+1) + ']/div/div/div[1]/div/a not added')}}
+\DoxyCodeLine{00255             \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00256 }
+\DoxyCodeLine{00257         \textcolor{comment}{\# update screen counter}}
+\DoxyCodeLine{00258         loadingBar.updateCounter(i+1)}
+\DoxyCodeLine{00259 }
+\DoxyCodeLine{00260     \textcolor{comment}{\# closing used counter}}
+\DoxyCodeLine{00261     loadingBar.closeCounter()}
+\DoxyCodeLine{00262     print(\textcolor{stringliteral}{"{}profiles readed : "{}} + str(len(profilesList)) + \textcolor{stringliteral}{"{}/"{}} + str(total))}
+\DoxyCodeLine{00263     print(\textcolor{stringliteral}{"{}ureadables : "{}} + str(count))}
+\DoxyCodeLine{00264     timeout\_readed = str(len(profilesList)) + \textcolor{stringliteral}{"{}/"{}} + str(total)}
+\DoxyCodeLine{00265     \textcolor{keywordflow}{return} profilesList}
+\DoxyCodeLine{00266 }
+\DoxyCodeLine{00267 }
+\DoxyCodeLine{00268 \textcolor{keyword}{def }loadAndRead(pathList, total):}
+\DoxyCodeLine{00269     \textcolor{comment}{\# get list}}
+\DoxyCodeLine{00270     list = driver.find\_element(By.XPATH,pathList)}
+\DoxyCodeLine{00271     wait\_secs(2)}
+\DoxyCodeLine{00272 }
+\DoxyCodeLine{00273     \textcolor{comment}{\# scrool all}}
+\DoxyCodeLine{00274     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00275         print(\textcolor{stringliteral}{"{}hehe"{}})}
+\DoxyCodeLine{00276         scrollAll(list, total)}
+\DoxyCodeLine{00277         \textcolor{comment}{\# safety scroll}}
+\DoxyCodeLine{00278         scrollAll(list, total)}
+\DoxyCodeLine{00279     \textcolor{keywordflow}{except} BaseException:}
+\DoxyCodeLine{00280         print(\textcolor{stringliteral}{"{}scroll went wrong, timeout exception maybe"{}})}
+\DoxyCodeLine{00281 }
+\DoxyCodeLine{00282     \textcolor{comment}{\# read all profiles}}
+\DoxyCodeLine{00283     \textcolor{keywordflow}{return} readProfileList(list, total)}
+\DoxyCodeLine{00284 }
+\DoxyCodeLine{00285 }
+\DoxyCodeLine{00286 \textcolor{comment}{\# -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00287 \textcolor{comment}{\# post funcions}}
+\DoxyCodeLine{00288 \textcolor{keyword}{def }getButtonListPost(driver, CoreFile, mode, special = False):}
+\DoxyCodeLine{00289     path : str = CoreFile[\textcolor{stringliteral}{"{}page"{}}][\textcolor{stringliteral}{"{}openList"{}}][mode]}
+\DoxyCodeLine{00290 }
+\DoxyCodeLine{00291     \textcolor{keywordflow}{if} special : }
+\DoxyCodeLine{00292         path = path.replace(\textcolor{stringliteral}{'/span[2]/div/span[2]/'}, \textcolor{stringliteral}{'/div/span/div/span[2]/'})}
+\DoxyCodeLine{00293     \textcolor{comment}{\# path = path.replace('4','5') trouble line}}
+\DoxyCodeLine{00294     \textcolor{comment}{\# val inicialization}}
+\DoxyCodeLine{00295     total = 0}
+\DoxyCodeLine{00296     x = 0}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298     }
+\DoxyCodeLine{00299     total = getButtonListPost(driver, CoreFile, mode, \textcolor{keyword}{True}) \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} special \textcolor{keywordflow}{else} 0}
+\DoxyCodeLine{00300 }
+\DoxyCodeLine{00301     \textcolor{keywordflow}{if} total > 0 :}
+\DoxyCodeLine{00302         \textcolor{keywordflow}{return} total}
+\DoxyCodeLine{00303 }
+\DoxyCodeLine{00304     \textcolor{comment}{\# if element is not clickable, search for a parent that is clickable}}
+\DoxyCodeLine{00305     \textcolor{keywordflow}{while} x < 10:}
+\DoxyCodeLine{00306         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00307             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00308                 \textcolor{comment}{\# get element or parent(in case of [element not clickable])}}
+\DoxyCodeLine{00309                 path = getParentbyPath(path, x)}
+\DoxyCodeLine{00310                 \textcolor{comment}{\# get button}}
+\DoxyCodeLine{00311                 button = driver.find\_element(By.XPATH,path)}
+\DoxyCodeLine{00312 }
+\DoxyCodeLine{00313                 \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00314                     \textcolor{comment}{\# get total number of reaction (it's written in the element)}}
+\DoxyCodeLine{00315                     \textcolor{keywordflow}{if} x == 0:}
+\DoxyCodeLine{00316                         total = int(button.text)}
+\DoxyCodeLine{00317                 \textcolor{keywordflow}{except} ValueError:}
+\DoxyCodeLine{00318                     \textcolor{comment}{\# deal with non readable values}}
+\DoxyCodeLine{00319                     \textcolor{comment}{\# /html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div/div/div/div/div/div/div/div/div/div/div/div[2]/div/div[4]/div/div/div[1]/div/div[1]/div/div[1]/div/span/div/span[1]/span/span}}
+\DoxyCodeLine{00320                     \textcolor{comment}{\# /html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div/div/div/div/div/div/div/div/div/div/div/div[2]/div/div[4]/div/div/div[1]/div/div[1]/div/div[1]/div/span/div/span[2]/span/span/text()[1]}}
+\DoxyCodeLine{00321                     }
+\DoxyCodeLine{00322                     readable\_Path = getCousinbyPath(path)}
+\DoxyCodeLine{00323                     \textcolor{comment}{\# get button}}
+\DoxyCodeLine{00324                     button = driver.find\_element(By.XPATH,readable\_Path)}
+\DoxyCodeLine{00325 }
+\DoxyCodeLine{00326                     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00327                         \textcolor{comment}{\# get total number of reaction (it's written in the element)}}
+\DoxyCodeLine{00328                         \textcolor{keywordflow}{if} x == 0:}
+\DoxyCodeLine{00329                             total = int(button.text)}
+\DoxyCodeLine{00330                     \textcolor{keywordflow}{except} ValueError:}
+\DoxyCodeLine{00331                         \textcolor{comment}{\# get element or parent(in case of [element not clickable])}}
+\DoxyCodeLine{00332                         print(\textcolor{stringliteral}{"{}total not readable"{}})}
+\DoxyCodeLine{00333                         \textcolor{keywordflow}{return} -\/1}
+\DoxyCodeLine{00334 }
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336             \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00337                 \textcolor{comment}{\# deal with missing element}}
+\DoxyCodeLine{00338                 print(\textcolor{stringliteral}{"{}button not founded"{}})}
+\DoxyCodeLine{00339                 \textcolor{keywordflow}{return} -\/1}
+\DoxyCodeLine{00340 }
+\DoxyCodeLine{00341             button.click()}
+\DoxyCodeLine{00342 }
+\DoxyCodeLine{00343             \textcolor{comment}{\# return total of reactions}}
+\DoxyCodeLine{00344             \textcolor{keywordflow}{return} total}
+\DoxyCodeLine{00345         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00346             \textcolor{comment}{\# exception : element not clickable}}
+\DoxyCodeLine{00347             x += 1}
+\DoxyCodeLine{00348 }
+\DoxyCodeLine{00349     \textcolor{comment}{\# deal with no valid buttons}}
+\DoxyCodeLine{00350     \textcolor{keywordflow}{return} -\/1}
+\DoxyCodeLine{00351 }
+\DoxyCodeLine{00352 }
+\DoxyCodeLine{00353 \textcolor{keyword}{def }getParentbyPath(path, rec=1):}
+\DoxyCodeLine{00354     \textcolor{comment}{\# if rec == 0 it just return just the path}}
+\DoxyCodeLine{00355     \textcolor{keywordflow}{if} rec < 1:}
+\DoxyCodeLine{00356         \textcolor{keywordflow}{return} path}
+\DoxyCodeLine{00357     \textcolor{keywordflow}{return} getParentbyPath(path[0:path.rfind(\textcolor{stringliteral}{"{}/"{}})], rec-\/1)}
+\DoxyCodeLine{00358 }
+\DoxyCodeLine{00359 \textcolor{keyword}{def }getCousinbyPath(path :str, force :bool =\textcolor{keyword}{False}):}
+\DoxyCodeLine{00360 }
+\DoxyCodeLine{00361     digitIndex = path.rfind(\textcolor{stringliteral}{"{}["{}})+1}
+\DoxyCodeLine{00362 }
+\DoxyCodeLine{00363     digit = int(path[digitIndex])}
+\DoxyCodeLine{00364 }
+\DoxyCodeLine{00365     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} digit == 0:}
+\DoxyCodeLine{00366             }
+\DoxyCodeLine{00367         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} force :}
+\DoxyCodeLine{00368             digit = digit -\/ 1}
+\DoxyCodeLine{00369         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00370             digit = digit + 1}
+\DoxyCodeLine{00371     \textcolor{keywordflow}{else} :}
+\DoxyCodeLine{00372         digit = digit+1}
+\DoxyCodeLine{00373 }
+\DoxyCodeLine{00374     arr = list(path)}
+\DoxyCodeLine{00375     arr[digitIndex] = str(digit)}
+\DoxyCodeLine{00376     path = \textcolor{stringliteral}{''}.join(arr)}
+\DoxyCodeLine{00377 }
+\DoxyCodeLine{00378     \textcolor{keywordflow}{return} path}
+\DoxyCodeLine{00379 }
+\DoxyCodeLine{00380 }
+\DoxyCodeLine{00381 \textcolor{comment}{\# -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00382 \textcolor{comment}{\# page}}
+\DoxyCodeLine{00383 \textcolor{keyword}{def }getPageReactsPost(driver, ipost, atempt=2):}
+\DoxyCodeLine{00384     \textcolor{keyword}{global} timeout\_flag, timeout\_list, timeout\_readed}
+\DoxyCodeLine{00385     \textcolor{keywordflow}{if} \textcolor{stringliteral}{"{}photos"{}} \textcolor{keywordflow}{in} ipost:}
+\DoxyCodeLine{00386         mode = 0}
+\DoxyCodeLine{00387     \textcolor{keywordflow}{if} \textcolor{stringliteral}{"{}posts"{}} \textcolor{keywordflow}{in} ipost:}
+\DoxyCodeLine{00388         mode = 1}
+\DoxyCodeLine{00389     \textcolor{keywordflow}{if} \textcolor{stringliteral}{"{}videos"{}} \textcolor{keywordflow}{in} ipost:}
+\DoxyCodeLine{00390         mode = 2}
+\DoxyCodeLine{00391 }
+\DoxyCodeLine{00392 }
+\DoxyCodeLine{00393     \textcolor{comment}{\# get elements xpath}}
+\DoxyCodeLine{00394     Div = CoreFile[\textcolor{stringliteral}{"{}page"{}}][\textcolor{stringliteral}{"{}list"{}}]}
+\DoxyCodeLine{00395     pathMainDiv = Div[\textcolor{stringliteral}{"{}main"{}}]}
+\DoxyCodeLine{00396     pathList = pathMainDiv + Div[\textcolor{stringliteral}{"{}List"{}}]}
+\DoxyCodeLine{00397 }
+\DoxyCodeLine{00398     \textcolor{comment}{\# atempt couter iniciater}}
+\DoxyCodeLine{00399     current = 0}
+\DoxyCodeLine{00400 }
+\DoxyCodeLine{00401     \textcolor{comment}{\# profile list iniciator}}
+\DoxyCodeLine{00402     profilesList = []}
+\DoxyCodeLine{00403 }
+\DoxyCodeLine{00404     \textcolor{comment}{\# try to read for x atempts}}
+\DoxyCodeLine{00405     \textcolor{keywordflow}{while} current < atempt:}
+\DoxyCodeLine{00406 }
+\DoxyCodeLine{00407         \textcolor{comment}{\# open post}}
+\DoxyCodeLine{00408         driver.get(ipost)}
+\DoxyCodeLine{00409 }
+\DoxyCodeLine{00410         wait\_secs(3)}
+\DoxyCodeLine{00411 }
+\DoxyCodeLine{00412         \textcolor{comment}{\# open list}}
+\DoxyCodeLine{00413         total = getButtonListPost(driver, CoreFile, mode)}
+\DoxyCodeLine{00414         \textcolor{keywordflow}{if} total < 0:}
+\DoxyCodeLine{00415             profilesList = []}
+\DoxyCodeLine{00416             current += 1}
+\DoxyCodeLine{00417             total = getButtonListPost(driver, CoreFile, 3)}
+\DoxyCodeLine{00418 }
+\DoxyCodeLine{00419             \textcolor{keywordflow}{if} total < 0 :\textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00420 }
+\DoxyCodeLine{00421         wait\_secs(2)}
+\DoxyCodeLine{00422 }
+\DoxyCodeLine{00423         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00424             profilesList = loadAndRead(pathList, total)}
+\DoxyCodeLine{00425             \textcolor{keywordflow}{if} timeout\_flag :}
+\DoxyCodeLine{00426                 timeout\_list.append(ipost)}
+\DoxyCodeLine{00427                 timeout\_list.append(timeout\_readed)}
+\DoxyCodeLine{00428                 timeout\_flag = \textcolor{keyword}{False}}
+\DoxyCodeLine{00429 }
+\DoxyCodeLine{00430         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00431             \textcolor{stringliteral}{"{}somthing got wrong in load function"{}}}
+\DoxyCodeLine{00432             profilesList = [[-\/1]]}
+\DoxyCodeLine{00433 }
+\DoxyCodeLine{00434         \textcolor{comment}{\# check timeout exception}}
+\DoxyCodeLine{00435         \textcolor{keywordflow}{if} profilesList[0][0] == -\/1:}
+\DoxyCodeLine{00436             current += 1}
+\DoxyCodeLine{00437             profilesList = []}
+\DoxyCodeLine{00438         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00439 }
+\DoxyCodeLine{00440             \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00441 }
+\DoxyCodeLine{00442         \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00443     \textcolor{comment}{\# read all profiles}}
+\DoxyCodeLine{00444     \textcolor{keywordflow}{return} profilesList}
+\DoxyCodeLine{00445 \textcolor{comment}{\# -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00446 }
+\DoxyCodeLine{00447 }
+\DoxyCodeLine{00452 \textcolor{keyword}{def }searchForlikes(post:List)-\/>Dict:}
+\DoxyCodeLine{00453     \textcolor{keyword}{global} timeout\_list}
+\DoxyCodeLine{00454     openBrowser()}
+\DoxyCodeLine{00455     login()}
+\DoxyCodeLine{00456     wait\_secs(6)}
+\DoxyCodeLine{00457 }
+\DoxyCodeLine{00458     \textcolor{comment}{\# inicializacions :}}
+\DoxyCodeLine{00459 }
+\DoxyCodeLine{00460     \textcolor{comment}{\# -\/success reads list}}
+\DoxyCodeLine{00461     done = []}
+\DoxyCodeLine{00462     \textcolor{comment}{\# -\/failed reads list}}
+\DoxyCodeLine{00463     failed = []}
+\DoxyCodeLine{00464     \textcolor{comment}{\# -\/accumulator}}
+\DoxyCodeLine{00465     templist = []}
+\DoxyCodeLine{00466 }
+\DoxyCodeLine{00467     out = \{\}}
+\DoxyCodeLine{00468     PostsAdress = \{\}}
+\DoxyCodeLine{00469     \textcolor{comment}{\# reading all posts}}
+\DoxyCodeLine{00470     \textcolor{keywordflow}{for} item \textcolor{keywordflow}{in} post:}
+\DoxyCodeLine{00471         print(item)}
+\DoxyCodeLine{00472         linkList = getPageReactsPost(driver, item)}
+\DoxyCodeLine{00473         page = \textcolor{stringliteral}{"{}https://www.facebook.com/"{}} + driver.current\_url.split(\textcolor{stringliteral}{"{}/"{}})[3]}
+\DoxyCodeLine{00474         new = \textcolor{keyword}{False}}
+\DoxyCodeLine{00475 }
+\DoxyCodeLine{00476         templist = []}
+\DoxyCodeLine{00477 }
+\DoxyCodeLine{00478         print(page)}
+\DoxyCodeLine{00479         \textcolor{comment}{\# checking success and saving results}}
+\DoxyCodeLine{00480         \textcolor{keywordflow}{if} len(linkList) == 0:}
+\DoxyCodeLine{00481             failed.append(item)}
+\DoxyCodeLine{00482         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00483             done.append(item)}
+\DoxyCodeLine{00484 }
+\DoxyCodeLine{00485         \textcolor{comment}{\# adding new profiles}}
+\DoxyCodeLine{00486         \textcolor{keywordflow}{for} link \textcolor{keywordflow}{in} linkList:}
+\DoxyCodeLine{00487             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} link \textcolor{keywordflow}{in} templist:}
+\DoxyCodeLine{00488                 templist.append(link)}
+\DoxyCodeLine{00489 }
+\DoxyCodeLine{00490         id = driver.current\_url.split(\textcolor{stringliteral}{"{}/"{}})[3]}
+\DoxyCodeLine{00491         page = linkparse(\textcolor{stringliteral}{"{}https://www.facebook.com/"{}} + id)}
+\DoxyCodeLine{00492         \textcolor{keywordflow}{if} id.isdigit():}
+\DoxyCodeLine{00493             driver.get(page)}
+\DoxyCodeLine{00494             page = \textcolor{stringliteral}{"{}https://www.facebook.com/"{}} + \(\backslash\)}
+\DoxyCodeLine{00495                 driver.current\_url.split(\textcolor{stringliteral}{"{}/"{}})[3]}
+\DoxyCodeLine{00496 }
+\DoxyCodeLine{00497         page = linkparse(page)}
+\DoxyCodeLine{00498 }
+\DoxyCodeLine{00499         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00500             \textcolor{keywordflow}{for} collected \textcolor{keywordflow}{in} templist:}
+\DoxyCodeLine{00501                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} collected \textcolor{keywordflow}{in} out[page]:}
+\DoxyCodeLine{00502                     out[page].append(collected)}
+\DoxyCodeLine{00503                     PostsAdress[collected[0]] = item}
+\DoxyCodeLine{00504 }
+\DoxyCodeLine{00505         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00506             out[page] = templist}
+\DoxyCodeLine{00507             \textcolor{keywordflow}{for} collected \textcolor{keywordflow}{in} templist:}
+\DoxyCodeLine{00508                 PostsAdress[collected[0]] = item}
+\DoxyCodeLine{00509 }
+\DoxyCodeLine{00510 }
+\DoxyCodeLine{00511     pp(failed)}
+\DoxyCodeLine{00512     \textcolor{keywordflow}{for} word \textcolor{keywordflow}{in} out:}
+\DoxyCodeLine{00513         \textcolor{keywordflow}{if} len(out[word])>2:}
+\DoxyCodeLine{00514              out[word] = list(map(\textcolor{keyword}{lambda} i: i[:2] + [PostsAdress.get(i[0])] + i[2:], out[word]))}
+\DoxyCodeLine{00515         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00516             out[word] = list(map(\textcolor{keyword}{lambda} i: i + [PostsAdress.get(i[0])], out[word]))}
+\DoxyCodeLine{00517 }
+\DoxyCodeLine{00518     closeBrowser()}
+\DoxyCodeLine{00519     \textcolor{comment}{\# read all profiles}}
+\DoxyCodeLine{00520     \textcolor{keywordflow}{return} getAplicableCleanList(out), done, failed, timeout\_list}
+\DoxyCodeLine{00521 }
+\DoxyCodeLine{00522 }
+\DoxyCodeLine{00523 \textcolor{comment}{\#post = CoreFile["{}post"{}]["{}post"{}]}}
+\DoxyCodeLine{00524 }
+\DoxyCodeLine{00525 \textcolor{comment}{\#profilesList = searchForlikes(post, username, password)}}
+
+\end{DoxyCode}

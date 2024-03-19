@@ -1,0 +1,89 @@
+\doxysection{Feedback\+Displayer.\+py}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} typing \textcolor{keyword}{import} Dict, List}
+\DoxyCodeLine{00002 }
+\DoxyCodeLine{00003 Dysplay = \{\}}
+\DoxyCodeLine{00004 }
+\DoxyCodeLine{00005 \textcolor{keyword}{def }exists(name:str)-\/>bool:}
+\DoxyCodeLine{00006     \textcolor{keywordflow}{return} name \textcolor{keywordflow}{in} Dysplay}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00008 \textcolor{keyword}{def }get\_checker(name:str)-\/>List:}
+\DoxyCodeLine{00009     separator = [\textcolor{stringliteral}{'-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/'},\textcolor{stringliteral}{'-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/'}]}
+\DoxyCodeLine{00010     checker = [ separator ]}
+\DoxyCodeLine{00011     \textcolor{keywordflow}{if} exists(name):}
+\DoxyCodeLine{00012         \textcolor{keywordflow}{for} word \textcolor{keywordflow}{in} Dysplay[name][\textcolor{stringliteral}{'Last'}]:}
+\DoxyCodeLine{00013             item = Dysplay[name][\textcolor{stringliteral}{'Last'}][word]}
+\DoxyCodeLine{00014             checker.append([[word,item]])}
+\DoxyCodeLine{00015     }
+\DoxyCodeLine{00016     \textcolor{keywordflow}{return} checker}
+\DoxyCodeLine{00017 }
+\DoxyCodeLine{00018 \textcolor{keyword}{def }get\_stack(name:str)-\/>List:}
+\DoxyCodeLine{00019     \textcolor{keywordflow}{if} exists(name):}
+\DoxyCodeLine{00020         \textcolor{keywordflow}{return} reverse(Dysplay[name][\textcolor{stringliteral}{'Stack'}])}
+\DoxyCodeLine{00021     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00022         \textcolor{keywordflow}{return} get\_checker(name)}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024 \textcolor{keyword}{def }reverse(stack):}
+\DoxyCodeLine{00025     rev = []}
+\DoxyCodeLine{00026     \textcolor{keywordflow}{for} item \textcolor{keywordflow}{in} stack:}
+\DoxyCodeLine{00027         rev.insert(len(stack)-\/1, item)}
+\DoxyCodeLine{00028     }
+\DoxyCodeLine{00029     \textcolor{keywordflow}{return} rev}
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031 \textcolor{keyword}{def }add\_checker(name:str, id:str, val)-\/>Dict:}
+\DoxyCodeLine{00032     info = \{id : val\}}
+\DoxyCodeLine{00033     Dysplay[name] = \{\textcolor{stringliteral}{'Last'} : info, \textcolor{stringliteral}{'Stack'} : [info]\}}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035 \textcolor{keyword}{def }update\_checker(name:str, id:str, val:str)-\/>bool:}
+\DoxyCodeLine{00036     \textcolor{keyword}{global} Dysplay}
+\DoxyCodeLine{00037     \textcolor{keywordflow}{if} exists(name):}
+\DoxyCodeLine{00038         Dysplay[name][\textcolor{stringliteral}{'Last'}][id] = val}
+\DoxyCodeLine{00039         \textcolor{keywordflow}{for} item \textcolor{keywordflow}{in} get\_checker(name):}
+\DoxyCodeLine{00040             Dysplay[name][\textcolor{stringliteral}{'Stack'}].append(item)}
+\DoxyCodeLine{00041     \textcolor{keywordflow}{else} : }
+\DoxyCodeLine{00042         add\_checker(name, id, val)}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044 \textcolor{keyword}{def }remove\_value\_from(name:str, id:str):}
+\DoxyCodeLine{00045     \textcolor{keyword}{global} Dysplay}
+\DoxyCodeLine{00046     \textcolor{keywordflow}{if} exists(name):}
+\DoxyCodeLine{00047         \textcolor{keywordflow}{if} id \textcolor{keywordflow}{in} Dysplay[name][\textcolor{stringliteral}{'Last'}]:}
+\DoxyCodeLine{00048             Dysplay[name][\textcolor{stringliteral}{'Last'}].pop(id)}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050 \textcolor{keyword}{def }remove\_all\_contaning\_id\_from(name, id):}
+\DoxyCodeLine{00051     \textcolor{keywordflow}{if} exists(name): }
+\DoxyCodeLine{00052         remove\_list = []}
+\DoxyCodeLine{00053         \textcolor{keywordflow}{for} word \textcolor{keywordflow}{in} Dysplay[name][\textcolor{stringliteral}{'Last'}]:}
+\DoxyCodeLine{00054             \textcolor{keywordflow}{if} id \textcolor{keywordflow}{in} word :}
+\DoxyCodeLine{00055                remove\_list.append(word) }
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057         \textcolor{keywordflow}{for} word \textcolor{keywordflow}{in} remove\_list:}
+\DoxyCodeLine{00058             remove\_value\_from(name, word)}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060 \textcolor{keyword}{def }clean\_display(name):}
+\DoxyCodeLine{00061     \textcolor{keywordflow}{if} exists(name):}
+\DoxyCodeLine{00062         Dysplay[name][\textcolor{stringliteral}{'Last'}]=\{\}}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064 \textcolor{keyword}{def }update\_all\_checkers(id, val):}
+\DoxyCodeLine{00065     \textcolor{keywordflow}{for} name \textcolor{keywordflow}{in}  Dysplay:}
+\DoxyCodeLine{00066         update\_checker(name, id, val)}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068 \textcolor{keyword}{def }remove\_from\_all(id):}
+\DoxyCodeLine{00069     \textcolor{keywordflow}{for} name \textcolor{keywordflow}{in} Dysplay:}
+\DoxyCodeLine{00070         remove\_value\_from(name, id)}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072 \textcolor{comment}{\# update\_checker('checker1', 'val1', 66)}}
+\DoxyCodeLine{00073 \textcolor{comment}{\# update\_checker('checker1', 'val2', 33)}}
+\DoxyCodeLine{00074 \textcolor{comment}{\# update\_checker('checker1', 'val1', 2)}}
+\DoxyCodeLine{00075 \textcolor{comment}{\# update\_checker('checker2', 'val1', 2)}}
+\DoxyCodeLine{00076 \textcolor{comment}{\# update\_checker('checker2', 'val2', 3)}}
+\DoxyCodeLine{00077 \textcolor{comment}{\# remove\_value\_from('checker2', 'val2')}}
+\DoxyCodeLine{00078 \textcolor{comment}{\# remove\_value\_from('checker2', 'val2')}}
+\DoxyCodeLine{00079 \textcolor{comment}{\# clean\_display('checker1')}}
+\DoxyCodeLine{00080 \textcolor{comment}{\# update\_all\_checkers('new thing', 'all th same')}}
+\DoxyCodeLine{00081 \textcolor{comment}{\# remove\_from\_all('new thing')}}
+\DoxyCodeLine{00082 \textcolor{comment}{\# remove\_from\_all('new thing')}}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084 \textcolor{keyword}{True}}
+
+\end{DoxyCode}

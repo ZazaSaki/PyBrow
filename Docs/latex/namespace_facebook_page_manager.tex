@@ -1,0 +1,241 @@
+\doxysection{Facebook\+Page\+Manager Namespace Reference}
+\label{namespace_facebook_page_manager}\index{FacebookPageManager@{FacebookPageManager}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+List \textbf{ get\+All\+Pages\+Names} ()
+\item 
+List \textbf{ get\+All\+Pages\+Sheet} ()
+\item 
+List \textbf{ get\+All\+Pages} ()
+\item 
+def \textbf{ add\+Page} (str name, str link, str sheet)
+\begin{DoxyCompactList}\small\item\em Add a page to the table. \end{DoxyCompactList}\item 
+List \textbf{ Search\+Page} (str name)
+\begin{DoxyCompactList}\small\item\em Search for a name in pages. \end{DoxyCompactList}\item 
+List \textbf{ get\+Page\+By\+Name} (str name)
+\begin{DoxyCompactList}\small\item\em Search for a page name. \end{DoxyCompactList}\item 
+List \textbf{ get\+Page\+By\+Link} (str link)
+\begin{DoxyCompactList}\small\item\em Search for a page link. \end{DoxyCompactList}\item 
+List \textbf{ get\+Page\+By\+Sheet} (str sheet)
+\begin{DoxyCompactList}\small\item\em Search for a page sheet. \end{DoxyCompactList}\item 
+def \textbf{ update\+Link} (str name, str link)
+\begin{DoxyCompactList}\small\item\em Update a page\textquotesingle{}s link with a given name. \end{DoxyCompactList}\item 
+def \textbf{ update\+Sheet} (str name, str sheet)
+\begin{DoxyCompactList}\small\item\em Update a page\textquotesingle{}s sheet with a given name. \end{DoxyCompactList}\item 
+def \textbf{ remove\+Page} (str name)
+\begin{DoxyCompactList}\small\item\em Removes a page with a given name. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespace_facebook_page_manager_aebcf16fdb327e7071e645a80f8871a81}} 
+\index{FacebookPageManager@{FacebookPageManager}!addPage@{addPage}}
+\index{addPage@{addPage}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{addPage()}
+{\footnotesize\ttfamily def Facebook\+Page\+Manager.\+add\+Page (\begin{DoxyParamCaption}\item[{str}]{name,  }\item[{str}]{link,  }\item[{str}]{sheet }\end{DoxyParamCaption})}
+
+
+
+Add a page to the table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & name of the page \\
+\hline
+{\em link} & link of the page \\
+\hline
+{\em sheet} & page\textquotesingle{}s sheet link \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 31} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_a6f2abedd56724b822fe28a0fc842923f}} 
+\index{FacebookPageManager@{FacebookPageManager}!getAllPages@{getAllPages}}
+\index{getAllPages@{getAllPages}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{getAllPages()}
+{\footnotesize\ttfamily List Facebook\+Page\+Manager.\+get\+All\+Pages (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+all pages 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 23} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_a62268c54a5fde1fa7bc8d5cb23df4341}} 
+\index{FacebookPageManager@{FacebookPageManager}!getAllPagesNames@{getAllPagesNames}}
+\index{getAllPagesNames@{getAllPagesNames}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{getAllPagesNames()}
+{\footnotesize\ttfamily List Facebook\+Page\+Manager.\+get\+All\+Pages\+Names (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+all pages\textquotesingle{} names 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 13} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_ad627f78e33abc32bc5c43b9704dda004}} 
+\index{FacebookPageManager@{FacebookPageManager}!getAllPagesSheet@{getAllPagesSheet}}
+\index{getAllPagesSheet@{getAllPagesSheet}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{getAllPagesSheet()}
+{\footnotesize\ttfamily List Facebook\+Page\+Manager.\+get\+All\+Pages\+Sheet (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+all pages\textquotesingle{} sheets\textquotesingle{} links 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 18} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_a5ab77db5ec9f246bf0607a71b11f6fb9}} 
+\index{FacebookPageManager@{FacebookPageManager}!getPageByLink@{getPageByLink}}
+\index{getPageByLink@{getPageByLink}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{getPageByLink()}
+{\footnotesize\ttfamily List Facebook\+Page\+Manager.\+get\+Page\+By\+Link (\begin{DoxyParamCaption}\item[{str}]{link }\end{DoxyParamCaption})}
+
+
+
+Search for a page link. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em link} & link to search \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+page with the exact link 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 53} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_adb5ccc6380825a24ee0f530f56c5cfc6}} 
+\index{FacebookPageManager@{FacebookPageManager}!getPageByName@{getPageByName}}
+\index{getPageByName@{getPageByName}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{getPageByName()}
+{\footnotesize\ttfamily List Facebook\+Page\+Manager.\+get\+Page\+By\+Name (\begin{DoxyParamCaption}\item[{str}]{name }\end{DoxyParamCaption})}
+
+
+
+Search for a page name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & name to search \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+page with the exact name 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 46} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_aaab7bcc84994e301d499a446504aeec9}} 
+\index{FacebookPageManager@{FacebookPageManager}!getPageBySheet@{getPageBySheet}}
+\index{getPageBySheet@{getPageBySheet}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{getPageBySheet()}
+{\footnotesize\ttfamily List Facebook\+Page\+Manager.\+get\+Page\+By\+Sheet (\begin{DoxyParamCaption}\item[{str}]{sheet }\end{DoxyParamCaption})}
+
+
+
+Search for a page sheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sheet} & sheet\textquotesingle{}s link to search \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+page with the exact sheet 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 60} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_a46c6c15b32f429d4cf6b39d6c54f9c5a}} 
+\index{FacebookPageManager@{FacebookPageManager}!removePage@{removePage}}
+\index{removePage@{removePage}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{removePage()}
+{\footnotesize\ttfamily def Facebook\+Page\+Manager.\+remove\+Page (\begin{DoxyParamCaption}\item[{str}]{name }\end{DoxyParamCaption})}
+
+
+
+Removes a page with a given name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & pages\textquotesingle{}s name to remove \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 80} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_a48b92735a5c76bb3c2082bc1f5724879}} 
+\index{FacebookPageManager@{FacebookPageManager}!SearchPage@{SearchPage}}
+\index{SearchPage@{SearchPage}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{SearchPage()}
+{\footnotesize\ttfamily List Facebook\+Page\+Manager.\+Search\+Page (\begin{DoxyParamCaption}\item[{str}]{name }\end{DoxyParamCaption})}
+
+
+
+Search for a name in pages. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & name to search \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+all pages containing the name 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 39} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_ab9ebe1dd2fc40ea906eb4ec0b5cf06cc}} 
+\index{FacebookPageManager@{FacebookPageManager}!updateLink@{updateLink}}
+\index{updateLink@{updateLink}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{updateLink()}
+{\footnotesize\ttfamily def Facebook\+Page\+Manager.\+update\+Link (\begin{DoxyParamCaption}\item[{str}]{name,  }\item[{str}]{link }\end{DoxyParamCaption})}
+
+
+
+Update a page\textquotesingle{}s link with a given name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & pages\textquotesingle{}s name to update \\
+\hline
+{\em link} & pages\textquotesingle{}s updated link \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 67} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+
+\mbox{\label{namespace_facebook_page_manager_aa72eeb5999ed4e8383b4e0c8fa479572}} 
+\index{FacebookPageManager@{FacebookPageManager}!updateSheet@{updateSheet}}
+\index{updateSheet@{updateSheet}!FacebookPageManager@{FacebookPageManager}}
+\doxysubsubsection{updateSheet()}
+{\footnotesize\ttfamily def Facebook\+Page\+Manager.\+update\+Sheet (\begin{DoxyParamCaption}\item[{str}]{name,  }\item[{str}]{sheet }\end{DoxyParamCaption})}
+
+
+
+Update a page\textquotesingle{}s sheet with a given name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & pages\textquotesingle{}s name to update \\
+\hline
+{\em sheet} & pages\textquotesingle{}s updated sheet link \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 74} of file \textbf{ Facebook\+Page\+Manager.\+py}.
+

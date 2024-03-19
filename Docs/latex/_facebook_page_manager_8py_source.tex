@@ -1,0 +1,72 @@
+\doxysection{Facebook\+Page\+Manager.\+py}
+\label{_facebook_page_manager_8py_source}\index{FacebookPageManager.py@{FacebookPageManager.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{import} sqlite3}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} typing \textcolor{keyword}{import} List}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} .DataManager \textcolor{keyword}{import} conn, cursor}
+\DoxyCodeLine{00004 }
+\DoxyCodeLine{00005 \textcolor{comment}{\# with conn:}}
+\DoxyCodeLine{00006 \textcolor{comment}{\#     cursor.execute("{}"{}"{}CREATE TABLE page (}}
+\DoxyCodeLine{00007 \textcolor{comment}{\#                     name text,}}
+\DoxyCodeLine{00008 \textcolor{comment}{\#                     link text,}}
+\DoxyCodeLine{00009 \textcolor{comment}{\#                     sheet text}}
+\DoxyCodeLine{00010 \textcolor{comment}{\#     )"{}"{}"{})}}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013 \textcolor{keyword}{def }getAllPagesNames()-\/>List:}
+\DoxyCodeLine{00014     cursor.execute(\textcolor{stringliteral}{"{}SELECT name FROM page"{}})}
+\DoxyCodeLine{00015     \textcolor{keywordflow}{return} list(map(\textcolor{keyword}{lambda} a : a[0], cursor.fetchall()))}
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00017 }
+\DoxyCodeLine{00018 \textcolor{keyword}{def }getAllPagesSheet()-\/>List:}
+\DoxyCodeLine{00019     cursor.execute(\textcolor{stringliteral}{"{}SELECT sheet FROM page"{}})}
+\DoxyCodeLine{00020     \textcolor{keywordflow}{return} list(map(\textcolor{keyword}{lambda} a : a[0], cursor.fetchall()))}
+\DoxyCodeLine{00021 }
+\DoxyCodeLine{00022 }
+\DoxyCodeLine{00023 \textcolor{keyword}{def }getAllPages()-\/>List:}
+\DoxyCodeLine{00024     cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM page"{}})}
+\DoxyCodeLine{00025     \textcolor{keywordflow}{return} cursor.fetchall()}
+\DoxyCodeLine{00026 }
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00031 \textcolor{keyword}{def }addPage(name:str, link:str, sheet:str):}
+\DoxyCodeLine{00032     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00033         cursor.execute(\textcolor{stringliteral}{"{}INSERT INTO page VALUES (?, ?, ?)"{}}, [name, link, sheet])}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00039 \textcolor{keyword}{def }SearchPage(name:str)-\/>List:}
+\DoxyCodeLine{00040     cursor.execute(\textcolor{stringliteral}{"{}SELECT name FROM page WHERE name LIKE ?"{}}, [\textcolor{stringliteral}{"{}\%"{}} + name + \textcolor{stringliteral}{"{}\%"{}}])}
+\DoxyCodeLine{00041     \textcolor{keywordflow}{return} cursor.fetchall()}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00046 \textcolor{keyword}{def }getPageByName(name:str)-\/>List:}
+\DoxyCodeLine{00047     cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM page WHERE name LIKE ?"{}}, [name])}
+\DoxyCodeLine{00048     \textcolor{keywordflow}{return} cursor.fetchall()}
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00050 }
+\DoxyCodeLine{00053 \textcolor{keyword}{def }getPageByLink(link:str)-\/>List:}
+\DoxyCodeLine{00054     cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM page WHERE link LIKE ?"{}}, [link])}
+\DoxyCodeLine{00055     \textcolor{keywordflow}{return} cursor.fetchall()}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00060 \textcolor{keyword}{def }getPageBySheet(sheet:str)-\/>List:}
+\DoxyCodeLine{00061     cursor.execute(\textcolor{stringliteral}{"{}SELECT * FROM page WHERE sheet LIKE ?"{}}, [sheet])}
+\DoxyCodeLine{00062     \textcolor{keywordflow}{return} cursor.fetchall()}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00067 \textcolor{keyword}{def }updateLink(name:str, link:str):}
+\DoxyCodeLine{00068     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00069         cursor.execute(\textcolor{stringliteral}{"{}UPDATE page SET link = ? WHERE name LIKE ?"{}}, [link, name])}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00074 \textcolor{keyword}{def }updateSheet(name:str, sheet:str):}
+\DoxyCodeLine{00075     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00076         cursor.execute(\textcolor{stringliteral}{"{}UPDATE page SET sheet = ? WHERE name LIKE ?"{}}, [sheet, name])}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00080 \textcolor{keyword}{def }removePage(name:str):}
+\DoxyCodeLine{00081     \textcolor{keyword}{with} conn:}
+\DoxyCodeLine{00082         cursor.execute(\textcolor{stringliteral}{"{}DELETE FROM page WHERE name LIKE ?"{}}, [name])}
+
+\end{DoxyCode}

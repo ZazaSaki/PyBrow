@@ -1,0 +1,491 @@
+\doxysection{Main Namespace Reference}
+\label{namespace_main}\index{Main@{Main}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \textbf{ Update\+Data\+Base} ()
+\begin{DoxyCompactList}\small\item\em Full update routine, verifies, fixes and pulls information from the google sheets, and verifies the updated data. \end{DoxyCompactList}\item 
+def \textbf{ quick\+\_\+update} ()
+\item 
+def \textbf{ Update\+From\+Drive} ()
+\begin{DoxyCompactList}\small\item\em Pull information from google api. \end{DoxyCompactList}\item 
+def \textbf{ Verify\+Ignore\+Links} ()
+\begin{DoxyCompactList}\small\item\em Refresh the google sheets. \end{DoxyCompactList}\item 
+def \textbf{ Verify\+Data\+Base} ()
+\begin{DoxyCompactList}\small\item\em Verify Database, clean invalid links. \end{DoxyCompactList}\item 
+def \textbf{ Full\+Verify} ()
+\begin{DoxyCompactList}\small\item\em Verify Data Base, clean invalid links and resolve duplicates. \end{DoxyCompactList}\item 
+def \textbf{ Update\+Likes} (List \textbf{ post}=\textbf{ post})
+\begin{DoxyCompactList}\small\item\em Reads a list of posts and feeds the sheets with non-\/negative reaction. \end{DoxyCompactList}\item 
+def \textbf{ feed\+\_\+likes} (Dict like\+\_\+list)
+\begin{DoxyCompactList}\small\item\em Feeds the sheets with non-\/negative reaction. \end{DoxyCompactList}\item 
+List \textbf{ Page\+Picker} ()
+\begin{DoxyCompactList}\small\item\em Allows the user to pick up a page. \end{DoxyCompactList}\item 
+def \textbf{ Page\+Displayer} (List page\+List)
+\begin{DoxyCompactList}\small\item\em Displays all information of pages from a given list of pages. \end{DoxyCompactList}\item 
+def \textbf{ do\+And\+Wait} (Function\+Type function)
+\begin{DoxyCompactList}\small\item\em Executes a given function and waits for user input to continue. \end{DoxyCompactList}\item 
+def \textbf{ get\+\_\+input\+\_\+vals} ()
+\item 
+def \textbf{ menu} (Dict \textbf{ def\+List}, str title=\char`\"{}Menu\char`\"{})
+\begin{DoxyCompactList}\small\item\em Displays a menu of a given dictionary of option, and allow the user to pick up an option and execute it. \end{DoxyCompactList}\item 
+def \textbf{ print\+Menu} (Dict options\+Menu, str title=\char`\"{}Menu\char`\"{})
+\begin{DoxyCompactList}\small\item\em Displays a menu of a given dictionary of option. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \textbf{ username} = \char`\"{}\char`\"{}
+\item 
+string \textbf{ password} = \char`\"{}\char`\"{}
+\item 
+bool \textbf{ ans} = True
+\item 
+\textbf{ post} = read\+List()
+\item 
+dictionary \textbf{ update\+Menu}
+\begin{DoxyCompactList}\small\item\em Update Options. \end{DoxyCompactList}\item 
+dictionary \textbf{ search\+Page\+Menu}
+\begin{DoxyCompactList}\small\item\em Pages\textquotesingle{} search engine manager. \end{DoxyCompactList}\item 
+dictionary \textbf{ pages\+Menu}
+\begin{DoxyCompactList}\small\item\em Page Manager option. \end{DoxyCompactList}\item 
+dictionary \textbf{ read\+Menu}
+\item 
+dictionary \textbf{ option\+\_\+menu}
+\begin{DoxyCompactList}\small\item\em Inner Settings Menu. \end{DoxyCompactList}\item 
+dictionary \textbf{ def\+List}
+\begin{DoxyCompactList}\small\item\em \doxyref{Main}{p.}{namespace_main} Menu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespace_main_a942d217b905cb78f65c0e03d98cb36dc}} 
+\index{Main@{Main}!doAndWait@{doAndWait}}
+\index{doAndWait@{doAndWait}!Main@{Main}}
+\doxysubsubsection{doAndWait()}
+{\footnotesize\ttfamily def Main.\+do\+And\+Wait (\begin{DoxyParamCaption}\item[{Function\+Type}]{function }\end{DoxyParamCaption})}
+
+
+
+Executes a given function and waits for user input to continue. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em function} & function to execute \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 195} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_af40553940aeb133d1f2d3bc0f3203253}} 
+\index{Main@{Main}!feed\_likes@{feed\_likes}}
+\index{feed\_likes@{feed\_likes}!Main@{Main}}
+\doxysubsubsection{feed\_likes()}
+{\footnotesize\ttfamily def Main.\+feed\+\_\+likes (\begin{DoxyParamCaption}\item[{Dict}]{like\+\_\+list }\end{DoxyParamCaption})}
+
+
+
+Feeds the sheets with non-\/negative reaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em like\+\_\+list} & dictionary of profiles organized by page \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Update\+Likes}{p.}{namespace_main_ac6e88b47fa5ba19b67014001a701f65b} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 148} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_af1b61ab1061dacaaf02e12e8e1eb898d}} 
+\index{Main@{Main}!FullVerify@{FullVerify}}
+\index{FullVerify@{FullVerify}!Main@{Main}}
+\doxysubsubsection{FullVerify()}
+{\footnotesize\ttfamily def Main.\+Full\+Verify (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Verify Data Base, clean invalid links and resolve duplicates. 
+
+\begin{DoxyAttention}{Attention}
+Slow 
+\end{DoxyAttention}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Verify\+Data\+Base}{p.}{namespace_main_ac6ccb78a3bab19a54ec831b57830697c}, \doxyref{feed\+\_\+likes}{p.}{namespace_main_af40553940aeb133d1f2d3bc0f3203253} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 112} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_a3d31c4ad2c5c19a8a10d247ba4bc0b23}} 
+\index{Main@{Main}!get\_input\_vals@{get\_input\_vals}}
+\index{get\_input\_vals@{get\_input\_vals}!Main@{Main}}
+\doxysubsubsection{get\_input\_vals()}
+{\footnotesize\ttfamily def Main.\+get\+\_\+input\+\_\+vals (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 200} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_a25117c53add5e4c99c0a242ca44611da}} 
+\index{Main@{Main}!menu@{menu}}
+\index{menu@{menu}!Main@{Main}}
+\doxysubsubsection{menu()}
+{\footnotesize\ttfamily def Main.\+menu (\begin{DoxyParamCaption}\item[{Dict}]{def\+List,  }\item[{str}]{title = {\ttfamily \char`\"{}Menu\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+Displays a menu of a given dictionary of option, and allow the user to pick up an option and execute it. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em def\+List} & list of option \\
+\hline
+{\em title} & title to be displayed \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{print\+Menu}{p.}{namespace_main_ab4fa6097be86bf77db86d92e75b1a36a} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 212} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_a883af5cf63a28563aefc462afbe1b062}} 
+\index{Main@{Main}!PageDisplayer@{PageDisplayer}}
+\index{PageDisplayer@{PageDisplayer}!Main@{Main}}
+\doxysubsubsection{PageDisplayer()}
+{\footnotesize\ttfamily def Main.\+Page\+Displayer (\begin{DoxyParamCaption}\item[{List}]{page\+List }\end{DoxyParamCaption})}
+
+
+
+Displays all information of pages from a given list of pages. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em page\+List} & list of pages \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 184} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_ab3d09f41cb30355bb4316583bfe59263}} 
+\index{Main@{Main}!PagePicker@{PagePicker}}
+\index{PagePicker@{PagePicker}!Main@{Main}}
+\doxysubsubsection{PagePicker()}
+{\footnotesize\ttfamily List Main.\+Page\+Picker (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Allows the user to pick up a page. 
+
+\begin{DoxyReturn}{Returns}
+Page item from database 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 166} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_ab4fa6097be86bf77db86d92e75b1a36a}} 
+\index{Main@{Main}!printMenu@{printMenu}}
+\index{printMenu@{printMenu}!Main@{Main}}
+\doxysubsubsection{printMenu()}
+{\footnotesize\ttfamily def Main.\+print\+Menu (\begin{DoxyParamCaption}\item[{Dict}]{options\+Menu,  }\item[{str}]{title = {\ttfamily \char`\"{}Menu\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+Displays a menu of a given dictionary of option. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em def\+List} & list of option \\
+\hline
+{\em title} & title to be displayed \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{menu}{p.}{namespace_main_a25117c53add5e4c99c0a242ca44611da} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 246} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_aac3235d7d3f8d0fe3e60bb4811b66ff6}} 
+\index{Main@{Main}!quick\_update@{quick\_update}}
+\index{quick\_update@{quick\_update}!Main@{Main}}
+\doxysubsubsection{quick\_update()}
+{\footnotesize\ttfamily def Main.\+quick\+\_\+update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 71} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_afb61a419c897391a414dcc36bc53157a}} 
+\index{Main@{Main}!UpdateDataBase@{UpdateDataBase}}
+\index{UpdateDataBase@{UpdateDataBase}!Main@{Main}}
+\doxysubsubsection{UpdateDataBase()}
+{\footnotesize\ttfamily def Main.\+Update\+Data\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Full update routine, verifies, fixes and pulls information from the google sheets, and verifies the updated data. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{Update\+From\+Drive}{p.}{namespace_main_a029b3316930db9f3aadb75739e224f30}, \doxyref{Verify\+Data\+Base}{p.}{namespace_main_ac6ccb78a3bab19a54ec831b57830697c}, \doxyref{Verify\+Ignore\+Links}{p.}{namespace_main_a9e404ba46687ff85cc97dd60f4b033bc} 
+\end{DoxySeeAlso}
+\begin{DoxyNote}{Note}
+isolar fixer numa funcao a parte 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 49} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_a029b3316930db9f3aadb75739e224f30}} 
+\index{Main@{Main}!UpdateFromDrive@{UpdateFromDrive}}
+\index{UpdateFromDrive@{UpdateFromDrive}!Main@{Main}}
+\doxysubsubsection{UpdateFromDrive()}
+{\footnotesize\ttfamily def Main.\+Update\+From\+Drive (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Pull information from google api. 
+
+
+
+Definition at line \textbf{ 86} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_ac6e88b47fa5ba19b67014001a701f65b}} 
+\index{Main@{Main}!UpdateLikes@{UpdateLikes}}
+\index{UpdateLikes@{UpdateLikes}!Main@{Main}}
+\doxysubsubsection{UpdateLikes()}
+{\footnotesize\ttfamily def Main.\+Update\+Likes (\begin{DoxyParamCaption}\item[{List}]{post = {\ttfamily \textbf{ post}} }\end{DoxyParamCaption})}
+
+
+
+Reads a list of posts and feeds the sheets with non-\/negative reaction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em post} & list of posts \\
+\hline
+\end{DoxyParams}
+\begin{DoxyAttention}{Attention}
+Slow 
+\end{DoxyAttention}
+\begin{DoxySeeAlso}{See also}
+\doxyref{feed\+\_\+likes}{p.}{namespace_main_af40553940aeb133d1f2d3bc0f3203253} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 125} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_ac6ccb78a3bab19a54ec831b57830697c}} 
+\index{Main@{Main}!VerifyDataBase@{VerifyDataBase}}
+\index{VerifyDataBase@{VerifyDataBase}!Main@{Main}}
+\doxysubsubsection{VerifyDataBase()}
+{\footnotesize\ttfamily def Main.\+Verify\+Data\+Base (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Verify Database, clean invalid links. 
+
+
+
+Definition at line \textbf{ 102} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_a9e404ba46687ff85cc97dd60f4b033bc}} 
+\index{Main@{Main}!VerifyIgnoreLinks@{VerifyIgnoreLinks}}
+\index{VerifyIgnoreLinks@{VerifyIgnoreLinks}!Main@{Main}}
+\doxysubsubsection{VerifyIgnoreLinks()}
+{\footnotesize\ttfamily def Main.\+Verify\+Ignore\+Links (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Refresh the google sheets. 
+
+
+
+Definition at line \textbf{ 96} of file \textbf{ Main.\+py}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{namespace_main_affc941dc5adf8fdacad21aaa1511068e}} 
+\index{Main@{Main}!ans@{ans}}
+\index{ans@{ans}!Main@{Main}}
+\doxysubsubsection{ans}
+{\footnotesize\ttfamily bool Main.\+ans = True}
+
+
+
+Definition at line \textbf{ 25} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_a6a6cdec0cdbdd257502aee62045731ff}} 
+\index{Main@{Main}!defList@{defList}}
+\index{defList@{defList}!Main@{Main}}
+\doxysubsubsection{defList}
+{\footnotesize\ttfamily dictionary Main.\+def\+List}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  \{\textcolor{stringliteral}{"{}Read"{}} : \textcolor{keyword}{lambda} : menu(readMenu, \textcolor{stringliteral}{"{}Read"{}}),}
+\DoxyCodeLine{00002            \textcolor{stringliteral}{"{}Pages"{}} : \textcolor{keyword}{lambda} : menu(pagesMenu, \textcolor{stringliteral}{"{}Pages"{}}),}
+\DoxyCodeLine{00003            \textcolor{stringliteral}{"{}DataBase"{}}: \textcolor{keyword}{lambda}: menu(updateMenu, \textcolor{stringliteral}{"{}DataBase"{}}),}
+\DoxyCodeLine{00004            \textcolor{stringliteral}{"{}Options"{}} : \textcolor{keyword}{lambda}: menu(option\_menu, \textcolor{stringliteral}{"{}Options"{}}),}
+\DoxyCodeLine{00005            \textcolor{stringliteral}{"{}Forget Facebook Account"{}}: forgetFacebookAccount,}
+\DoxyCodeLine{00006            \textcolor{stringliteral}{"{}Reconect"{}} : connection,}
+\DoxyCodeLine{00007            \}}
+
+\end{DoxyCode}
+
+
+\doxyref{Main}{p.}{namespace_main} Menu. 
+
+
+
+Definition at line \textbf{ 297} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_ace4680d62010c4ee05c7ce57917716b4}} 
+\index{Main@{Main}!option\_menu@{option\_menu}}
+\index{option\_menu@{option\_menu}!Main@{Main}}
+\doxysubsubsection{option\_menu}
+{\footnotesize\ttfamily dictionary Main.\+option\+\_\+menu}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  \{\textcolor{stringliteral}{"{}Change Links Column"{}} : \textcolor{keyword}{lambda} : set\_code\_col(int(input(\textcolor{stringliteral}{"{}Choose a column (0=A, 1=B, C=3 ...) : "{}}))),}
+\DoxyCodeLine{00002                \textcolor{stringliteral}{"{}Change Names Column"{}} : \textcolor{keyword}{lambda} : set\_names\_col(int(input(\textcolor{stringliteral}{"{}Choose a column (0=A, 1=B, C=3 ...) : "{}}))),}
+\DoxyCodeLine{00003                \textcolor{stringliteral}{"{}Show emails"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : print(email())),}
+\DoxyCodeLine{00004                \textcolor{stringliteral}{"{}Add emails"{}} : \textcolor{keyword}{lambda} : add\_email(input(\textcolor{stringliteral}{"{}email:"{}})),}
+\DoxyCodeLine{00005                \textcolor{stringliteral}{"{}Remove emails"{}} : \textcolor{keyword}{lambda} : remove\_email(input(\textcolor{stringliteral}{"{}email:"{}})),}
+\DoxyCodeLine{00006             \}}
+
+\end{DoxyCode}
+
+
+Inner Settings Menu. 
+
+
+
+Definition at line \textbf{ 289} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_a85656be9fee3ed4ee30bec6af5089970}} 
+\index{Main@{Main}!pagesMenu@{pagesMenu}}
+\index{pagesMenu@{pagesMenu}!Main@{Main}}
+\doxysubsubsection{pagesMenu}
+{\footnotesize\ttfamily dictionary Main.\+pages\+Menu}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  \{\textcolor{stringliteral}{"{}Search "{}} : \textcolor{keyword}{lambda} : menu(searchPageMenu, \textcolor{stringliteral}{"{}Search"{}}),}
+\DoxyCodeLine{00002              \textcolor{stringliteral}{"{}Add Page"{}} : \textcolor{keyword}{lambda} : addPage(input(\textcolor{stringliteral}{"{}Name :"{}}), input(\textcolor{stringliteral}{"{}Link :"{}}), input(\textcolor{stringliteral}{"{}Sheet Link :"{}})),}
+\DoxyCodeLine{00003              \textcolor{stringliteral}{"{}Update Link"{}} : \textcolor{keyword}{lambda} : updateLink(PagePicker(), input(\textcolor{stringliteral}{"{}Link :"{}})),}
+\DoxyCodeLine{00004              \textcolor{stringliteral}{"{}Update Google Sheet"{}} : \textcolor{keyword}{lambda} : updateSheet(PagePicker(), input(\textcolor{stringliteral}{"{}Google Sheet :"{}})),}
+\DoxyCodeLine{00005              \}}
+
+\end{DoxyCode}
+
+
+Page Manager option. 
+
+
+
+Definition at line \textbf{ 277} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_aa62c23566297781d70d6269bdf75329c}} 
+\index{Main@{Main}!password@{password}}
+\index{password@{password}!Main@{Main}}
+\doxysubsubsection{password}
+{\footnotesize\ttfamily string Main.\+password = \char`\"{}\char`\"{}}
+
+
+
+Definition at line \textbf{ 23} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_aa14af9a301daef95d44408f144f09757}} 
+\index{Main@{Main}!post@{post}}
+\index{post@{post}!Main@{Main}}
+\doxysubsubsection{post}
+{\footnotesize\ttfamily Main.\+post = read\+List()}
+
+
+
+Definition at line \textbf{ 40} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_a0765418bf2d4bf24f3d9639d77c83892}} 
+\index{Main@{Main}!readMenu@{readMenu}}
+\index{readMenu@{readMenu}!Main@{Main}}
+\doxysubsubsection{readMenu}
+{\footnotesize\ttfamily dictionary Main.\+read\+Menu}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  \{\textcolor{stringliteral}{"{}Read Likes From Post's File"{}}: UpdateLikes,}
+\DoxyCodeLine{00002             \textcolor{stringliteral}{"{}Read Likes From Post"{}}: \textcolor{keyword}{lambda}: UpdateLikes(post=[input(\textcolor{stringliteral}{"{}Link:"{}})]),}
+\DoxyCodeLine{00003             \}}
+
+\end{DoxyCode}
+
+
+Definition at line \textbf{ 284} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_ad41426a96ec1855b9943a064c128be71}} 
+\index{Main@{Main}!searchPageMenu@{searchPageMenu}}
+\index{searchPageMenu@{searchPageMenu}!Main@{Main}}
+\doxysubsubsection{searchPageMenu}
+{\footnotesize\ttfamily dictionary Main.\+search\+Page\+Menu}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  \{\textcolor{stringliteral}{"{}All Names"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : pprint(getAllPagesNames())),}
+\DoxyCodeLine{00002                   \textcolor{stringliteral}{"{}All Sheets"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : pprint(getAllPagesSheet())),}
+\DoxyCodeLine{00003                   \textcolor{stringliteral}{"{}Search Page"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : PageDisplayer(getPageByName(PagePicker()))),}
+\DoxyCodeLine{00004                   \textcolor{stringliteral}{"{}Search Page By Link"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : PageDisplayer(getPageByLink(input(\textcolor{stringliteral}{"{}Link :"{}})))),}
+\DoxyCodeLine{00005                   \textcolor{stringliteral}{"{}Search Page By Sheet"{}} : \textcolor{keyword}{lambda} : doAndWait(\textcolor{keyword}{lambda} : PageDisplayer(getPageBySheet(input(\textcolor{stringliteral}{"{}Sheet :"{}})))),}
+\DoxyCodeLine{00006                   \}}
+
+\end{DoxyCode}
+
+
+Pages\textquotesingle{} search engine manager. 
+
+
+
+Definition at line \textbf{ 269} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_ac231d8565d9c452a7754e9b6d4fcd51f}} 
+\index{Main@{Main}!updateMenu@{updateMenu}}
+\index{updateMenu@{updateMenu}!Main@{Main}}
+\doxysubsubsection{updateMenu}
+{\footnotesize\ttfamily dictionary Main.\+update\+Menu}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 =  \{\textcolor{stringliteral}{"{}Update"{}}: UpdateDataBase,}
+\DoxyCodeLine{00002               \textcolor{stringliteral}{"{}Verify Database"{}}: VerifyDataBase,}
+\DoxyCodeLine{00003               \textcolor{stringliteral}{"{}Verify new links"{}}: VerifyIgnoreLinks,}
+\DoxyCodeLine{00004               \textcolor{stringliteral}{"{}Fix Broken Pages"{}}: fix\_all\_sheets,}
+\DoxyCodeLine{00005               \textcolor{stringliteral}{"{}Remove Duplicateds"{}} : RemoveDuplicateds,}
+\DoxyCodeLine{00006               \textcolor{stringliteral}{"{}Lock All"{}} : \textcolor{keyword}{lambda} : smartLockAll(email())\}}
+
+\end{DoxyCode}
+
+
+Update Options. 
+
+
+
+Definition at line \textbf{ 261} of file \textbf{ Main.\+py}.
+
+\mbox{\label{namespace_main_a7a49867e9ee173d63401ba0b9bbfd011}} 
+\index{Main@{Main}!username@{username}}
+\index{username@{username}!Main@{Main}}
+\doxysubsubsection{username}
+{\footnotesize\ttfamily string Main.\+username = \char`\"{}\char`\"{}}
+
+
+
+Definition at line \textbf{ 22} of file \textbf{ Main.\+py}.
+

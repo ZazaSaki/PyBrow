@@ -1,0 +1,35 @@
+\doxysection{Purpose}\label{index_sec1}
+This bot is built to collect non-\/negative reactions from facebook page posts, compare them to all the collected profiles in google sheets, filter all not contacted profiles, and write all of them back in the google sheets\doxysection{Functionality}\label{index_sec2}
+
+\begin{DoxyEnumerate}
+\item \doxyref{Data\+Manager}{p.}{namespace_data_manager} manages a database with all the collected contacts
+\item \doxyref{Facebook\+Page\+Manager}{p.}{namespace_facebook_page_manager} manages all the pages that exist with their respective google sheets links\+:
+\begin{DoxyItemize}
+\item It\textquotesingle{}s loaded manually by \doxyref{Main.\+pages\+Menu}{p.}{namespace_main_a85656be9fee3ed4ee30bec6af5089970}
+\end{DoxyItemize}
+\item \doxyref{Option\+Manager}{p.}{namespace_option_manager} Loads default options, and manages desired alteration
+\item \doxyref{docs\+Updater\+Base}{p.}{namespacedocs_updater_base} updates the database, collecting information from google sheets\+:
+\begin{DoxyItemize}
+\item pull all sheets\textquotesingle{} links from database with \doxyref{Facebook\+Page\+Manager.\+get\+All\+Pages\+Sheet()}{p.}{namespace_facebook_page_manager_ad627f78e33abc32bc5c43b9704dda004}
+\item according to the \doxyref{Option\+Manager}{p.}{namespace_option_manager} information\+:
+\begin{DoxyItemize}
+\item sets and fixes that google sheet
+\item reads contacts from google sheets
+\end{DoxyItemize}
+\item Loads all new information from the sheets in the data base throught the \doxyref{Data\+Manager}{p.}{namespace_data_manager}
+\item Update non contacted profiles\textquotesingle{} sheets (see \doxyref{Main.\+Verify\+Ignore\+Links()}{p.}{namespace_main_a9e404ba46687ff85cc97dd60f4b033bc})
+\end{DoxyItemize}
+\item After updated\+:
+\begin{DoxyItemize}
+\item Can read reactions from facebook post\textquotesingle{}s through \doxyref{Main.\+Update\+Likes()}{p.}{namespace_main_ac6e88b47fa5ba19b67014001a701f65b} function\+:
+\begin{DoxyItemize}
+\item with a given facebook account (see \doxyref{Read.\+check\+Login()}{p.}{namespace_read_abc8d4f6d6148c331b0a37e0a6eb57383})\+:
+\begin{DoxyItemize}
+\item the account cookies are saved for future reads but they can be deleted manually (see Main.\+forget\+Facebook\+Account())
+\end{DoxyItemize}
+\item Sort the collected Likes by page
+\end{DoxyItemize}
+\item Filter the profiles
+\item Write the non-\/contacted profiles back into the google sheets (see \doxyref{Main.\+feed\+\_\+likes()}{p.}{namespace_main_af40553940aeb133d1f2d3bc0f3203253}) 
+\end{DoxyItemize}
+\end{DoxyEnumerate}

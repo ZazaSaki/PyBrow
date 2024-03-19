@@ -1,0 +1,366 @@
+\doxysection{search\+\_\+functions.\+php}
+\label{search__functions_8php_source}\index{search\_functions.php@{search\_functions.php}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 <?php}
+\DoxyCodeLine{00002 require\_once \textcolor{stringliteral}{"{}search\_config.php"{}};}
+\DoxyCodeLine{00003 }
+\DoxyCodeLine{00004 \textcolor{keyword}{function} end\_form(\$value)}
+\DoxyCodeLine{00005 \{}
+\DoxyCodeLine{00006   global \$config;}
+\DoxyCodeLine{00007   global \$translator;}
+\DoxyCodeLine{00008   \textcolor{keywordflow}{if} (\$config[\textcolor{stringliteral}{'DISABLE\_INDEX'}] == \textcolor{keyword}{false})}
+\DoxyCodeLine{00009   \{}
+\DoxyCodeLine{00010     echo \textcolor{stringliteral}{"{}</div>\(\backslash\)n"{}};}
+\DoxyCodeLine{00011   \}}
+\DoxyCodeLine{00012   \textcolor{keywordflow}{if} (\$config[\textcolor{stringliteral}{'GENERATE\_TREEVIEW'}])}
+\DoxyCodeLine{00013   \{}
+\DoxyCodeLine{00014     echo \$translator[\textcolor{stringliteral}{'split\_bar'}];}
+\DoxyCodeLine{00015   \}}
+\DoxyCodeLine{00016 \}}
+\DoxyCodeLine{00017 }
+\DoxyCodeLine{00018 \textcolor{keyword}{function} search\_results()}
+\DoxyCodeLine{00019 \{}
+\DoxyCodeLine{00020   global \$translator;}
+\DoxyCodeLine{00021   \textcolor{keywordflow}{return} \$translator[\textcolor{stringliteral}{'search\_results\_title'}];}
+\DoxyCodeLine{00022 \}}
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00024 \textcolor{keyword}{function} matches\_text(\$num)}
+\DoxyCodeLine{00025 \{}
+\DoxyCodeLine{00026   global \$translator;}
+\DoxyCodeLine{00027   \$string = \$translator[\textcolor{stringliteral}{'search\_results'}][(\$num>2)?2:\$num];}
+\DoxyCodeLine{00028   \textcolor{comment}{// The eval is used so that translator strings can contain \$num.}}
+\DoxyCodeLine{00029   eval(\textcolor{stringliteral}{"{}\(\backslash\)\$result = \(\backslash\)"{}\$string\(\backslash\)"{};"{}});}
+\DoxyCodeLine{00030   \textcolor{keywordflow}{return} \$result;}
+\DoxyCodeLine{00031 \}}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033 \textcolor{keyword}{function} report\_matches()}
+\DoxyCodeLine{00034 \{}
+\DoxyCodeLine{00035   global \$translator;}
+\DoxyCodeLine{00036   \textcolor{keywordflow}{return} \$translator[\textcolor{stringliteral}{'search\_matches'}];}
+\DoxyCodeLine{00037 \}}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039 \textcolor{keyword}{function} readInt(\$file)}
+\DoxyCodeLine{00040 \{}
+\DoxyCodeLine{00041   \$b1 = ord(fgetc(\$file)); \$b2 = ord(fgetc(\$file));}
+\DoxyCodeLine{00042   \$b3 = ord(fgetc(\$file)); \$b4 = ord(fgetc(\$file));}
+\DoxyCodeLine{00043   \textcolor{keywordflow}{return} (\$b1<<24)|(\$b2<<16)|(\$b3<<8)|\$b4;}
+\DoxyCodeLine{00044 \}}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046 \textcolor{keyword}{function} readString(\$file)}
+\DoxyCodeLine{00047 \{}
+\DoxyCodeLine{00048   \$result=\textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00049   \textcolor{keywordflow}{while} (ord(\$c=fgetc(\$file))) \$result.=\$c;}
+\DoxyCodeLine{00050   \textcolor{keywordflow}{return} \$result;}
+\DoxyCodeLine{00051 \}}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053 \textcolor{keyword}{function} readHeader(\$file)}
+\DoxyCodeLine{00054 \{}
+\DoxyCodeLine{00055   \$header =fgetc(\$file); \$header.=fgetc(\$file);}
+\DoxyCodeLine{00056   \$header.=fgetc(\$file); \$header.=fgetc(\$file);}
+\DoxyCodeLine{00057   \textcolor{keywordflow}{return} \$header;}
+\DoxyCodeLine{00058 \}}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060 \textcolor{keyword}{function} computeIndex(\$word)}
+\DoxyCodeLine{00061 \{}
+\DoxyCodeLine{00062   \textcolor{comment}{// Simple hashing that allows for substring search}}
+\DoxyCodeLine{00063   \textcolor{keywordflow}{if} (strlen(\$word)<2) \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00064   \textcolor{comment}{// high char of the index}}
+\DoxyCodeLine{00065   \$hi = ord(\$word\{0\});}
+\DoxyCodeLine{00066   \textcolor{keywordflow}{if} (\$hi==0) \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00067   \textcolor{comment}{// low char of the index}}
+\DoxyCodeLine{00068   \$lo = ord(\$word\{1\});}
+\DoxyCodeLine{00069   \textcolor{keywordflow}{if} (\$lo==0) \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{00070   \textcolor{comment}{// return index}}
+\DoxyCodeLine{00071   \textcolor{keywordflow}{return} \$hi*256+\$lo;}
+\DoxyCodeLine{00072 \}}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074 \textcolor{keyword}{function} search(\$file,\$word,\&\$statsList)}
+\DoxyCodeLine{00075 \{}
+\DoxyCodeLine{00076   \$index = computeIndex(\$word);}
+\DoxyCodeLine{00077   \textcolor{keywordflow}{if} (\$index!=-\/1) \textcolor{comment}{// found a valid index}}
+\DoxyCodeLine{00078   \{}
+\DoxyCodeLine{00079     fseek(\$file,\$index*4+4); \textcolor{comment}{// 4 bytes per entry, skip header}}
+\DoxyCodeLine{00080     \$index = readInt(\$file);}
+\DoxyCodeLine{00081     \textcolor{keywordflow}{if} (\$index) \textcolor{comment}{// found words matching the hash key}}
+\DoxyCodeLine{00082     \{}
+\DoxyCodeLine{00083       \$start=\textcolor{keyword}{sizeof}(\$statsList);}
+\DoxyCodeLine{00084       \$count=\$start;}
+\DoxyCodeLine{00085       fseek(\$file,\$index);}
+\DoxyCodeLine{00086       \$w = readString(\$file);}
+\DoxyCodeLine{00087       \textcolor{keywordflow}{while} (\$w)}
+\DoxyCodeLine{00088       \{}
+\DoxyCodeLine{00089         \$statIdx = readInt(\$file);}
+\DoxyCodeLine{00090         \textcolor{keywordflow}{if} (\$word==substr(\$w,0,strlen(\$word)))}
+\DoxyCodeLine{00091         \{ \textcolor{comment}{// found word that matches (as substring)}}
+\DoxyCodeLine{00092           \$statsList[\$count++]=array(}
+\DoxyCodeLine{00093               \textcolor{stringliteral}{"{}word"{}}=>\$word,}
+\DoxyCodeLine{00094               \textcolor{stringliteral}{"{}match"{}}=>\$w,}
+\DoxyCodeLine{00095               \textcolor{stringliteral}{"{}index"{}}=>\$statIdx,}
+\DoxyCodeLine{00096               \textcolor{stringliteral}{"{}full"{}}=>strlen(\$w)==strlen(\$word),}
+\DoxyCodeLine{00097               \textcolor{stringliteral}{"{}docs"{}}=>array()}
+\DoxyCodeLine{00098               );}
+\DoxyCodeLine{00099         \}}
+\DoxyCodeLine{00100         \$w = readString(\$file);}
+\DoxyCodeLine{00101       \}}
+\DoxyCodeLine{00102       \$totalHi=0;}
+\DoxyCodeLine{00103       \$totalFreqHi=0;}
+\DoxyCodeLine{00104       \$totalFreqLo=0;}
+\DoxyCodeLine{00105       \textcolor{keywordflow}{for} (\$count=\$start;\$count<\textcolor{keyword}{sizeof}(\$statsList);\$count++)}
+\DoxyCodeLine{00106       \{}
+\DoxyCodeLine{00107         \$statInfo = \&\$statsList[\$count];}
+\DoxyCodeLine{00108         \$multiplier = 1;}
+\DoxyCodeLine{00109         \textcolor{comment}{// whole word matches have a double weight}}
+\DoxyCodeLine{00110         \textcolor{keywordflow}{if} (\$statInfo[\textcolor{stringliteral}{"{}full"{}}]) \$multiplier=2;}
+\DoxyCodeLine{00111         fseek(\$file,\$statInfo[\textcolor{stringliteral}{"{}index"{}}]); }
+\DoxyCodeLine{00112         \$numDocs = readInt(\$file);}
+\DoxyCodeLine{00113         \$docInfo = array();}
+\DoxyCodeLine{00114         \textcolor{comment}{// read docs info + occurrence frequency of the word}}
+\DoxyCodeLine{00115         \textcolor{keywordflow}{for} (\$i=0;\$i<\$numDocs;\$i++)}
+\DoxyCodeLine{00116         \{}
+\DoxyCodeLine{00117           \$idx=readInt(\$file); }
+\DoxyCodeLine{00118           \$freq=readInt(\$file); }
+\DoxyCodeLine{00119           \$docInfo[\$i]=array(\textcolor{stringliteral}{"{}idx"{}}  => \$idx,}
+\DoxyCodeLine{00120                              \textcolor{stringliteral}{"{}freq"{}} => \$freq>>1,}
+\DoxyCodeLine{00121                              \textcolor{stringliteral}{"{}rank"{}} => 0.0,}
+\DoxyCodeLine{00122                              \textcolor{stringliteral}{"{}hi"{}}   => \$freq\&1}
+\DoxyCodeLine{00123                             );}
+\DoxyCodeLine{00124           \textcolor{keywordflow}{if} (\$freq\&1) \textcolor{comment}{// word occurs in high priority doc}}
+\DoxyCodeLine{00125           \{}
+\DoxyCodeLine{00126             \$totalHi++;}
+\DoxyCodeLine{00127             \$totalFreqHi+=\$freq*\$multiplier;}
+\DoxyCodeLine{00128           \}}
+\DoxyCodeLine{00129           \textcolor{keywordflow}{else} \textcolor{comment}{// word occurs in low priority doc}}
+\DoxyCodeLine{00130           \{}
+\DoxyCodeLine{00131             \$totalFreqLo+=\$freq*\$multiplier;}
+\DoxyCodeLine{00132           \}}
+\DoxyCodeLine{00133         \}}
+\DoxyCodeLine{00134         \textcolor{comment}{// read name and url info for the doc}}
+\DoxyCodeLine{00135         \textcolor{keywordflow}{for} (\$i=0;\$i<\$numDocs;\$i++)}
+\DoxyCodeLine{00136         \{}
+\DoxyCodeLine{00137           fseek(\$file,\$docInfo[\$i][\textcolor{stringliteral}{"{}idx"{}}]);}
+\DoxyCodeLine{00138           \$docInfo[\$i][\textcolor{stringliteral}{"{}name"{}}]=readString(\$file);}
+\DoxyCodeLine{00139           \$docInfo[\$i][\textcolor{stringliteral}{"{}url"{}}]=readString(\$file);}
+\DoxyCodeLine{00140         \}}
+\DoxyCodeLine{00141         \$statInfo[\textcolor{stringliteral}{"{}docs"{}}]=\$docInfo;}
+\DoxyCodeLine{00142       \}}
+\DoxyCodeLine{00143       \$totalFreq=(\$totalHi+1)*\$totalFreqLo + \$totalFreqHi;}
+\DoxyCodeLine{00144       \textcolor{keywordflow}{for} (\$count=\$start;\$count<\textcolor{keyword}{sizeof}(\$statsList);\$count++)}
+\DoxyCodeLine{00145       \{}
+\DoxyCodeLine{00146         \$statInfo = \&\$statsList[\$count];}
+\DoxyCodeLine{00147         \$multiplier = 1;}
+\DoxyCodeLine{00148         \textcolor{comment}{// whole word matches have a double weight}}
+\DoxyCodeLine{00149         \textcolor{keywordflow}{if} (\$statInfo[\textcolor{stringliteral}{"{}full"{}}]) \$multiplier=2;}
+\DoxyCodeLine{00150         \textcolor{keywordflow}{for} (\$i=0;\$i<\textcolor{keyword}{sizeof}(\$statInfo[\textcolor{stringliteral}{"{}docs"{}}]);\$i++)}
+\DoxyCodeLine{00151         \{}
+\DoxyCodeLine{00152           \$docInfo = \&\$statInfo[\textcolor{stringliteral}{"{}docs"{}}];}
+\DoxyCodeLine{00153           \textcolor{comment}{// compute frequency rank of the word in each doc}}
+\DoxyCodeLine{00154           \$freq=\$docInfo[\$i][\textcolor{stringliteral}{"{}freq"{}}];}
+\DoxyCodeLine{00155           \textcolor{keywordflow}{if} (\$docInfo[\$i][\textcolor{stringliteral}{"{}hi"{}}])}
+\DoxyCodeLine{00156           \{}
+\DoxyCodeLine{00157             \$statInfo[\textcolor{stringliteral}{"{}docs"{}}][\$i][\textcolor{stringliteral}{"{}rank"{}}]=}
+\DoxyCodeLine{00158               (float)(\$freq*\$multiplier+\$totalFreqLo)/\$totalFreq;}
+\DoxyCodeLine{00159           \}}
+\DoxyCodeLine{00160           \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00161           \{}
+\DoxyCodeLine{00162             \$statInfo[\textcolor{stringliteral}{"{}docs"{}}][\$i][\textcolor{stringliteral}{"{}rank"{}}]=}
+\DoxyCodeLine{00163               (float)(\$freq*\$multiplier)/\$totalFreq;}
+\DoxyCodeLine{00164           \}}
+\DoxyCodeLine{00165         \}}
+\DoxyCodeLine{00166       \}}
+\DoxyCodeLine{00167     \}}
+\DoxyCodeLine{00168   \}}
+\DoxyCodeLine{00169   \textcolor{keywordflow}{return} \$statsList;}
+\DoxyCodeLine{00170 \}}
+\DoxyCodeLine{00171 }
+\DoxyCodeLine{00172 \textcolor{keyword}{function} combine\_results(\$results,\&\$docs)}
+\DoxyCodeLine{00173 \{}
+\DoxyCodeLine{00174   \textcolor{keywordflow}{foreach} (\$results as \$wordInfo)}
+\DoxyCodeLine{00175   \{}
+\DoxyCodeLine{00176     \$docsList = \&\$wordInfo[\textcolor{stringliteral}{"{}docs"{}}];}
+\DoxyCodeLine{00177     \textcolor{keywordflow}{foreach} (\$docsList as \$di)}
+\DoxyCodeLine{00178     \{}
+\DoxyCodeLine{00179       \$key=\$di[\textcolor{stringliteral}{"{}url"{}}];}
+\DoxyCodeLine{00180       \$rank=\$di[\textcolor{stringliteral}{"{}rank"{}}];}
+\DoxyCodeLine{00181       \textcolor{keywordflow}{if} (isset(\$docs[\$key]))}
+\DoxyCodeLine{00182       \{}
+\DoxyCodeLine{00183         \$docs[\$key][\textcolor{stringliteral}{"{}rank"{}}]+=\$rank;}
+\DoxyCodeLine{00184       \}}
+\DoxyCodeLine{00185       \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00186       \{}
+\DoxyCodeLine{00187         \$docs[\$key] = array(\textcolor{stringliteral}{"{}url"{}}=>\$key,}
+\DoxyCodeLine{00188             \textcolor{stringliteral}{"{}name"{}}=>\$di[\textcolor{stringliteral}{"{}name"{}}],}
+\DoxyCodeLine{00189             \textcolor{stringliteral}{"{}rank"{}}=>\$rank}
+\DoxyCodeLine{00190             );}
+\DoxyCodeLine{00191       \}}
+\DoxyCodeLine{00192       \$docs[\$key][\textcolor{stringliteral}{"{}words"{}}][] = array(}
+\DoxyCodeLine{00193                \textcolor{stringliteral}{"{}word"{}}=>\$wordInfo[\textcolor{stringliteral}{"{}word"{}}],}
+\DoxyCodeLine{00194                \textcolor{stringliteral}{"{}match"{}}=>\$wordInfo[\textcolor{stringliteral}{"{}match"{}}],}
+\DoxyCodeLine{00195                \textcolor{stringliteral}{"{}freq"{}}=>\$di[\textcolor{stringliteral}{"{}freq"{}}]}
+\DoxyCodeLine{00196                );}
+\DoxyCodeLine{00197     \}}
+\DoxyCodeLine{00198   \}}
+\DoxyCodeLine{00199   \textcolor{keywordflow}{return} \$docs;}
+\DoxyCodeLine{00200 \}}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202 \textcolor{keyword}{function} filter\_results(\$docs,\&\$requiredWords,\&\$forbiddenWords)}
+\DoxyCodeLine{00203 \{}
+\DoxyCodeLine{00204   \$filteredDocs=array();}
+\DoxyCodeLine{00205   \textcolor{keywordflow}{while} (list (\$key, \$val) = each (\$docs)) }
+\DoxyCodeLine{00206   \{}
+\DoxyCodeLine{00207     \$words = \&\$docs[\$key][\textcolor{stringliteral}{"{}words"{}}];}
+\DoxyCodeLine{00208     \$copy=1; \textcolor{comment}{// copy entry by default}}
+\DoxyCodeLine{00209     \textcolor{keywordflow}{if} (\textcolor{keyword}{sizeof}(\$requiredWords)>0)}
+\DoxyCodeLine{00210     \{}
+\DoxyCodeLine{00211       \textcolor{keywordflow}{foreach} (\$requiredWords as \$reqWord)}
+\DoxyCodeLine{00212       \{}
+\DoxyCodeLine{00213         \$found=0;}
+\DoxyCodeLine{00214         \textcolor{keywordflow}{foreach} (\$words as \$wordInfo)}
+\DoxyCodeLine{00215         \{ }
+\DoxyCodeLine{00216           \$found = \$wordInfo[\textcolor{stringliteral}{"{}word"{}}]==\$reqWord;}
+\DoxyCodeLine{00217           \textcolor{keywordflow}{if} (\$found) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00218         \}}
+\DoxyCodeLine{00219         \textcolor{keywordflow}{if} (!\$found) }
+\DoxyCodeLine{00220         \{}
+\DoxyCodeLine{00221           \$copy=0; \textcolor{comment}{// document contains none of the required words}}
+\DoxyCodeLine{00222           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00223         \}}
+\DoxyCodeLine{00224       \}}
+\DoxyCodeLine{00225     \}}
+\DoxyCodeLine{00226     \textcolor{keywordflow}{if} (\textcolor{keyword}{sizeof}(\$forbiddenWords)>0)}
+\DoxyCodeLine{00227     \{}
+\DoxyCodeLine{00228       \textcolor{keywordflow}{foreach} (\$words as \$wordInfo)}
+\DoxyCodeLine{00229       \{}
+\DoxyCodeLine{00230         \textcolor{keywordflow}{if} (in\_array(\$wordInfo[\textcolor{stringliteral}{"{}word"{}}],\$forbiddenWords))}
+\DoxyCodeLine{00231         \{}
+\DoxyCodeLine{00232           \$copy=0; \textcolor{comment}{// document contains a forbidden word}}
+\DoxyCodeLine{00233           \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00234         \}}
+\DoxyCodeLine{00235       \}}
+\DoxyCodeLine{00236     \}}
+\DoxyCodeLine{00237     \textcolor{keywordflow}{if} (\$copy) \$filteredDocs[\$key]=\$docs[\$key];}
+\DoxyCodeLine{00238   \}}
+\DoxyCodeLine{00239   \textcolor{keywordflow}{return} \$filteredDocs;}
+\DoxyCodeLine{00240 \}}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242 \textcolor{keyword}{function} compare\_rank(\$a,\$b)}
+\DoxyCodeLine{00243 \{}
+\DoxyCodeLine{00244   \textcolor{keywordflow}{if} (\$a[\textcolor{stringliteral}{"{}rank"{}}] == \$b[\textcolor{stringliteral}{"{}rank"{}}]) }
+\DoxyCodeLine{00245   \{}
+\DoxyCodeLine{00246     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00247   \}}
+\DoxyCodeLine{00248   \textcolor{keywordflow}{return} (\$a[\textcolor{stringliteral}{"{}rank"{}}]>\$b[\textcolor{stringliteral}{"{}rank"{}}]) ? -\/1 : 1; }
+\DoxyCodeLine{00249 \}}
+\DoxyCodeLine{00250 }
+\DoxyCodeLine{00251 \textcolor{keyword}{function} sort\_results(\$docs,\&\$sorted)}
+\DoxyCodeLine{00252 \{}
+\DoxyCodeLine{00253   \$sorted = \$docs;}
+\DoxyCodeLine{00254   usort(\$sorted,\textcolor{stringliteral}{"{}compare\_rank"{}});}
+\DoxyCodeLine{00255   \textcolor{keywordflow}{return} \$sorted;}
+\DoxyCodeLine{00256 \}}
+\DoxyCodeLine{00257 }
+\DoxyCodeLine{00258 \textcolor{keyword}{function} report\_results(\&\$docs)}
+\DoxyCodeLine{00259 \{}
+\DoxyCodeLine{00260   echo \textcolor{stringliteral}{"{}<div class=\(\backslash\)"{}header\(\backslash\)"{}>"{}};}
+\DoxyCodeLine{00261   echo \textcolor{stringliteral}{"{}  <div class=\(\backslash\)"{}headertitle\(\backslash\)"{}>\(\backslash\)n"{}};}
+\DoxyCodeLine{00262   echo \textcolor{stringliteral}{"{}    <h1>"{}}.search\_results().\textcolor{stringliteral}{"{}</h1>\(\backslash\)n"{}};}
+\DoxyCodeLine{00263   echo \textcolor{stringliteral}{"{}  </div>\(\backslash\)n"{}};}
+\DoxyCodeLine{00264   echo \textcolor{stringliteral}{"{}</div>\(\backslash\)n"{}};}
+\DoxyCodeLine{00265   echo \textcolor{stringliteral}{"{}<div class=\(\backslash\)"{}searchresults\(\backslash\)"{}>\(\backslash\)n"{}};}
+\DoxyCodeLine{00266   echo \textcolor{stringliteral}{"{}<table cellspacing=\(\backslash\)"{}2\(\backslash\)"{}>\(\backslash\)n"{}};}
+\DoxyCodeLine{00267   \$numDocs = \textcolor{keyword}{sizeof}(\$docs);}
+\DoxyCodeLine{00268   \textcolor{keywordflow}{if} (\$numDocs==0)}
+\DoxyCodeLine{00269   \{}
+\DoxyCodeLine{00270     echo \textcolor{stringliteral}{"{}  <tr>\(\backslash\)n"{}};}
+\DoxyCodeLine{00271     echo \textcolor{stringliteral}{"{}    <td colspan=\(\backslash\)"{}2\(\backslash\)"{}>"{}}.matches\_text(0).\textcolor{stringliteral}{"{}</td>\(\backslash\)n"{}};}
+\DoxyCodeLine{00272     echo \textcolor{stringliteral}{"{}  </tr>\(\backslash\)n"{}};}
+\DoxyCodeLine{00273   \}}
+\DoxyCodeLine{00274   \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00275   \{}
+\DoxyCodeLine{00276     echo \textcolor{stringliteral}{"{}  <tr>\(\backslash\)n"{}};}
+\DoxyCodeLine{00277     echo \textcolor{stringliteral}{"{}    <td colspan=\(\backslash\)"{}2\(\backslash\)"{}>"{}}.matches\_text(\$numDocs);}
+\DoxyCodeLine{00278     echo \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00279     echo \textcolor{stringliteral}{"{}    </td>\(\backslash\)n"{}};}
+\DoxyCodeLine{00280     echo \textcolor{stringliteral}{"{}  </tr>\(\backslash\)n"{}};}
+\DoxyCodeLine{00281     \$num=1;}
+\DoxyCodeLine{00282     \textcolor{keywordflow}{foreach} (\$docs as \$doc)}
+\DoxyCodeLine{00283     \{}
+\DoxyCodeLine{00284       echo \textcolor{stringliteral}{"{}  <tr>\(\backslash\)n"{}};}
+\DoxyCodeLine{00285       echo \textcolor{stringliteral}{"{}    <td align=\(\backslash\)"{}right\(\backslash\)"{}>\$num.</td>"{}};}
+\DoxyCodeLine{00286       echo     \textcolor{stringliteral}{"{}<td><a class=\(\backslash\)"{}el\(\backslash\)"{} href=\(\backslash\)"{}"{}}.\$doc[\textcolor{stringliteral}{"{}url"{}}].\textcolor{stringliteral}{"{}\(\backslash\)"{}>"{}}.\$doc[\textcolor{stringliteral}{"{}name"{}}].\textcolor{stringliteral}{"{}</a></td>\(\backslash\)n"{}};}
+\DoxyCodeLine{00287       echo \textcolor{stringliteral}{"{}  <tr>\(\backslash\)n"{}};}
+\DoxyCodeLine{00288       echo \textcolor{stringliteral}{"{}    <td></td><td class=\(\backslash\)"{}tiny\(\backslash\)"{}>"{}}.report\_matches().\textcolor{stringliteral}{"{} "{}};}
+\DoxyCodeLine{00289       \textcolor{keywordflow}{foreach} (\$doc[\textcolor{stringliteral}{"{}words"{}}] as \$wordInfo)}
+\DoxyCodeLine{00290       \{}
+\DoxyCodeLine{00291         \$word = \$wordInfo[\textcolor{stringliteral}{"{}word"{}}];}
+\DoxyCodeLine{00292         \$matchRight = substr(\$wordInfo[\textcolor{stringliteral}{"{}match"{}}],strlen(\$word));}
+\DoxyCodeLine{00293         echo \textcolor{stringliteral}{"{}<b>\$word</b>\$matchRight("{}}.\$wordInfo[\textcolor{stringliteral}{"{}freq"{}}].\textcolor{stringliteral}{"{}) "{}};}
+\DoxyCodeLine{00294       \}}
+\DoxyCodeLine{00295       echo \textcolor{stringliteral}{"{}    </td>\(\backslash\)n"{}};}
+\DoxyCodeLine{00296       echo \textcolor{stringliteral}{"{}  </tr>\(\backslash\)n"{}};}
+\DoxyCodeLine{00297       \$num++;}
+\DoxyCodeLine{00298     \}}
+\DoxyCodeLine{00299   \}}
+\DoxyCodeLine{00300   echo \textcolor{stringliteral}{"{}</table>\(\backslash\)n"{}};}
+\DoxyCodeLine{00301   echo \textcolor{stringliteral}{"{}</div>\(\backslash\)n"{}};}
+\DoxyCodeLine{00302 \}}
+\DoxyCodeLine{00303 }
+\DoxyCodeLine{00304 \textcolor{keyword}{function} run\_query(\$query)}
+\DoxyCodeLine{00305 \{}
+\DoxyCodeLine{00306   \textcolor{keywordflow}{if}(strcmp(\textcolor{stringliteral}{'4.1.0'}, phpversion()) > 0) }
+\DoxyCodeLine{00307   \{}
+\DoxyCodeLine{00308     die(\textcolor{stringliteral}{"{}Error: PHP version 4.1.0 or above required!"{}});}
+\DoxyCodeLine{00309   \}}
+\DoxyCodeLine{00310   \textcolor{keywordflow}{if} (!(\$file=fopen(\textcolor{stringliteral}{"{}search/search.idx"{}},\textcolor{stringliteral}{"{}rb"{}}))) }
+\DoxyCodeLine{00311   \{}
+\DoxyCodeLine{00312     die(\textcolor{stringliteral}{"{}Error: Search index file could NOT be opened!"{}});}
+\DoxyCodeLine{00313   \}}
+\DoxyCodeLine{00314   \textcolor{keywordflow}{if} (readHeader(\$file)!=\textcolor{stringliteral}{"{}DOXS"{}})}
+\DoxyCodeLine{00315   \{}
+\DoxyCodeLine{00316     die(\textcolor{stringliteral}{"{}Error: Header of index file is invalid!"{}});}
+\DoxyCodeLine{00317   \}}
+\DoxyCodeLine{00318   \$results = array();}
+\DoxyCodeLine{00319   \$requiredWords = array();}
+\DoxyCodeLine{00320   \$forbiddenWords = array();}
+\DoxyCodeLine{00321   \$foundWords = array();}
+\DoxyCodeLine{00322   \$word=strtok(\$query,\textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{00323   \textcolor{keywordflow}{while} (\$word) \textcolor{comment}{// for each word in the search query}}
+\DoxyCodeLine{00324   \{}
+\DoxyCodeLine{00325     \textcolor{keywordflow}{if} ((\$word\{0\}==\textcolor{charliteral}{'+'})) \{ \$word=substr(\$word,1); \$requiredWords[]=\$word; \}}
+\DoxyCodeLine{00326     \textcolor{keywordflow}{if} ((\$word\{0\}==\textcolor{charliteral}{'-\/'})) \{ \$word=substr(\$word,1); \$forbiddenWords[]=\$word; \}}
+\DoxyCodeLine{00327     \textcolor{keywordflow}{if} (!in\_array(\$word,\$foundWords))}
+\DoxyCodeLine{00328     \{}
+\DoxyCodeLine{00329       \$foundWords[]=\$word;}
+\DoxyCodeLine{00330       search(\$file,strtolower(\$word),\$results);}
+\DoxyCodeLine{00331     \}}
+\DoxyCodeLine{00332     \$word=strtok(\textcolor{stringliteral}{"{} "{}});}
+\DoxyCodeLine{00333   \}}
+\DoxyCodeLine{00334   fclose(\$file);}
+\DoxyCodeLine{00335   \$docs = array();}
+\DoxyCodeLine{00336   combine\_results(\$results,\$docs);}
+\DoxyCodeLine{00337   \textcolor{comment}{// filter out documents with forbidden word or that do not contain}}
+\DoxyCodeLine{00338   \textcolor{comment}{// required words}}
+\DoxyCodeLine{00339   \$filteredDocs = filter\_results(\$docs,\$requiredWords,\$forbiddenWords);}
+\DoxyCodeLine{00340   \textcolor{comment}{// sort the results based on rank}}
+\DoxyCodeLine{00341   \$sorted = array();}
+\DoxyCodeLine{00342   sort\_results(\$filteredDocs,\$sorted);}
+\DoxyCodeLine{00343   \textcolor{keywordflow}{return} \$sorted;}
+\DoxyCodeLine{00344 \}}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346 \textcolor{keyword}{function} main()}
+\DoxyCodeLine{00347 \{}
+\DoxyCodeLine{00348   \$query = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00349   \textcolor{keywordflow}{if} (array\_key\_exists(\textcolor{stringliteral}{"{}query"{}}, \$\_GET))}
+\DoxyCodeLine{00350   \{}
+\DoxyCodeLine{00351     \$query=\$\_GET[\textcolor{stringliteral}{"{}query"{}}];}
+\DoxyCodeLine{00352   \}}
+\DoxyCodeLine{00353   \$sorted = run\_query(\$query);}
+\DoxyCodeLine{00354   \textcolor{comment}{// Now output the HTML stuff...}}
+\DoxyCodeLine{00355   \textcolor{comment}{// End the HTML form}}
+\DoxyCodeLine{00356   end\_form(preg\_replace(\textcolor{stringliteral}{"{}/[\string^a-\/zA-\/Z0-\/9\(\backslash\)-\/\(\backslash\)\_\(\backslash\).\(\backslash\)x80-\/\(\backslash\)xFF]/i"{}}, \textcolor{stringliteral}{"{} "{}}, \$query ));}
+\DoxyCodeLine{00357   \textcolor{comment}{// report results to the user}}
+\DoxyCodeLine{00358   report\_results(\$sorted);}
+\DoxyCodeLine{00359 \}}
+\DoxyCodeLine{00360 ?>}
+
+\end{DoxyCode}

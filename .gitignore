@@ -1,11 +1,11 @@
 creds.json
 /data/*
-/Browser/browser_data/*
+/Browser/browser_data/*.pkl
 PostList.txt
 __pycache__
 chromedriver.exe
-!gitignore
+!.gitignore
 *.db
 *.pkl
+*.pk
 /images
-/Docs

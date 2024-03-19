@@ -1,0 +1,47 @@
+\doxysection{File\+Reader.\+py}
+\label{_file_reader_8py_source}\index{FileReader.py@{FileReader.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{import} json}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} os \textcolor{keyword}{import} read}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} pprint \textcolor{keyword}{import} pprint \textcolor{keyword}{as} pp}
+\DoxyCodeLine{00004 \textcolor{keyword}{from} typing \textcolor{keyword}{import} List}
+\DoxyCodeLine{00005 }
+\DoxyCodeLine{00006 \textcolor{comment}{\# load code}}
+\DoxyCodeLine{00007 scrollFile = open(\textcolor{stringliteral}{'./Browser/scroll.jes'}).read()}
+\DoxyCodeLine{00008 }
+\DoxyCodeLine{00009 \textcolor{comment}{\# load updated xpaths}}
+\DoxyCodeLine{00010 code = (json.load(open(\textcolor{stringliteral}{'./Browser/browser\_data/workSheet.json'})))[\textcolor{stringliteral}{"{}page"{}}][\textcolor{stringliteral}{"{}list"{}}]}
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013 \textcolor{keyword}{def }loadScroller():}
+\DoxyCodeLine{00014     \textcolor{comment}{\# update code with updated xpaths}}
+\DoxyCodeLine{00015     code = replace(\textcolor{stringliteral}{"{}mainPath"{}}, \textcolor{stringliteral}{"{}main"{}}, scrollFile)}
+\DoxyCodeLine{00016     code = replace(\textcolor{stringliteral}{"{}scrollablePath"{}}, \textcolor{stringliteral}{"{}scrollable"{}}, code, main=\textcolor{stringliteral}{"{}main"{}})}
+\DoxyCodeLine{00017     code = replace(\textcolor{stringliteral}{"{}listPath"{}}, \textcolor{stringliteral}{"{}List"{}}, code, main=\textcolor{stringliteral}{"{}main"{}})}
+\DoxyCodeLine{00018     code = replace(\textcolor{stringliteral}{"{}reactListPath"{}}, \textcolor{stringliteral}{"{}reactList"{}}, code, main=\textcolor{stringliteral}{"{}main"{}})}
+\DoxyCodeLine{00019 }
+\DoxyCodeLine{00020     \textcolor{comment}{\# returning updated code}}
+\DoxyCodeLine{00021     \textcolor{keywordflow}{return} code}
+\DoxyCodeLine{00022 }
+\DoxyCodeLine{00023 \textcolor{comment}{\# code injecter}}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025 }
+\DoxyCodeLine{00026 \textcolor{keyword}{def }replace(term, name, file, main="{}"{}):}
+\DoxyCodeLine{00027     term = \textcolor{stringliteral}{"{}<<"{}}+term+\textcolor{stringliteral}{"{}>>"{}}}
+\DoxyCodeLine{00028     \textcolor{keywordflow}{if} main != \textcolor{stringliteral}{"{}"{}}:}
+\DoxyCodeLine{00029         main = code[main]}
+\DoxyCodeLine{00030     inject = \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}} + main + code[name] + \textcolor{stringliteral}{"{}\(\backslash\)"{}"{}}}
+\DoxyCodeLine{00031     \textcolor{keywordflow}{return} file.replace(term, inject)}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033 \textcolor{comment}{\# load list of post}}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00038 \textcolor{keyword}{def }readList()-\/>List[str]:}
+\DoxyCodeLine{00039     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00040         file = open(\textcolor{stringliteral}{"{}PostList.txt"{}}, \textcolor{stringliteral}{'r'})}
+\DoxyCodeLine{00041         \textcolor{keywordflow}{return} file.readlines()}
+\DoxyCodeLine{00042     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00043         \textcolor{keywordflow}{return} []}
+
+\end{DoxyCode}

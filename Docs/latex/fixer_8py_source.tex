@@ -1,0 +1,19 @@
+\doxysection{fixer.\+py}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} gspread.utils \textcolor{keyword}{import} ValueRenderOption}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} Drive.docsUpdaterBase \textcolor{keyword}{import} client\_session}
+\DoxyCodeLine{00003 }
+\DoxyCodeLine{00004 ss = client\_session.open\_by\_url(\textcolor{stringliteral}{"{}https://docs.google.com/spreadsheets/d/1\_L5KnzKwnInQ07i6s2v4BXhmnRNwzN0kiwfjomz8AQo"{}})}
+\DoxyCodeLine{00005 }
+\DoxyCodeLine{00006 ws = ss.worksheet(\textcolor{stringliteral}{"{}!Verifyer"{}})}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00008 ng = ws.get(value\_render\_option = \textcolor{stringliteral}{"{}FORMATTED\_VALUE"{}})}
+\DoxyCodeLine{00009 fg = ws.get\_all\_records(default\_blank=\textcolor{stringliteral}{"{}00\_No\_Info\_00"{}},value\_render\_option = ValueRenderOption.formatted)}
+\DoxyCodeLine{00010 ufg = ws.get\_all\_records(default\_blank=\textcolor{stringliteral}{"{}00\_No\_Info\_00"{}},value\_render\_option = ValueRenderOption.unformatted)}
+\DoxyCodeLine{00011 ffg = ws.get\_all\_records(default\_blank=\textcolor{stringliteral}{"{}00\_No\_Info\_00"{}},value\_render\_option = ValueRenderOption.formula)}
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013 }
+\DoxyCodeLine{00014 \textcolor{keyword}{True}}
+
+\end{DoxyCode}

@@ -1,0 +1,338 @@
+\doxysection{general Namespace Reference}
+\label{namespacegeneral}\index{general@{general}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \textbf{ run\+\_\+with\+\_\+timeout\+\_\+checker} (Function\+Type task, str message=\char`\"{}do task\char`\"{})
+\begin{DoxyCompactList}\small\item\em Runs a function and waits for the server in case of time out. \end{DoxyCompactList}\item 
+def \textbf{ time\+\_\+out\+\_\+checker} (Exception err)
+\begin{DoxyCompactList}\small\item\em Checks if an exception is a timeout exception. \end{DoxyCompactList}\item 
+Tuple \textbf{ clean\+Table} (List Name\+Link\+List)
+\begin{DoxyCompactList}\small\item\em Splits a list of contacts in 2 lists, one with clean links, other with dirty links. \end{DoxyCompactList}\item 
+def \textbf{ save\+JSON} (str name, Dict file\+Info)
+\begin{DoxyCompactList}\small\item\em Saves a dictionary in data directory. \end{DoxyCompactList}\item 
+List \textbf{ get\+Not\+Included} (List new\+List, List base\+List, int offset=0)
+\begin{DoxyCompactList}\small\item\em Recieves two list, and filters the not included values of the first list according to the second list. \end{DoxyCompactList}\item 
+str \textbf{ get\+\_\+col\+\_\+by\+\_\+num} (int num)
+\begin{DoxyCompactList}\small\item\em Converts a column id in A1 Notation. \end{DoxyCompactList}\item 
+def \textbf{ wait\+\_\+secs} (int sec=1)
+\begin{DoxyCompactList}\small\item\em Stops for a given number of seconds. \end{DoxyCompactList}\item 
+def \textbf{ Explicit\+Wait} (str message=\char`\"{}Waiting for api to respond\char`\"{}, int secs=30)
+\begin{DoxyCompactList}\small\item\em Stops the program for a given number of seconds and meanwhile displays a message. \end{DoxyCompactList}\item 
+str \textbf{ linkparse} (str link)
+\begin{DoxyCompactList}\small\item\em Cleans a facebook profile link and assures that it is in the shortest version possible. \end{DoxyCompactList}\item 
+List \textbf{ listparse} (List list)
+\begin{DoxyCompactList}\small\item\em Applies linkparse() to a list of links. \end{DoxyCompactList}\item 
+def \textbf{ contains\+Parts\+Of} (group, word, patience=300)
+\begin{DoxyCompactList}\small\item\em Forget this one. \end{DoxyCompactList}\item 
+List \textbf{ list\+Of\+Rows\+To\+List\+Of\+Cols} (List List\+Of\+List)
+\begin{DoxyCompactList}\small\item\em Converts a list of rows into a list of columns. \end{DoxyCompactList}\item 
+Dict \textbf{ get\+Aplicable\+Clean\+List} (Dict dictionary)
+\begin{DoxyCompactList}\small\item\em Converts dictionary of List of contacts \{page \+: [[profile link, name] , ...] , ...\} in a dictionary of list of contacts with hyperlinks \{page \+: [[profile link, Hyperlink(name)] , ...] , ...\}. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \textbf{ Alpha} = \char`\"{}ABCDEFGHIJKLMNOPQRSTUVWXYZ\char`\"{}
+\begin{DoxyCompactList}\small\item\em Alphabet to convert numeric ranges in A1 Notation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespacegeneral_ac14a64ba9b36c9384f3bb17344c27fce}} 
+\index{general@{general}!cleanTable@{cleanTable}}
+\index{cleanTable@{cleanTable}!general@{general}}
+\doxysubsubsection{cleanTable()}
+{\footnotesize\ttfamily Tuple general.\+clean\+Table (\begin{DoxyParamCaption}\item[{List}]{Name\+Link\+List }\end{DoxyParamCaption})}
+
+
+
+Splits a list of contacts in 2 lists, one with clean links, other with dirty links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Name\+Link\+List} & List of contacts \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+tuple of lists (clean, dirty) 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 50} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_a873d7603d65bb72c96d99f36639115a3}} 
+\index{general@{general}!containsPartsOf@{containsPartsOf}}
+\index{containsPartsOf@{containsPartsOf}!general@{general}}
+\doxysubsubsection{containsPartsOf()}
+{\footnotesize\ttfamily def general.\+contains\+Parts\+Of (\begin{DoxyParamCaption}\item[{}]{group,  }\item[{}]{word,  }\item[{}]{patience = {\ttfamily 300} }\end{DoxyParamCaption})}
+
+
+
+Forget this one. 
+
+
+
+Definition at line \textbf{ 205} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_a7ea6633cf231b5c01cd2e7047ce17a35}} 
+\index{general@{general}!ExplicitWait@{ExplicitWait}}
+\index{ExplicitWait@{ExplicitWait}!general@{general}}
+\doxysubsubsection{ExplicitWait()}
+{\footnotesize\ttfamily def general.\+Explicit\+Wait (\begin{DoxyParamCaption}\item[{str}]{message = {\ttfamily \char`\"{}Waiting~for~api~to~respond\char`\"{}},  }\item[{int}]{secs = {\ttfamily 30} }\end{DoxyParamCaption})}
+
+
+
+Stops the program for a given number of seconds and meanwhile displays a message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em message} & message to display while waiting \\
+\hline
+{\em secs} & number of seconds to wait {\itshape defaul value = 30} \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 139} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_ae07f810601710b91fa8ecb5a07c7e16d}} 
+\index{general@{general}!get\_col\_by\_num@{get\_col\_by\_num}}
+\index{get\_col\_by\_num@{get\_col\_by\_num}!general@{general}}
+\doxysubsubsection{get\_col\_by\_num()}
+{\footnotesize\ttfamily str general.\+get\+\_\+col\+\_\+by\+\_\+num (\begin{DoxyParamCaption}\item[{int}]{num }\end{DoxyParamCaption})}
+
+
+
+Converts a column id in A1 Notation. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em num} & column id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A1 Notation of the given id $\ast$(2 = \textquotesingle{}B\textquotesingle{}, 26 = \textquotesingle{}AA\textquotesingle{})$\ast$ 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 118} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_a6465fde42e3cf4e82fe4f490fd8d2f43}} 
+\index{general@{general}!getAplicableCleanList@{getAplicableCleanList}}
+\index{getAplicableCleanList@{getAplicableCleanList}!general@{general}}
+\doxysubsubsection{getAplicableCleanList()}
+{\footnotesize\ttfamily Dict general.\+get\+Aplicable\+Clean\+List (\begin{DoxyParamCaption}\item[{Dict}]{dictionary }\end{DoxyParamCaption})}
+
+
+
+Converts dictionary of List of contacts \{page \+: [[profile link, name] , ...] , ...\} in a dictionary of list of contacts with hyperlinks \{page \+: [[profile link, Hyperlink(name)] , ...] , ...\}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dictionary} & dictionary of List of contacts \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+dictionary of List of contacts with hyperlinks 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 242} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_ad5d55e5e72c961d4131bb5ae37f59da4}} 
+\index{general@{general}!getNotIncluded@{getNotIncluded}}
+\index{getNotIncluded@{getNotIncluded}!general@{general}}
+\doxysubsubsection{getNotIncluded()}
+{\footnotesize\ttfamily List general.\+get\+Not\+Included (\begin{DoxyParamCaption}\item[{List}]{new\+List,  }\item[{List}]{base\+List,  }\item[{int }]{offset = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Recieves two list, and filters the not included values of the first list according to the second list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+List} & list to filter \\
+\hline
+{\em base\+List} & base list to filter with \\
+\hline
+{\em offset} & {\itshape optiona} index of the id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of not included items from {\itshape newlist} 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 93} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_ae6066afec82d0a0700b80c63547a23e1}} 
+\index{general@{general}!linkparse@{linkparse}}
+\index{linkparse@{linkparse}!general@{general}}
+\doxysubsubsection{linkparse()}
+{\footnotesize\ttfamily str general.\+linkparse (\begin{DoxyParamCaption}\item[{str}]{link }\end{DoxyParamCaption})}
+
+
+
+Cleans a facebook profile link and assures that it is in the shortest version possible. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em link} & facebook profile link to clean \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+clean link 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 156} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_a551fab5c6bd46e54fab4d3004a6e44cd}} 
+\index{general@{general}!listOfRowsToListOfCols@{listOfRowsToListOfCols}}
+\index{listOfRowsToListOfCols@{listOfRowsToListOfCols}!general@{general}}
+\doxysubsubsection{listOfRowsToListOfCols()}
+{\footnotesize\ttfamily List general.\+list\+Of\+Rows\+To\+List\+Of\+Cols (\begin{DoxyParamCaption}\item[{List}]{List\+Of\+List }\end{DoxyParamCaption})}
+
+
+
+Converts a list of rows into a list of columns. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em List\+Of\+List} & rows\textquotesingle{} list to convert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of columns 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 220} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_afdb870c1fd3fced161071851846f1107}} 
+\index{general@{general}!listparse@{listparse}}
+\index{listparse@{listparse}!general@{general}}
+\doxysubsubsection{listparse()}
+{\footnotesize\ttfamily List general.\+listparse (\begin{DoxyParamCaption}\item[{List}]{list }\end{DoxyParamCaption})}
+
+
+
+Applies linkparse() to a list of links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em list} & list of links \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+clean list of link 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 199} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_ab3971e461bbd82815378594625a0c06d}} 
+\index{general@{general}!run\_with\_timeout\_checker@{run\_with\_timeout\_checker}}
+\index{run\_with\_timeout\_checker@{run\_with\_timeout\_checker}!general@{general}}
+\doxysubsubsection{run\_with\_timeout\_checker()}
+{\footnotesize\ttfamily def general.\+run\+\_\+with\+\_\+timeout\+\_\+checker (\begin{DoxyParamCaption}\item[{Function\+Type}]{task,  }\item[{str }]{message = {\ttfamily \char`\"{}do~task\char`\"{}} }\end{DoxyParamCaption})}
+
+
+
+Runs a function and waits for the server in case of time out. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em task} & function to run \\
+\hline
+{\em message} & message to display while waiting \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+return the same as the the task 
+\end{DoxyReturn}
+\begin{DoxyAttention}{Attention}
+This is build to be used with gspread requests 
+\end{DoxyAttention}
+
+
+Definition at line \textbf{ 22} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_a78c58ad84dd337e9aa36c8103d3a6af2}} 
+\index{general@{general}!saveJSON@{saveJSON}}
+\index{saveJSON@{saveJSON}!general@{general}}
+\doxysubsubsection{saveJSON()}
+{\footnotesize\ttfamily def general.\+save\+JSON (\begin{DoxyParamCaption}\item[{str}]{name,  }\item[{Dict}]{file\+Info }\end{DoxyParamCaption})}
+
+
+
+Saves a dictionary in data directory. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & name of the file \\
+\hline
+{\em file\+Info} & file\textquotesingle{}s information \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 76} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_ae1c6de600ec3d5a17222482b40375884}} 
+\index{general@{general}!time\_out\_checker@{time\_out\_checker}}
+\index{time\_out\_checker@{time\_out\_checker}!general@{general}}
+\doxysubsubsection{time\_out\_checker()}
+{\footnotesize\ttfamily def general.\+time\+\_\+out\+\_\+checker (\begin{DoxyParamCaption}\item[{Exception}]{err }\end{DoxyParamCaption})}
+
+
+
+Checks if an exception is a timeout exception. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em err} & exception to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if is a timeout exception 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 35} of file \textbf{ general.\+py}.
+
+\mbox{\label{namespacegeneral_a172ebd384165ab1ea716e6a7832f81d6}} 
+\index{general@{general}!wait\_secs@{wait\_secs}}
+\index{wait\_secs@{wait\_secs}!general@{general}}
+\doxysubsubsection{wait\_secs()}
+{\footnotesize\ttfamily def general.\+wait\+\_\+secs (\begin{DoxyParamCaption}\item[{int}]{sec = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Stops for a given number of seconds. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sec} & number of seconds to wait \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 130} of file \textbf{ general.\+py}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{namespacegeneral_ac222ec8140dc3614bfda40e34cd1c3a9}} 
+\index{general@{general}!Alpha@{Alpha}}
+\index{Alpha@{Alpha}!general@{general}}
+\doxysubsubsection{Alpha}
+{\footnotesize\ttfamily string general.\+Alpha = \char`\"{}ABCDEFGHIJKLMNOPQRSTUVWXYZ\char`\"{}}
+
+
+
+Alphabet to convert numeric ranges in A1 Notation. 
+
+
+
+Definition at line \textbf{ 11} of file \textbf{ general.\+py}.
+

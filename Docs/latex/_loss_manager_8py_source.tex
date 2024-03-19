@@ -1,0 +1,144 @@
+\doxysection{Loss\+Manager.\+py}
+\label{_loss_manager_8py_source}\index{LossManager.py@{LossManager.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{import} os}
+\DoxyCodeLine{00002 \textcolor{keyword}{import} dill}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} types \textcolor{keyword}{import} FunctionType}
+\DoxyCodeLine{00004 }
+\DoxyCodeLine{00005 }
+\DoxyCodeLine{00006 stack = []}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00008 }
+\DoxyCodeLine{00009 extention = \textcolor{stringliteral}{"{}.pk"{}}}
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012 name = \textcolor{stringliteral}{"{}data/recover"{}}}
+\DoxyCodeLine{00013 }
+\DoxyCodeLine{00014 hold = \textcolor{stringliteral}{"{}data/recover"{}}}
+\DoxyCodeLine{00015 }
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00018 recover\_need = \textcolor{keyword}{False}}
+\DoxyCodeLine{00019 }
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021 path\_on\_hold = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00022 }
+\DoxyCodeLine{00023 }
+\DoxyCodeLine{00026 \textcolor{keyword}{def }get\_path()-\/>str:}
+\DoxyCodeLine{00027     \textcolor{keyword}{global} stack}
+\DoxyCodeLine{00028     }
+\DoxyCodeLine{00029     \textcolor{keywordflow}{if} len(stack) < 1:}
+\DoxyCodeLine{00030         \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00031     }
+\DoxyCodeLine{00032     \textcolor{keywordflow}{return} stack[-\/1]}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00036 \textcolor{keyword}{def }get\_recover()-\/>bool:}
+\DoxyCodeLine{00037     \textcolor{keyword}{global} recover\_need}
+\DoxyCodeLine{00038     \textcolor{keywordflow}{return} recover\_need}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041 \textcolor{keyword}{def }get\_all\_recover\_path():}
+\DoxyCodeLine{00042     \textcolor{keyword}{global} recover\_need }
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044     files = [f \textcolor{keywordflow}{for} f \textcolor{keywordflow}{in} os.listdir(\textcolor{stringliteral}{'./data'}) \textcolor{keywordflow}{if} os.path.isfile(os.path.join(\textcolor{stringliteral}{'./data'}, f))]}
+\DoxyCodeLine{00045     }
+\DoxyCodeLine{00046     files.sort(key = \textcolor{keyword}{lambda} f : -\/os.path.getmtime(os.path.join(\textcolor{stringliteral}{'./data'}, f)))}
+\DoxyCodeLine{00047     filtered = filter(\textcolor{keyword}{lambda} f : \textcolor{stringliteral}{'recover'} \textcolor{keywordflow}{in} f, files) }
+\DoxyCodeLine{00048     filtered = map(\textcolor{keyword}{lambda} f : os.path.join(\textcolor{stringliteral}{'./data'}, f), filtered)}
+\DoxyCodeLine{00049     filtered = list(filtered)}
+\DoxyCodeLine{00050     }
+\DoxyCodeLine{00051     \textcolor{keywordflow}{for} path \textcolor{keywordflow}{in} filtered:}
+\DoxyCodeLine{00052         stack.append(path)}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054     recover\_need =  len(stack)>0}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00058 \textcolor{keyword}{def }activate\_recover():}
+\DoxyCodeLine{00059     \textcolor{keyword}{global} recover\_need}
+\DoxyCodeLine{00060     recover\_need = \textcolor{keyword}{True}}
+\DoxyCodeLine{00061 }
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00064 \textcolor{keyword}{def }deactivate\_recover():}
+\DoxyCodeLine{00065     \textcolor{keyword}{global} recover\_need}
+\DoxyCodeLine{00066     recover\_need = \textcolor{keyword}{False}}
+\DoxyCodeLine{00067 }
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00074 \textcolor{keyword}{def }submit(func:FunctionType)-\/>str:}
+\DoxyCodeLine{00075     \textcolor{keyword}{global} stack}
+\DoxyCodeLine{00076     hash = func.\_\_hash\_\_()}
+\DoxyCodeLine{00077 }
+\DoxyCodeLine{00078     path = put\_on\_hold\_path(hash)}
+\DoxyCodeLine{00079     }
+\DoxyCodeLine{00080 }
+\DoxyCodeLine{00081     file = open(path, \textcolor{stringliteral}{"{}wb"{}})}
+\DoxyCodeLine{00082     dill.dump(func, file)}
+\DoxyCodeLine{00083     file.close()}
+\DoxyCodeLine{00084 }
+\DoxyCodeLine{00085     stack.append(path)}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087     activate\_recover()}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089     \textcolor{keywordflow}{return} path}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00097 \textcolor{keyword}{def }recover(path:str):}
+\DoxyCodeLine{00098     file = open(path, \textcolor{stringliteral}{"{}rb"{}})}
+\DoxyCodeLine{00099     f = dill.load(file)}
+\DoxyCodeLine{00100     }
+\DoxyCodeLine{00101     file.close()}
+\DoxyCodeLine{00102     del file}
+\DoxyCodeLine{00103     }
+\DoxyCodeLine{00104     f()}
+\DoxyCodeLine{00105 }
+\DoxyCodeLine{00106     clear(path)}
+\DoxyCodeLine{00107 }
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00110 \textcolor{keyword}{def }full\_recover():}
+\DoxyCodeLine{00111     \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} get\_path() == \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00112         recover(get\_path())}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114 }
+\DoxyCodeLine{00116 \textcolor{keyword}{def }clear(path:str):}
+\DoxyCodeLine{00117     \textcolor{keyword}{global} stack}
+\DoxyCodeLine{00118     os.remove(path)}
+\DoxyCodeLine{00119     stack.pop(stack.index(path))}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121     \textcolor{keywordflow}{if} get\_path() == \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00122         deactivate\_recover()}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124 }
+\DoxyCodeLine{00129 \textcolor{keyword}{def }put\_on\_hold\_path(hash:int, i:int=0)-\/>str:}
+\DoxyCodeLine{00130     path\_on\_hold = hold + \textcolor{stringliteral}{"{}\_"{}} + str(hash) + \textcolor{stringliteral}{"{}\_"{}} + str(i) + extention}
+\DoxyCodeLine{00131     }
+\DoxyCodeLine{00132     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} os.path.exists(path\_on\_hold):}
+\DoxyCodeLine{00133         \textcolor{keywordflow}{return} path\_on\_hold}
+\DoxyCodeLine{00134     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00135         \textcolor{keywordflow}{return} put\_on\_hold\_path(hash, i+1)}
+\DoxyCodeLine{00136         }
+\DoxyCodeLine{00137 }
+\DoxyCodeLine{00140 \textcolor{keyword}{def }run\_with\_recover(func:FunctionType):}
+\DoxyCodeLine{00141     path = submit(func)}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143     func()}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145     clear(path)}
+\DoxyCodeLine{00146 }
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148 \textcolor{comment}{\#general}}
+\DoxyCodeLine{00149 \textcolor{keyword}{from} General.general \textcolor{keyword}{import} *}
+\DoxyCodeLine{00150 \textcolor{keyword}{from} General.loadingBar \textcolor{keyword}{import} *}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152 \textcolor{comment}{\#Option Manager}}
+\DoxyCodeLine{00153 \textcolor{keyword}{from} Drive.OptionManager \textcolor{keyword}{import} *}
+\DoxyCodeLine{00154 }
+\DoxyCodeLine{00155 \textcolor{comment}{\#database}}
+\DoxyCodeLine{00156 \textcolor{keyword}{from} Drive.DataBase.DataManager \textcolor{keyword}{import} *}
+\DoxyCodeLine{00157 \textcolor{keyword}{from} Drive.DataBase.FacebookPageManager \textcolor{keyword}{import} *}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159 \textcolor{comment}{\#drive}}
+\DoxyCodeLine{00160 \textcolor{keyword}{from} Drive.DataBase.DirtyCleanerBase \textcolor{keyword}{import} *}
+\DoxyCodeLine{00161 \textcolor{keyword}{from} Drive.docsUpdaterBase \textcolor{keyword}{import} *}
+\DoxyCodeLine{00162 \textcolor{keyword}{from} Drive.LockManager \textcolor{keyword}{import} *}
+
+\end{DoxyCode}

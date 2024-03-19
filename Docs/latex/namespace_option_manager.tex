@@ -1,0 +1,606 @@
+\doxysection{Option\+Manager Namespace Reference}
+\label{namespace_option_manager}\index{OptionManager@{OptionManager}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+dict \textbf{ set\+\_\+col} (int col\+\_\+index=2)
+\begin{DoxyCompactList}\small\item\em generate a column option given a index number \end{DoxyCompactList}\item 
+str \textbf{ build\+\_\+script} (int col\+\_\+index=0)
+\begin{DoxyCompactList}\small\item\em generate a script base on a index column \end{DoxyCompactList}\item 
+def \textbf{ setup} ()
+\begin{DoxyCompactList}\small\item\em Generate default settings. \end{DoxyCompactList}\item 
+def \textbf{ restore} ()
+\begin{DoxyCompactList}\small\item\em Restore the default options. \end{DoxyCompactList}\item 
+def \textbf{ load} ()
+\begin{DoxyCompactList}\small\item\em Load the {\itshape options.\+js} from {\itshape /data}. \end{DoxyCompactList}\item 
+def \textbf{ get\+\_\+query} ()
+\item 
+def \textbf{ set\+\_\+query} (new\+\_\+query)
+\item 
+def \textbf{ get\+\_\+highest\+\_\+column} ()
+\item 
+def \textbf{ set\+\_\+highest\+\_\+column} (highest\+\_\+column)
+\item 
+def \textbf{ set\+\_\+code\+\_\+col} (int col\+\_\+index=2)
+\begin{DoxyCompactList}\small\item\em Change the code column, and saves the the changes. \end{DoxyCompactList}\item 
+dict \textbf{ code} ()
+\begin{DoxyCompactList}\small\item\em Get code properties. \end{DoxyCompactList}\item 
+str \textbf{ code\+\_\+col} (str prop)
+\begin{DoxyCompactList}\small\item\em Get code column property. \end{DoxyCompactList}\item 
+str \textbf{ code\+\_\+title} ()
+\begin{DoxyCompactList}\small\item\em Get code column title location property in A1 Notation. \end{DoxyCompactList}\item 
+def \textbf{ set\+\_\+names\+\_\+col} (int col\+\_\+index=0)
+\begin{DoxyCompactList}\small\item\em Change the names column, and saves the the changes. \end{DoxyCompactList}\item 
+dict \textbf{ names} ()
+\begin{DoxyCompactList}\small\item\em Get names. \end{DoxyCompactList}\item 
+str \textbf{ names\+\_\+col} (str prop)
+\begin{DoxyCompactList}\small\item\em Get names column properties. \end{DoxyCompactList}\item 
+str \textbf{ names\+\_\+title} ()
+\item 
+str \textbf{ script} ()
+\begin{DoxyCompactList}\small\item\em Get the script property. \end{DoxyCompactList}\item 
+def \textbf{ add\+\_\+email} (str \textbf{ email})
+\begin{DoxyCompactList}\small\item\em Adds an email to the top priority list. \end{DoxyCompactList}\item 
+def \textbf{ remove\+\_\+email} (str \textbf{ email})
+\begin{DoxyCompactList}\small\item\em Removes an email from the top priority list. \end{DoxyCompactList}\item 
+List \textbf{ email} ()
+\item 
+List \textbf{ get\+\_\+ignore\+\_\+titles} ()
+\item 
+List \textbf{ get\+\_\+ignore\+\_\+words} ()
+\item 
+def \textbf{ save} ()
+\begin{DoxyCompactList}\small\item\em Save the changes. \end{DoxyCompactList}\item 
+str \textbf{ get\+\_\+all\+\_\+likes\+\_\+name} ()
+\begin{DoxyCompactList}\small\item\em Get {\itshape All Likes}\textquotesingle{} worksheet\textquotesingle{}s title. \end{DoxyCompactList}\item 
+str \textbf{ get\+\_\+new\+\_\+profiles\+\_\+name} ()
+\begin{DoxyCompactList}\small\item\em Get {\itshape New Profiles From Ads}\textquotesingle{} worksheet\textquotesingle{}s title. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+dictionary \textbf{ options} = \{\}
+\begin{DoxyCompactList}\small\item\em Dictionary of all options. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespace_option_manager_a95ed738f425896f29d94f328b36df28f}} 
+\index{OptionManager@{OptionManager}!add\_email@{add\_email}}
+\index{add\_email@{add\_email}!OptionManager@{OptionManager}}
+\doxysubsubsection{add\_email()}
+{\footnotesize\ttfamily def Option\+Manager.\+add\+\_\+email (\begin{DoxyParamCaption}\item[{str}]{email }\end{DoxyParamCaption})}
+
+
+
+Adds an email to the top priority list. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{email()}{p.}{namespace_option_manager_a9a3f2de283dccb5ae46a7e89a7a213df} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 231} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a697fdfd9c2a4ee7b9549b138248e5436}} 
+\index{OptionManager@{OptionManager}!build\_script@{build\_script}}
+\index{build\_script@{build\_script}!OptionManager@{OptionManager}}
+\doxysubsubsection{build\_script()}
+{\footnotesize\ttfamily str Option\+Manager.\+build\+\_\+script (\begin{DoxyParamCaption}\item[{int}]{col\+\_\+index = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+generate a script base on a index column 
+
+
+\begin{DoxyParams}{Parameters}
+{\em col\+\_\+index} & column index {\itshape starts counting on 0} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a script in js 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+This script migth be pointing to the column with the hyperlinks 
+\end{DoxyNote}
+\doxyparagraph{Output in case of col\+\_\+index = 0}\label{namespace_option_manager_autotoc_md5}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{stringliteral}{"{}GetUrl(A:A)"{}}}
+
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See also}
+\doxyref{setup()}{p.}{namespace_option_manager_a6878b77a9c909562223985bd19718a96} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 44} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a30328298774fdc285962f4da4fb7f96f}} 
+\index{OptionManager@{OptionManager}!code@{code}}
+\index{code@{code}!OptionManager@{OptionManager}}
+\doxysubsubsection{code()}
+{\footnotesize\ttfamily dict Option\+Manager.\+code (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get code properties. 
+
+\begin{DoxyReturn}{Returns}
+properties in dictinary format 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{setup}{p.}{namespace_option_manager_a6878b77a9c909562223985bd19718a96} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 177} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_ae049a654a331eae0a630ccd77cd3c17e}} 
+\index{OptionManager@{OptionManager}!code\_col@{code\_col}}
+\index{code\_col@{code\_col}!OptionManager@{OptionManager}}
+\doxysubsubsection{code\_col()}
+{\footnotesize\ttfamily str Option\+Manager.\+code\+\_\+col (\begin{DoxyParamCaption}\item[{str}]{prop }\end{DoxyParamCaption})}
+
+
+
+Get code column property. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prop} & wanted property \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+property in string format 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{set\+\_\+col(int)}{p.}{namespace_option_manager_a1469c1947b76d8100b00a402b74e83a4} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 184} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a5092f5c88e4a7d6f392838494fb63656}} 
+\index{OptionManager@{OptionManager}!code\_title@{code\_title}}
+\index{code\_title@{code\_title}!OptionManager@{OptionManager}}
+\doxysubsubsection{code\_title()}
+{\footnotesize\ttfamily str Option\+Manager.\+code\+\_\+title (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get code column title location property in A1 Notation. 
+
+\begin{DoxyReturn}{Returns}
+property in string format 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{set\+\_\+col(int)}{p.}{namespace_option_manager_a1469c1947b76d8100b00a402b74e83a4}, \doxyref{docs\+Updater\+Base.\+update\+\_\+code}{p.}{namespacedocs_updater_base_a68f04140f55c040a90ea63d186470d1c} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 190} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a9a3f2de283dccb5ae46a7e89a7a213df}} 
+\index{OptionManager@{OptionManager}!email@{email}}
+\index{email@{email}!OptionManager@{OptionManager}}
+\doxysubsubsection{email()}
+{\footnotesize\ttfamily List Option\+Manager.\+email (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+The email top priority list used by ther \doxyref{Locker}{p.}{namespace_locker} Manager 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Lock\+Manager}{p.}{namespace_lock_manager} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 243} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_aadacf1e9a0a92505de8d0ff861bd864a}} 
+\index{OptionManager@{OptionManager}!get\_all\_likes\_name@{get\_all\_likes\_name}}
+\index{get\_all\_likes\_name@{get\_all\_likes\_name}!OptionManager@{OptionManager}}
+\doxysubsubsection{get\_all\_likes\_name()}
+{\footnotesize\ttfamily str Option\+Manager.\+get\+\_\+all\+\_\+likes\+\_\+name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get {\itshape All Likes}\textquotesingle{} worksheet\textquotesingle{}s title. 
+
+
+
+Definition at line \textbf{ 263} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a92f3e352778bcd28bc19dfb3d1b269f9}} 
+\index{OptionManager@{OptionManager}!get\_highest\_column@{get\_highest\_column}}
+\index{get\_highest\_column@{get\_highest\_column}!OptionManager@{OptionManager}}
+\doxysubsubsection{get\_highest\_column()}
+{\footnotesize\ttfamily def Option\+Manager.\+get\+\_\+highest\+\_\+column (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 158} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a652e471aa8bd8550b5651d86f38f00fb}} 
+\index{OptionManager@{OptionManager}!get\_ignore\_titles@{get\_ignore\_titles}}
+\index{get\_ignore\_titles@{get\_ignore\_titles}!OptionManager@{OptionManager}}
+\doxysubsubsection{get\_ignore\_titles()}
+{\footnotesize\ttfamily List Option\+Manager.\+get\+\_\+ignore\+\_\+titles (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+List of worksheet\textquotesingle{}s titles to ignore during the validation process 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{docs\+Updater\+Base.\+validate}{p.}{namespacedocs_updater_base_a5c757ddb1a1da76edd15b9d695db40d9} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 249} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_aec246bac30230e549d659462e3c85e5a}} 
+\index{OptionManager@{OptionManager}!get\_ignore\_words@{get\_ignore\_words}}
+\index{get\_ignore\_words@{get\_ignore\_words}!OptionManager@{OptionManager}}
+\doxysubsubsection{get\_ignore\_words()}
+{\footnotesize\ttfamily List Option\+Manager.\+get\+\_\+ignore\+\_\+words (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+list of words to ignore during the validation process 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If a worksheet\textquotesingle{}s title contains any of this words that worksheet is ignored 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxyref{docs\+Updater\+Base.\+validate}{p.}{namespacedocs_updater_base_a5c757ddb1a1da76edd15b9d695db40d9} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 255} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a6f9fe34999b42751265ab9e32a6e7f4d}} 
+\index{OptionManager@{OptionManager}!get\_new\_profiles\_name@{get\_new\_profiles\_name}}
+\index{get\_new\_profiles\_name@{get\_new\_profiles\_name}!OptionManager@{OptionManager}}
+\doxysubsubsection{get\_new\_profiles\_name()}
+{\footnotesize\ttfamily str Option\+Manager.\+get\+\_\+new\+\_\+profiles\+\_\+name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get {\itshape New Profiles From Ads}\textquotesingle{} worksheet\textquotesingle{}s title. 
+
+
+
+Definition at line \textbf{ 267} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a1f46115c9b037596762986d95cd66a87}} 
+\index{OptionManager@{OptionManager}!get\_query@{get\_query}}
+\index{get\_query@{get\_query}!OptionManager@{OptionManager}}
+\doxysubsubsection{get\_query()}
+{\footnotesize\ttfamily def Option\+Manager.\+get\+\_\+query (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 151} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a1ff5ef42ee19d70560f0133ccd171a18}} 
+\index{OptionManager@{OptionManager}!load@{load}}
+\index{load@{load}!OptionManager@{OptionManager}}
+\doxysubsubsection{load()}
+{\footnotesize\ttfamily def Option\+Manager.\+load (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Load the {\itshape options.\+js} from {\itshape /data}. 
+
+\begin{DoxyNote}{Note}
+If {\itshape options.\+js} doesn\textquotesingle{}t exist it runs \doxyref{restore()}{p.}{namespace_option_manager_ad40c76438348abc9deee687f1260801f} 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 141} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_ace9c057fa2fd9269464e007263bcef40}} 
+\index{OptionManager@{OptionManager}!names@{names}}
+\index{names@{names}!OptionManager@{OptionManager}}
+\doxysubsubsection{names()}
+{\footnotesize\ttfamily dict Option\+Manager.\+names (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get names. 
+
+
+
+Definition at line \textbf{ 205} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a359ec2d730420e3f49103d07ee476052}} 
+\index{OptionManager@{OptionManager}!names\_col@{names\_col}}
+\index{names\_col@{names\_col}!OptionManager@{OptionManager}}
+\doxysubsubsection{names\_col()}
+{\footnotesize\ttfamily str Option\+Manager.\+names\+\_\+col (\begin{DoxyParamCaption}\item[{str}]{prop }\end{DoxyParamCaption})}
+
+
+
+Get names column properties. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prop} & wanted property \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+property in string format 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{set\+\_\+col(int)}{p.}{namespace_option_manager_a1469c1947b76d8100b00a402b74e83a4} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 212} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_aaa4695427b9f22c8dafe791ad0e37795}} 
+\index{OptionManager@{OptionManager}!names\_title@{names\_title}}
+\index{names\_title@{names\_title}!OptionManager@{OptionManager}}
+\doxysubsubsection{names\_title()}
+{\footnotesize\ttfamily str Option\+Manager.\+names\+\_\+title (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 218} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a580b90bf7ea63892279335004027856a}} 
+\index{OptionManager@{OptionManager}!remove\_email@{remove\_email}}
+\index{remove\_email@{remove\_email}!OptionManager@{OptionManager}}
+\doxysubsubsection{remove\_email()}
+{\footnotesize\ttfamily def Option\+Manager.\+remove\+\_\+email (\begin{DoxyParamCaption}\item[{str}]{email }\end{DoxyParamCaption})}
+
+
+
+Removes an email from the top priority list. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{email()}{p.}{namespace_option_manager_a9a3f2de283dccb5ae46a7e89a7a213df} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 237} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_ad40c76438348abc9deee687f1260801f}} 
+\index{OptionManager@{OptionManager}!restore@{restore}}
+\index{restore@{restore}!OptionManager@{OptionManager}}
+\doxysubsubsection{restore()}
+{\footnotesize\ttfamily def Option\+Manager.\+restore (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Restore the default options. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{setup()}{p.}{namespace_option_manager_a6878b77a9c909562223985bd19718a96} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 135} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a997f90be7f8d248aa80fb06dc9dfa2fb}} 
+\index{OptionManager@{OptionManager}!save@{save}}
+\index{save@{save}!OptionManager@{OptionManager}}
+\doxysubsubsection{save()}
+{\footnotesize\ttfamily def Option\+Manager.\+save (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Save the changes. 
+
+
+
+Definition at line \textbf{ 259} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_ae9161718c3a35ac2e654bb8349e74991}} 
+\index{OptionManager@{OptionManager}!script@{script}}
+\index{script@{script}!OptionManager@{OptionManager}}
+\doxysubsubsection{script()}
+{\footnotesize\ttfamily str Option\+Manager.\+script (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get the script property. 
+
+\begin{DoxyReturn}{Returns}
+property in string format 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{setup()}{p.}{namespace_option_manager_a6878b77a9c909562223985bd19718a96} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 224} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a8193967b79439ab9a624f7e49cd817dd}} 
+\index{OptionManager@{OptionManager}!set\_code\_col@{set\_code\_col}}
+\index{set\_code\_col@{set\_code\_col}!OptionManager@{OptionManager}}
+\doxysubsubsection{set\_code\_col()}
+{\footnotesize\ttfamily def Option\+Manager.\+set\+\_\+code\+\_\+col (\begin{DoxyParamCaption}\item[{int}]{col\+\_\+index = {\ttfamily 2} }\end{DoxyParamCaption})}
+
+
+
+Change the code column, and saves the the changes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em col\+\_\+index} & index of the pretended column \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+it sets all the properties related to it. The {\itshape col\+\_\+index} starts couting on 0 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxyref{set\+\_\+col(int)}{p.}{namespace_option_manager_a1469c1947b76d8100b00a402b74e83a4}, \doxyref{build\+\_\+script(int)}{p.}{namespace_option_manager_a697fdfd9c2a4ee7b9549b138248e5436}, \doxyref{save()}{p.}{namespace_option_manager_a997f90be7f8d248aa80fb06dc9dfa2fb} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 170} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a1469c1947b76d8100b00a402b74e83a4}} 
+\index{OptionManager@{OptionManager}!set\_col@{set\_col}}
+\index{set\_col@{set\_col}!OptionManager@{OptionManager}}
+\doxysubsubsection{set\_col()}
+{\footnotesize\ttfamily dict Option\+Manager.\+set\+\_\+col (\begin{DoxyParamCaption}\item[{int}]{col\+\_\+index = {\ttfamily 2} }\end{DoxyParamCaption})}
+
+
+
+generate a column option given a index number 
+
+
+\begin{DoxyParams}{Parameters}
+{\em col\+\_\+index} & column index {\itshape starts counting on 0} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a dictionary with the column settings 
+\end{DoxyReturn}
+\doxyparagraph{Output in case of col\+\_\+index = 2}\label{namespace_option_manager_autotoc_md4}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{\textcolor{stringliteral}{"{}column"{}} : \{}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}index"{}} : 2,}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}number"{}} : 3,}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}letter"{}} : \textcolor{stringliteral}{"{}C"{}},}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}location"{}} : \textcolor{stringliteral}{"{}C:C"{}}}
+\DoxyCodeLine{    \},}
+\DoxyCodeLine{   }
+\DoxyCodeLine{    \textcolor{stringliteral}{"{}title\_location"{}} : \textcolor{stringliteral}{"{}C1"{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ \begin{DoxySeeAlso}{See also}
+\doxyref{setup()}{p.}{namespace_option_manager_a6878b77a9c909562223985bd19718a96} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 23} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_aa23d68a131487f6b75aa01635ac978c0}} 
+\index{OptionManager@{OptionManager}!set\_highest\_column@{set\_highest\_column}}
+\index{set\_highest\_column@{set\_highest\_column}!OptionManager@{OptionManager}}
+\doxysubsubsection{set\_highest\_column()}
+{\footnotesize\ttfamily def Option\+Manager.\+set\+\_\+highest\+\_\+column (\begin{DoxyParamCaption}\item[{}]{highest\+\_\+column }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 161} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_aefb42e236f016a41398a3575436197f6}} 
+\index{OptionManager@{OptionManager}!set\_names\_col@{set\_names\_col}}
+\index{set\_names\_col@{set\_names\_col}!OptionManager@{OptionManager}}
+\doxysubsubsection{set\_names\_col()}
+{\footnotesize\ttfamily def Option\+Manager.\+set\+\_\+names\+\_\+col (\begin{DoxyParamCaption}\item[{int}]{col\+\_\+index = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Change the names column, and saves the the changes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em col\+\_\+index} & index of the pretended column \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+it sets all the properties related to it. The {\itshape col\+\_\+index} starts couting on 0 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxyref{set\+\_\+col(int)}{p.}{namespace_option_manager_a1469c1947b76d8100b00a402b74e83a4}, \doxyref{build\+\_\+script(int)}{p.}{namespace_option_manager_a697fdfd9c2a4ee7b9549b138248e5436}, \doxyref{save()}{p.}{namespace_option_manager_a997f90be7f8d248aa80fb06dc9dfa2fb} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 199} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a6cf5001d09bb9fc118ec590960c74725}} 
+\index{OptionManager@{OptionManager}!set\_query@{set\_query}}
+\index{set\_query@{set\_query}!OptionManager@{OptionManager}}
+\doxysubsubsection{set\_query()}
+{\footnotesize\ttfamily def Option\+Manager.\+set\+\_\+query (\begin{DoxyParamCaption}\item[{}]{new\+\_\+query }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 154} of file \textbf{ Option\+Manager.\+py}.
+
+\mbox{\label{namespace_option_manager_a6878b77a9c909562223985bd19718a96}} 
+\index{OptionManager@{OptionManager}!setup@{setup}}
+\index{setup@{setup}!OptionManager@{OptionManager}}
+\doxysubsubsection{setup()}
+{\footnotesize\ttfamily def Option\+Manager.\+setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Generate default settings. 
+
+\begin{DoxyNote}{Note}
+Is used if there is not a {\itshape options.\+json} file in {\itshape /data} folder 
+\end{DoxyNote}
+\doxyparagraph{Default Options}\label{namespace_option_manager_autotoc_md6}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    \textcolor{stringliteral}{"{}data"{}}: \{}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}code"{}}: \{}
+\DoxyCodeLine{            \textcolor{stringliteral}{"{}column"{}}: \{}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}index"{}}: 2,}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}number"{}}: 3,}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}letter"{}}: \textcolor{stringliteral}{"{}C"{}},}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}location"{}}: \textcolor{stringliteral}{"{}C:C"{}}}
+\DoxyCodeLine{            \},}
+\DoxyCodeLine{            \textcolor{stringliteral}{"{}title\_location"{}}: \textcolor{stringliteral}{"{}C1"{}}}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}names"{}}: \{}
+\DoxyCodeLine{            \textcolor{stringliteral}{"{}column"{}}: \{}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}index"{}}: 0,}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}number"{}}: 1,}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}letter"{}}: \textcolor{stringliteral}{"{}A"{}},}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}location"{}}: \textcolor{stringliteral}{"{}A:A"{}}}
+\DoxyCodeLine{            \},}
+\DoxyCodeLine{            \textcolor{stringliteral}{"{}title\_location"{}}: \textcolor{stringliteral}{"{}A1"{}}}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}ignore"{}}: \{}
+\DoxyCodeLine{            \textcolor{stringliteral}{"{}titles"{}}: [}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}paste here"{}},}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}all likes"{}},}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}new profiles from ads"{}},}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}all leads"{}},}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}lead ad references"{}},}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}grand est r\(\backslash\)u00e9f\(\backslash\)u00e9rences d'avril"{}}}
+\DoxyCodeLine{            ],}
+\DoxyCodeLine{            \textcolor{stringliteral}{"{}words"{}}: [}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}r\(\backslash\)u00e9f\(\backslash\)u00e9rences"{}},}
+\DoxyCodeLine{                \textcolor{stringliteral}{"{}!"{}}}
+\DoxyCodeLine{            ]}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}email"{}}: [}
+\DoxyCodeLine{            <api email>,}
+\DoxyCodeLine{        ],}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}sheets"{}}: \{}
+\DoxyCodeLine{            \textcolor{stringliteral}{"{}all likes"{}}: \textcolor{stringliteral}{"{}All Likes"{}},}
+\DoxyCodeLine{            \textcolor{stringliteral}{"{}new profiles"{}}: \textcolor{stringliteral}{"{}New Profiles From Ads"{}}}
+\DoxyCodeLine{        \},}
+\DoxyCodeLine{        \textcolor{stringliteral}{"{}script"{}}: \textcolor{stringliteral}{"{}=GetUrl(A:A)"{}}}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \textbf{ 96} of file \textbf{ Option\+Manager.\+py}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{namespace_option_manager_a2d2fa135021800483e4ffac4e26a6643}} 
+\index{OptionManager@{OptionManager}!options@{options}}
+\index{options@{options}!OptionManager@{OptionManager}}
+\doxysubsubsection{options}
+{\footnotesize\ttfamily dictionary Option\+Manager.\+options = \{\}}
+
+
+
+Dictionary of all options. 
+
+
+
+Definition at line \textbf{ 6} of file \textbf{ Option\+Manager.\+py}.
+

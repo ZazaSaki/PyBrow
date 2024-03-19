@@ -1,0 +1,222 @@
+\doxysection{Lock\+Manager Namespace Reference}
+\label{namespace_lock_manager}\index{LockManager@{LockManager}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+List[Dict] \textbf{ get\+Protected\+Ranges} (Worksheet worksheet)
+\begin{DoxyCompactList}\small\item\em Gets the protected ranges from the api. \end{DoxyCompactList}\item 
+str \textbf{ convert\+\_\+range} (dict sheet\+\_\+object)
+\begin{DoxyCompactList}\small\item\em Convert numeric ranges in A1 notation ranges. \end{DoxyCompactList}\item 
+dict \textbf{ convert\+\_\+ranges} (List[dict] sheet\+\_\+object\+\_\+list)
+\begin{DoxyCompactList}\small\item\em Recieves a list of protected ranges and add to each one of an {\itshape A1\+Notation} property with a A1 notation of the protected range. \end{DoxyCompactList}\item 
+Dict \textbf{ get\+Locked\+Range} (str range, Worksheet worksheet)
+\begin{DoxyCompactList}\small\item\em Get a protected range from the api acroding to a range and a sheet. \end{DoxyCompactList}\item 
+def \textbf{ lock\+Links\+Col} (Worksheet worksheet, List[str] emails)
+\begin{DoxyCompactList}\small\item\em Lock the presetted links\textquotesingle{} column in a worksheet. \end{DoxyCompactList}\item 
+def \textbf{ lock\+Range} (Worksheet worksheet, str range, List[str] emails)
+\begin{DoxyCompactList}\small\item\em Lock a range in a worksheet, manage repeated protected ranges. \end{DoxyCompactList}\item 
+def \textbf{ edit\+Protected\+Range} (Worksheet worksheet, str range, List[str] emails, protected\+Range=None)
+\begin{DoxyCompactList}\small\item\em Edit a range in a worksheet, manage repeated protected ranges. \end{DoxyCompactList}\item 
+def \textbf{ lock\+Sheet} (Worksheet worksheet, List[str] emails)
+\begin{DoxyCompactList}\small\item\em Lock a worksheet. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespace_lock_manager_a50a070ff6729ac0c94120f5c14e844b0}} 
+\index{LockManager@{LockManager}!convert\_range@{convert\_range}}
+\index{convert\_range@{convert\_range}!LockManager@{LockManager}}
+\doxysubsubsection{convert\_range()}
+{\footnotesize\ttfamily str Lock\+Manager.\+convert\+\_\+range (\begin{DoxyParamCaption}\item[{dict}]{sheet\+\_\+object }\end{DoxyParamCaption})}
+
+
+
+Convert numeric ranges in A1 notation ranges. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sheet\+\_\+object} & protected range object to get the A1 notation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+String with A1 notation of the location of the protected range 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 35} of file \textbf{ Lock\+Manager.\+py}.
+
+\mbox{\label{namespace_lock_manager_a4320968ba5dfc99a56e333fde07c3531}} 
+\index{LockManager@{LockManager}!convert\_ranges@{convert\_ranges}}
+\index{convert\_ranges@{convert\_ranges}!LockManager@{LockManager}}
+\doxysubsubsection{convert\_ranges()}
+{\footnotesize\ttfamily dict Lock\+Manager.\+convert\+\_\+ranges (\begin{DoxyParamCaption}\item[{List[dict]}]{sheet\+\_\+object\+\_\+list }\end{DoxyParamCaption})}
+
+
+
+Recieves a list of protected ranges and add to each one of an {\itshape A1\+Notation} property with a A1 notation of the protected range. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sheet\+\_\+object\+\_\+list} & list of protected range objects to modify \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+list of protected range objects, now with {\itshape A1\+Notation} property 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 64} of file \textbf{ Lock\+Manager.\+py}.
+
+\mbox{\label{namespace_lock_manager_aa807452bc91fdd9495262c9680aecb8d}} 
+\index{LockManager@{LockManager}!editProtectedRange@{editProtectedRange}}
+\index{editProtectedRange@{editProtectedRange}!LockManager@{LockManager}}
+\doxysubsubsection{editProtectedRange()}
+{\footnotesize\ttfamily def Lock\+Manager.\+edit\+Protected\+Range (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet,  }\item[{str}]{range,  }\item[{List[str]}]{emails,  }\item[{}]{protected\+Range = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Edit a range in a worksheet, manage repeated protected ranges. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & locked worksheet \\
+\hline
+{\em emails} & emails that can edit the range \\
+\hline
+{\em range} & the pretended locked range to edit \\
+\hline
+{\em protected\+Range} & $\ast$(optional)$\ast$ specifique range to edit \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{get\+Protected\+Ranges}{p.}{namespace_lock_manager_ab4d997ef8413fb616ad1e8905a03a283} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 139} of file \textbf{ Lock\+Manager.\+py}.
+
+\mbox{\label{namespace_lock_manager_abcefeaf1e21dfe04af6150d1f87fc285}} 
+\index{LockManager@{LockManager}!getLockedRange@{getLockedRange}}
+\index{getLockedRange@{getLockedRange}!LockManager@{LockManager}}
+\doxysubsubsection{getLockedRange()}
+{\footnotesize\ttfamily Dict Lock\+Manager.\+get\+Locked\+Range (\begin{DoxyParamCaption}\item[{str}]{range,  }\item[{Worksheet}]{worksheet }\end{DoxyParamCaption})}
+
+
+
+Get a protected range from the api acroding to a range and a sheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to get the protected range from \\
+\hline
+{\em range} & the pretended range \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the range or {\itshape None} if not found 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{get\+Protected\+Ranges}{p.}{namespace_lock_manager_ab4d997ef8413fb616ad1e8905a03a283} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 77} of file \textbf{ Lock\+Manager.\+py}.
+
+\mbox{\label{namespace_lock_manager_ab4d997ef8413fb616ad1e8905a03a283}} 
+\index{LockManager@{LockManager}!getProtectedRanges@{getProtectedRanges}}
+\index{getProtectedRanges@{getProtectedRanges}!LockManager@{LockManager}}
+\doxysubsubsection{getProtectedRanges()}
+{\footnotesize\ttfamily List[Dict] Lock\+Manager.\+get\+Protected\+Ranges (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet }\end{DoxyParamCaption})}
+
+
+
+Gets the protected ranges from the api. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to get the protected ranges from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+a list with all protected ranges of a worksheet 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 13} of file \textbf{ Lock\+Manager.\+py}.
+
+\mbox{\label{namespace_lock_manager_a9d52e8d1b0dd36ee55c23cf3587f477d}} 
+\index{LockManager@{LockManager}!lockLinksCol@{lockLinksCol}}
+\index{lockLinksCol@{lockLinksCol}!LockManager@{LockManager}}
+\doxysubsubsection{lockLinksCol()}
+{\footnotesize\ttfamily def Lock\+Manager.\+lock\+Links\+Col (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet,  }\item[{List[str]}]{emails }\end{DoxyParamCaption})}
+
+
+
+Lock the presetted links\textquotesingle{} column in a worksheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to lock \\
+\hline
+{\em range} & the pretended range to lock \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{lock\+Range}{p.}{namespace_lock_manager_a3ae8b8ed4682fb969223ef52a163f140} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 95} of file \textbf{ Lock\+Manager.\+py}.
+
+\mbox{\label{namespace_lock_manager_a3ae8b8ed4682fb969223ef52a163f140}} 
+\index{LockManager@{LockManager}!lockRange@{lockRange}}
+\index{lockRange@{lockRange}!LockManager@{LockManager}}
+\doxysubsubsection{lockRange()}
+{\footnotesize\ttfamily def Lock\+Manager.\+lock\+Range (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet,  }\item[{str}]{range,  }\item[{List[str]}]{emails }\end{DoxyParamCaption})}
+
+
+
+Lock a range in a worksheet, manage repeated protected ranges. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to lock \\
+\hline
+{\em emails} & emails that can edit the range \\
+\hline
+{\em range} & the pretended range to lock \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{get\+Protected\+Ranges}{p.}{namespace_lock_manager_ab4d997ef8413fb616ad1e8905a03a283}, \doxyref{edit\+Protected\+Range}{p.}{namespace_lock_manager_aa807452bc91fdd9495262c9680aecb8d} 
+\end{DoxySeeAlso}
+\begin{DoxyAttention}{Attention}
+if the range already exist, it will be edited 
+\end{DoxyAttention}
+
+
+Definition at line \textbf{ 104} of file \textbf{ Lock\+Manager.\+py}.
+
+\mbox{\label{namespace_lock_manager_afce6728c7840ee4ae40250106d14c531}} 
+\index{LockManager@{LockManager}!lockSheet@{lockSheet}}
+\index{lockSheet@{lockSheet}!LockManager@{LockManager}}
+\doxysubsubsection{lockSheet()}
+{\footnotesize\ttfamily def Lock\+Manager.\+lock\+Sheet (\begin{DoxyParamCaption}\item[{Worksheet}]{worksheet,  }\item[{List[str]}]{emails }\end{DoxyParamCaption})}
+
+
+
+Lock a worksheet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em worksheet} & worksheet to lock \\
+\hline
+{\em range} & the pretended range to lock \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{lock\+Range}{p.}{namespace_lock_manager_a3ae8b8ed4682fb969223ef52a163f140} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 177} of file \textbf{ Lock\+Manager.\+py}.
+

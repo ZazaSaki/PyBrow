@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['facebookpagemanager_0',['FacebookPageManager',['../namespace_facebook_page_manager.html',1,'']]],
+  ['fail_5fword_1',['FAIL_WORD',['../namespace_g_u_i.html#a5bc941f9bd89639a688afbd2a4ac36da',1,'GUI']]],
+  ['failed_2',['failed',['../namespace_read.html#a34c19516af4c08d12a9fbdf6a51bbc01',1,'Read']]],
+  ['feed_5flikes_3',['feed_likes',['../namespace_main.html#af40553940aeb133d1f2d3bc0f3203253',1,'Main']]],
+  ['feedbackdisplayer_4',['FeedbackDisplayer',['../namespace_feedback_displayer.html',1,'']]],
+  ['ffg_5',['ffg',['../namespacefixer.html#abf8e679fb9692e275de0504654b45a6e',1,'fixer']]],
+  ['fg_6',['fg',['../namespacefixer.html#ae3f160925ecc9fa05400535574f5c168',1,'fixer']]],
+  ['filereader_7',['FileReader',['../namespace_file_reader.html',1,'']]],
+  ['fillemptyinfo_8',['FillEmptyInfo',['../namespace_data_manager.html#a1cb2480d7a4adea9ca4ae854900b38fb',1,'DataManager']]],
+  ['fillemptyinfoinvalid_9',['FillEmptyInfoInvalid',['../namespace_data_manager.html#a26a534f4d3aa68a22b1113ee11e27dc5',1,'DataManager']]],
+  ['filterlist_10',['filterList',['../namespace_data_manager.html#ae633c50307ff420c7d1fc5e3733e9db5',1,'DataManager']]],
+  ['findduplicateds_11',['findDuplicateds',['../namespace_data_manager.html#a2b19fbc80a10186b7a41be4cc129bfd4',1,'DataManager']]],
+  ['finish_5fword_12',['FINISH_WORD',['../namespace_g_u_i.html#abaa12cc73659df563a72480c28b145a9',1,'GUI']]],
+  ['fix_5fall_5fsheets_13',['fix_all_sheets',['../namespacedocs_updater_base.html#a34a38a4b888163f965a296c01cd40de3',1,'docsUpdaterBase']]],
+  ['fix_5fno_5fcode_5fsheet_14',['fix_no_code_sheet',['../namespacedocs_updater_base.html#af2d10d037094765d0bdaa3e79e9c7d39',1,'docsUpdaterBase']]],
+  ['fixer_15',['fixer',['../namespacefixer.html',1,'']]],
+  ['forgetfacebookaccount_16',['forgetFacebookAccount',['../namespace_read.html#ada4ec1b756943ed6e3081fece545379b',1,'Read']]],
+  ['full_5frecover_17',['full_recover',['../namespace_loss_manager.html#a023fe08c0f8e196b33986aa96d69df0a',1,'LossManager']]],
+  ['fullupdate_18',['FullUpdate',['../namespacedocs_updater_base.html#a4f38b8a38e1d34d4a864cc980ce7ae11',1,'docsUpdaterBase']]],
+  ['fullverify_19',['FullVerify',['../namespace_main.html#af1b61ab1061dacaaf02e12e8e1eb898d',1,'Main']]]
+];

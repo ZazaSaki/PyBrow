@@ -1,0 +1,597 @@
+\doxysection{docs\+Updater\+Base.\+py}
+\label{docs_updater_base_8py_source}\index{docsUpdaterBase.py@{docsUpdaterBase.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{from} types \textcolor{keyword}{import} FunctionType}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} typing \textcolor{keyword}{import} List, Tuple}
+\DoxyCodeLine{00003 \textcolor{keyword}{import} gspread}
+\DoxyCodeLine{00004 \textcolor{keyword}{from} gspread.spreadsheet \textcolor{keyword}{import} Spreadsheet}
+\DoxyCodeLine{00005 \textcolor{keyword}{from} gspread.worksheet \textcolor{keyword}{import} Worksheet}
+\DoxyCodeLine{00006 \textcolor{keyword}{from} oauth2client.service\_account \textcolor{keyword}{import} ServiceAccountCredentials}
+\DoxyCodeLine{00007 }
+\DoxyCodeLine{00008 \textcolor{keyword}{from} FeedbackDisplayer \textcolor{keyword}{import} remove\_value\_from, update\_checker}
+\DoxyCodeLine{00009 }
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{00011 }
+\DoxyCodeLine{00012 scope = [\textcolor{stringliteral}{"{}https://spreadsheets.google.com/feeds"{}}, \textcolor{stringliteral}{'https://www.googleapis.com/auth/spreadsheets'},}
+\DoxyCodeLine{00013         \textcolor{stringliteral}{"{}https://www.googleapis.com/auth/drive.file"{}}, \textcolor{stringliteral}{"{}https://www.googleapis.com/auth/drive"{}}]}
+\DoxyCodeLine{00014 }
+\DoxyCodeLine{00015 }
+\DoxyCodeLine{00016 creds = ServiceAccountCredentials.from\_json\_keyfile\_name(\textcolor{stringliteral}{"{}creds.json"{}}, scope)}
+\DoxyCodeLine{00017 }
+\DoxyCodeLine{00018 }
+\DoxyCodeLine{00019 client\_session = gspread.authorize(creds)}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021 del creds, scope}
+\DoxyCodeLine{00022 }
+\DoxyCodeLine{00023 \textcolor{keyword}{from} itertools \textcolor{keyword}{import} repeat}
+\DoxyCodeLine{00024 \textcolor{keyword}{import} json}
+\DoxyCodeLine{00025 \textcolor{keyword}{from} os \textcolor{keyword}{import} name, write}
+\DoxyCodeLine{00026 \textcolor{keyword}{from} re \textcolor{keyword}{import} search}
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029 \textcolor{keyword}{from} gspread.exceptions \textcolor{keyword}{import} APIError, CellNotFound, WorksheetNotFound, SpreadsheetNotFound}
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031 \textcolor{keyword}{from} pprint \textcolor{keyword}{import} pprint \textcolor{keyword}{as} pp}
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00033 \textcolor{keyword}{from} Drive.DataBase.FacebookPageManager \textcolor{keyword}{import} getAllPagesSheet}
+\DoxyCodeLine{00034 \textcolor{keyword}{from} .DataBase.DataManager \textcolor{keyword}{import} filterList, insertInvalidProfiles, insertProfileNameNLinks}
+\DoxyCodeLine{00035 \textcolor{keyword}{from} General.general \textcolor{keyword}{import} ExplicitWait, get\_col\_by\_num, getNotIncluded, listparse, run\_with\_timeout\_checker, saveJSON, cleanTable, time\_out\_checker}
+\DoxyCodeLine{00036 \textcolor{keyword}{from} General.loadingBar \textcolor{keyword}{import} closeCounter, openCounter, updateCounter}
+\DoxyCodeLine{00037 \textcolor{keyword}{from} Drive.OptionManager \textcolor{keyword}{import} code, email, get\_all\_likes\_name, get\_highest\_column, get\_ignore\_titles, get\_ignore\_words, get\_new\_profiles\_name, get\_query, names, code\_col, names\_col, code\_title, names\_title, script}
+\DoxyCodeLine{00038 \textcolor{keyword}{from} Drive.LossManager \textcolor{keyword}{import} submit, clear}
+\DoxyCodeLine{00039 \textcolor{keyword}{from} Drive.LockManager \textcolor{keyword}{import} getLockedRange, lockLinksCol, lockRange, lockSheet}
+\DoxyCodeLine{00040 }
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042 \textcolor{keyword}{def }connection():}
+\DoxyCodeLine{00043     \textcolor{keyword}{global} client\_session}
+\DoxyCodeLine{00044     scope = [\textcolor{stringliteral}{"{}https://spreadsheets.google.com/feeds"{}}, \textcolor{stringliteral}{'https://www.googleapis.com/auth/spreadsheets'},}
+\DoxyCodeLine{00045             \textcolor{stringliteral}{"{}https://www.googleapis.com/auth/drive.file"{}}, \textcolor{stringliteral}{"{}https://www.googleapis.com/auth/drive"{}}]}
+\DoxyCodeLine{00046     creds = ServiceAccountCredentials.from\_json\_keyfile\_name(\textcolor{stringliteral}{"{}creds.json"{}}, scope)}
+\DoxyCodeLine{00047     client\_session = gspread.authorize(creds)}
+\DoxyCodeLine{00048     }
+\DoxyCodeLine{00049 }
+\DoxyCodeLine{00070 \textcolor{keyword}{def }do\_to\_all(function: FunctionType, args:List = \textcolor{keywordtype}{None}):}
+\DoxyCodeLine{00071     }
+\DoxyCodeLine{00072     validSheetsLinks = getAllPagesSheet()}
+\DoxyCodeLine{00073     }
+\DoxyCodeLine{00074     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} args == \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00075         args.insert(0, \textcolor{stringliteral}{"{}worksheet"{}})}
+\DoxyCodeLine{00076     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00077         args=[\textcolor{stringliteral}{"{}worksheet"{}}]}
+\DoxyCodeLine{00078     }
+\DoxyCodeLine{00079     \textcolor{keywordflow}{for} sheetLink \textcolor{keywordflow}{in} validSheetsLinks:}
+\DoxyCodeLine{00080         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00081             sheet = getSheetByLink(sheetLink)}
+\DoxyCodeLine{00082         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00083             print(\textcolor{stringliteral}{'invalid Link : '} + sheetLink)}
+\DoxyCodeLine{00084             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00085         }
+\DoxyCodeLine{00086         \textcolor{keywordflow}{for} worksheet \textcolor{keywordflow}{in} sheet:}
+\DoxyCodeLine{00087             args[0]=worksheet}
+\DoxyCodeLine{00088             function(*args)}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00111 \textcolor{keyword}{def }do\_to\_all\_spreadsheets(function : FunctionType, args:List = \textcolor{keywordtype}{None}):}
+\DoxyCodeLine{00112     validSheetsLinks = getAllPagesSheet()}
+\DoxyCodeLine{00113     }
+\DoxyCodeLine{00114     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} args == \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00115         args.insert(0, \textcolor{stringliteral}{"{}worksheet"{}})}
+\DoxyCodeLine{00116     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00117         args=[\textcolor{stringliteral}{"{}worksheet"{}}]}
+\DoxyCodeLine{00118     }
+\DoxyCodeLine{00119     \textcolor{keywordflow}{for} sheetLink \textcolor{keywordflow}{in} validSheetsLinks:}
+\DoxyCodeLine{00120         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00121             sheet = getSheetByLink(sheetLink)}
+\DoxyCodeLine{00122         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00123             print(\textcolor{stringliteral}{'invalid Link : '} + sheetLink)}
+\DoxyCodeLine{00124             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126         args[0]=sheet}
+\DoxyCodeLine{00127         function(*args)}
+\DoxyCodeLine{00128 }
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00160 \textcolor{keyword}{def }insertProfiles(profiles:List, sheet:Worksheet, col:int = 1, offset:int = 0):}
+\DoxyCodeLine{00161 }
+\DoxyCodeLine{00162     \textcolor{comment}{\# check empty list exception}}
+\DoxyCodeLine{00163     \textcolor{keywordflow}{if} len(profiles) < 1:}
+\DoxyCodeLine{00164         print(\textcolor{stringliteral}{"{}list is empty"{}})}
+\DoxyCodeLine{00165         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'cells.readed'}, \textcolor{stringliteral}{'list is empty'})}
+\DoxyCodeLine{00166         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00167 }
+\DoxyCodeLine{00168     startCol = get\_col\_by\_num(col-\/1)}
+\DoxyCodeLine{00169     endCol = get\_col\_by\_num(len(profiles[0])-\/2+col)}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171     }
+\DoxyCodeLine{00172     filtered, last = getNotIncludedByCol(}
+\DoxyCodeLine{00173         profiles, col, sheet, offset=offset)}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175     \textcolor{comment}{\# check lack of new values exception}}
+\DoxyCodeLine{00176     \textcolor{keywordflow}{if} len(filtered) == 0:}
+\DoxyCodeLine{00177         print(\textcolor{stringliteral}{"{}no new profiles founded"{}})}
+\DoxyCodeLine{00178         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'cells.readed'}, \textcolor{stringliteral}{'no values founded'})}
+\DoxyCodeLine{00179         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181     }
+\DoxyCodeLine{00182     start = last+1}
+\DoxyCodeLine{00183     end = last+len(filtered)+1}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185     pp(len(filtered))}
+\DoxyCodeLine{00186     pp(startCol + str(start) + \textcolor{stringliteral}{':'} + endCol + str(end))}
+\DoxyCodeLine{00187 }
+\DoxyCodeLine{00188     }
+\DoxyCodeLine{00189     location = startCol + str(start) + \textcolor{stringliteral}{':'} + endCol + str(end)}
+\DoxyCodeLine{00190 }
+\DoxyCodeLine{00191     }
+\DoxyCodeLine{00192     \textcolor{keywordflow}{try} :}
+\DoxyCodeLine{00193         run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : sheet.update(location, filtered, raw = \textcolor{keyword}{False}), \textcolor{stringliteral}{"{}update info"{}})}
+\DoxyCodeLine{00194     \textcolor{keywordflow}{except} APIError:}
+\DoxyCodeLine{00195         sheet.add\_rows(1)}
+\DoxyCodeLine{00196         run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : sheet.update(location, filtered, raw = \textcolor{keyword}{False}), \textcolor{stringliteral}{"{}update info"{}})}
+\DoxyCodeLine{00197     }
+\DoxyCodeLine{00198     print(str(len(filtered)) + \textcolor{stringliteral}{"{}/"{}} + str(len(profiles)) + \textcolor{stringliteral}{"{}update"{}})}
+\DoxyCodeLine{00199     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'cells.readed'}, str(len(filtered)) + \textcolor{stringliteral}{"{}/"{}} + str(len(profiles)) + \textcolor{stringliteral}{"{}update"{}})}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00202 }
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00209 \textcolor{keyword}{def }validate(worksheet:Worksheet) -\/> bool:}
+\DoxyCodeLine{00210     \textcolor{keywordflow}{if} worksheet.title.lower() \textcolor{keywordflow}{in} get\_ignore\_titles():}
+\DoxyCodeLine{00211             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00212 }
+\DoxyCodeLine{00213     \textcolor{keywordflow}{for} ign \textcolor{keywordflow}{in}  get\_ignore\_words():}
+\DoxyCodeLine{00214         \textcolor{keywordflow}{if} ign \textcolor{keywordflow}{in} worksheet.title.lower():}
+\DoxyCodeLine{00215             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217     \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219 }
+\DoxyCodeLine{00223 \textcolor{keyword}{def }rebuild\_sheet(url : str, title : str)-\/>Worksheet:}
+\DoxyCodeLine{00224     \textcolor{keywordflow}{return} getSheetByLink(url).worksheet(title)}
+\DoxyCodeLine{00225 }
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00229 \textcolor{keyword}{def }resetPage(sheet:Worksheet):}
+\DoxyCodeLine{00230     run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : sheet.clear(), \textcolor{stringliteral}{"{}clean sheet"{}})}
+\DoxyCodeLine{00231     run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : sheet.update(\textcolor{stringliteral}{"{}A1:D1"{}}, [[\textcolor{stringliteral}{"{}Links"{}}, \textcolor{stringliteral}{"{}Names"{}}, \textcolor{stringliteral}{"{}Post"{}}, \textcolor{stringliteral}{"{}React"{}}]]), \textcolor{stringliteral}{"{}write headers"{}})}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00272 \textcolor{keyword}{def }getNotIncludedByCol(profiles:List, col:int, sheet:Worksheet, offset:int = 0)-\/> tuple[List, int]:}
+\DoxyCodeLine{00273     \textcolor{comment}{\# calculate Start End Cells}}
+\DoxyCodeLine{00274     previous = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : sheet.col\_values(col+offset), \textcolor{stringliteral}{"{}get previous values from column"{}})}
+\DoxyCodeLine{00275 }
+\DoxyCodeLine{00276     last = len(previous)}
+\DoxyCodeLine{00277     temp = filterList(profiles, offset=offset)}
+\DoxyCodeLine{00278 }
+\DoxyCodeLine{00279     \textcolor{keywordflow}{return} getNotIncluded(temp, previous, offset=offset), last}
+\DoxyCodeLine{00280 }
+\DoxyCodeLine{00281 }
+\DoxyCodeLine{00286 \textcolor{keyword}{def }getProfilesTable(sheet:Worksheet)-\/>List:}
+\DoxyCodeLine{00287     names = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : sheet.col\_values(names\_col(\textcolor{stringliteral}{"{}number"{}})), \textcolor{stringliteral}{"{}get names column"{}})}
+\DoxyCodeLine{00288     links = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : sheet.col\_values(code\_col(\textcolor{stringliteral}{"{}number"{}})), \textcolor{stringliteral}{"{}get links column"{}})}
+\DoxyCodeLine{00289 }
+\DoxyCodeLine{00290     \textcolor{comment}{\# pp(links[0:10])}}
+\DoxyCodeLine{00291 }
+\DoxyCodeLine{00292     table = list(map(\textcolor{keyword}{lambda} a, b: [a, b], names, links))}
+\DoxyCodeLine{00293     }
+\DoxyCodeLine{00294     \textcolor{keywordflow}{return} cleanTable(table)}
+\DoxyCodeLine{00295 }
+\DoxyCodeLine{00296 }
+\DoxyCodeLine{00301 \textcolor{keyword}{def }get\_cols\_title(worksheet:Worksheet, col:int)-\/>str:}
+\DoxyCodeLine{00302     cell = get\_col\_by\_num(col) + \textcolor{stringliteral}{'1'}}
+\DoxyCodeLine{00303     \textcolor{keywordflow}{while} \textcolor{keyword}{True}:}
+\DoxyCodeLine{00304         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00305             command = run\_with\_timeout\_checker(}
+\DoxyCodeLine{00306                 \textcolor{keyword}{lambda} : worksheet.acell(}
+\DoxyCodeLine{00307                     cell, value\_render\_option=\textcolor{stringliteral}{'FORMULA'}).value,}
+\DoxyCodeLine{00308                 \textcolor{stringliteral}{"{}get column's title"{}}}
+\DoxyCodeLine{00309             )}
+\DoxyCodeLine{00310             \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00311         \textcolor{keywordflow}{except} gspread.exceptions.APIError \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00312             args = err.args}
+\DoxyCodeLine{00313             }
+\DoxyCodeLine{00314             \textcolor{keywordflow}{if} args[0][\textcolor{stringliteral}{"{}code"{}}] == 400:}
+\DoxyCodeLine{00315                 print(\textcolor{stringliteral}{"{}Cell not found"{}}, end = \textcolor{stringliteral}{"{}: "{}})}
+\DoxyCodeLine{00316                 \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00317             }
+\DoxyCodeLine{00318     \textcolor{keywordflow}{return} command}
+\DoxyCodeLine{00319 }
+\DoxyCodeLine{00320 }
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00323 \textcolor{keyword}{def }getSheetByLink(link:str)-\/>Spreadsheet:}
+\DoxyCodeLine{00324     \textcolor{keywordflow}{return} run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : client\_session.open\_by\_url(link), \textcolor{stringliteral}{"{}get sheet"{}})}
+\DoxyCodeLine{00325 }
+\DoxyCodeLine{00326 }
+\DoxyCodeLine{00327 }
+\DoxyCodeLine{00329 \textcolor{keyword}{def }refreshLinksSheet():}
+\DoxyCodeLine{00330     spreadsheetList = getAllPagesSheet()}
+\DoxyCodeLine{00331     }
+\DoxyCodeLine{00332     \textcolor{keywordflow}{for} sheet \textcolor{keywordflow}{in} spreadsheetList:}
+\DoxyCodeLine{00333         updateNewLinksSheetByLink(sheet, profiles=[])}
+\DoxyCodeLine{00334 }
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336 }
+\DoxyCodeLine{00340 \textcolor{keyword}{def }UpdateListsInDataBase(sheet:Worksheet):}
+\DoxyCodeLine{00341     primary, secondary = getProfilesTable(sheet)}
+\DoxyCodeLine{00342     print(insertProfileNameNLinks(primary))}
+\DoxyCodeLine{00343     print(insertInvalidProfiles(secondary))}
+\DoxyCodeLine{00344 }
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346 }
+\DoxyCodeLine{00355 \textcolor{keyword}{def }updateNewLinksSheet(sheet:Worksheet, profiles:List = []):}
+\DoxyCodeLine{00356     url = sheet.spreadsheet.url}
+\DoxyCodeLine{00357     title = sheet.title}
+\DoxyCodeLine{00358     PostsAdresses = \{\}}
+\DoxyCodeLine{00359     }
+\DoxyCodeLine{00360     page = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : rebuild\_sheet(url, title).get\_all\_values(value\_render\_option=\textcolor{stringliteral}{'FORMULA'})[1:], \textcolor{stringliteral}{"{}get all values"{}})}
+\DoxyCodeLine{00361 }
+\DoxyCodeLine{00362     \textcolor{keywordflow}{if} len(profiles)> 0:}
+\DoxyCodeLine{00363         }
+\DoxyCodeLine{00364         \textcolor{keywordflow}{if} len(profiles[0])>2 : }
+\DoxyCodeLine{00365             \textcolor{keywordflow}{for} item \textcolor{keywordflow}{in} profiles:}
+\DoxyCodeLine{00366                 PostsAdresses[item[0]] = item[2]}
+\DoxyCodeLine{00367 }
+\DoxyCodeLine{00368 }
+\DoxyCodeLine{00369             \textcolor{keywordflow}{for} person \textcolor{keywordflow}{in} page : }
+\DoxyCodeLine{00370                 post = PostsAdresses.get(person[0])}
+\DoxyCodeLine{00371                 }
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} post :}
+\DoxyCodeLine{00374                     post = \textcolor{stringliteral}{''}}
+\DoxyCodeLine{00375 }
+\DoxyCodeLine{00376                 \textcolor{keywordflow}{if} len(person)>= 3 :}
+\DoxyCodeLine{00377                     \textcolor{keywordflow}{if} len(person) >= 4:}
+\DoxyCodeLine{00378                         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} \textcolor{stringliteral}{'facebook.com/'} \textcolor{keywordflow}{in} person[2]:}
+\DoxyCodeLine{00379                             person[3] = person[2]+person[3]}
+\DoxyCodeLine{00380                         }
+\DoxyCodeLine{00381                     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00382                         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} \textcolor{stringliteral}{'facebook.com/'} \textcolor{keywordflow}{in} person[2]:}
+\DoxyCodeLine{00383                             person.append(person[2])}
+\DoxyCodeLine{00384                         \textcolor{keywordflow}{else} :}
+\DoxyCodeLine{00385                             person.append(\textcolor{stringliteral}{''})}
+\DoxyCodeLine{00386                     }
+\DoxyCodeLine{00387                     \textcolor{keywordflow}{if} (\textcolor{keywordflow}{not} post == \textcolor{stringliteral}{''}) \textcolor{keywordflow}{and} (\textcolor{keywordflow}{not} \textcolor{stringliteral}{'facebook.com/'} \textcolor{keywordflow}{in} person[2]):}
+\DoxyCodeLine{00388                         person[2] = post}
+\DoxyCodeLine{00389 }
+\DoxyCodeLine{00390                     \textcolor{keywordflow}{elif} \textcolor{keywordflow}{not} \textcolor{stringliteral}{'facebook.com/'} \textcolor{keywordflow}{in} person[2]:}
+\DoxyCodeLine{00391                         person[2] = post}
+\DoxyCodeLine{00392                 \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00393                     person.append(post)}
+\DoxyCodeLine{00394 }
+\DoxyCodeLine{00395     pageUpdater = \textcolor{keyword}{lambda} : run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : insertProfiles(page, sheet, col=1), \textcolor{stringliteral}{"{}insert previous profiles"{}})}
+\DoxyCodeLine{00396     }
+\DoxyCodeLine{00397     path = submit(\textcolor{keyword}{lambda} : run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : insertProfiles(page, rebuild\_sheet(url, title), col=1), \textcolor{stringliteral}{"{}insert previous profiles"{}}))}
+\DoxyCodeLine{00398     }
+\DoxyCodeLine{00399     resetPage(sheet)}
+\DoxyCodeLine{00400 }
+\DoxyCodeLine{00401     pageUpdater()}
+\DoxyCodeLine{00402     clear(path)}
+\DoxyCodeLine{00403     }
+\DoxyCodeLine{00404     run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : insertProfiles(profiles, sheet, col=1), \textcolor{stringliteral}{"{}insert profiles"{}})}
+\DoxyCodeLine{00405 }
+\DoxyCodeLine{00406 }
+\DoxyCodeLine{00414 \textcolor{keyword}{def }updateNewLinksSheetByLink(Link:str, profiles:List = []):}
+\DoxyCodeLine{00415     }
+\DoxyCodeLine{00416     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00417         spreadsheet = getSheetByLink(Link)}
+\DoxyCodeLine{00418         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'spreadsheet.title'}, spreadsheet.title)}
+\DoxyCodeLine{00419     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00420         spreadsheet = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00421         print(\textcolor{stringliteral}{'\{Link\} failed'})}
+\DoxyCodeLine{00422 }
+\DoxyCodeLine{00423     }
+\DoxyCodeLine{00424     sheet = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00425     }
+\DoxyCodeLine{00426     }
+\DoxyCodeLine{00427     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00428         sheet = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : spreadsheet.worksheet(get\_new\_profiles\_name()), \textcolor{stringliteral}{"{}get New Profiles From Ads"{}})}
+\DoxyCodeLine{00429     \textcolor{keywordflow}{except} gspread.exceptions.WorksheetNotFound:}
+\DoxyCodeLine{00430         sheet = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : spreadsheet.add\_worksheet(get\_new\_profiles\_name(), 10, 4), \textcolor{stringliteral}{"{}create New Profiles From Ads"{}})}
+\DoxyCodeLine{00431         lockRange(sheet, \textcolor{stringliteral}{"{}A:B"{}}, email())}
+\DoxyCodeLine{00432     \textcolor{keywordflow}{except} :}
+\DoxyCodeLine{00433         print(\textcolor{stringliteral}{"{}Not reachable : "{}} + Link)}
+\DoxyCodeLine{00434         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'failed'})}
+\DoxyCodeLine{00435         \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00436 }
+\DoxyCodeLine{00437     \textcolor{keywordflow}{if} sheet == \textcolor{stringliteral}{"{}"{}} :}
+\DoxyCodeLine{00438         print(\textcolor{stringliteral}{"{}Not reachable : "{}} + Link)}
+\DoxyCodeLine{00439         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'failed'})}
+\DoxyCodeLine{00440         \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00441     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'worksheet.title'}, sheet.title)}
+\DoxyCodeLine{00442     updateNewLinksSheet(sheet=sheet, profiles=profiles)}
+\DoxyCodeLine{00443     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'all\_likes'}, \textcolor{stringliteral}{'done'})}
+\DoxyCodeLine{00444     \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00445 }
+\DoxyCodeLine{00446 }
+\DoxyCodeLine{00451 \textcolor{keyword}{def }FullUpdate(just:bool = \textcolor{keyword}{False}, sheetGroup:List[str] = []):}
+\DoxyCodeLine{00452     done = []}
+\DoxyCodeLine{00453     failed = []}
+\DoxyCodeLine{00454     i = 0}
+\DoxyCodeLine{00455 }
+\DoxyCodeLine{00456     validSheets = getAllPagesSheet()}
+\DoxyCodeLine{00457     \textcolor{keywordflow}{for} sheet \textcolor{keywordflow}{in} validSheets:}
+\DoxyCodeLine{00458         \textcolor{keywordflow}{try} : }
+\DoxyCodeLine{00459             title = get\_all\_likes\_name()}
+\DoxyCodeLine{00460             spread = getSheetByLink(sheet)}
+\DoxyCodeLine{00461             SpreadsheetURL = spread.url}
+\DoxyCodeLine{00462             sheet = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : spread.worksheet(title))}
+\DoxyCodeLine{00463             update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'worksheet.title'}, title)}
+\DoxyCodeLine{00464             update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'spreadsheet.title'}, spread.title)}
+\DoxyCodeLine{00465             }
+\DoxyCodeLine{00466         \textcolor{keywordflow}{except} WorksheetNotFound : }
+\DoxyCodeLine{00467             print(\textcolor{stringliteral}{"{}failed"{}})}
+\DoxyCodeLine{00468             update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'all\_likes'}, \textcolor{stringliteral}{'failed'})}
+\DoxyCodeLine{00469             failed.append(\{\textcolor{stringliteral}{"{}title"{}}: title, \textcolor{stringliteral}{"{}sheetURL"{}}: \textcolor{stringliteral}{"{}None"{}},}
+\DoxyCodeLine{00470                           \textcolor{stringliteral}{"{}spreadSheetUrl"{}}: SpreadsheetURL\})}
+\DoxyCodeLine{00471             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00472         }
+\DoxyCodeLine{00473         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00474             print(\textcolor{stringliteral}{"{}failed"{}})}
+\DoxyCodeLine{00475             update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'all\_likes'}, \textcolor{stringliteral}{'failed'})}
+\DoxyCodeLine{00476             failed.append(\{\textcolor{stringliteral}{"{}title"{}}: title, \textcolor{stringliteral}{"{}sheetURL"{}}: \textcolor{stringliteral}{"{}None"{}},}
+\DoxyCodeLine{00477                           \textcolor{stringliteral}{"{}spreadSheetUrl"{}}: SpreadsheetURL\})}
+\DoxyCodeLine{00478             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00479 }
+\DoxyCodeLine{00480 }
+\DoxyCodeLine{00481         i += 1}
+\DoxyCodeLine{00482         sheetURL = sheet.url}
+\DoxyCodeLine{00483         title = sheet.title}
+\DoxyCodeLine{00484         }
+\DoxyCodeLine{00485 }
+\DoxyCodeLine{00486         \textcolor{keywordflow}{if} just:}
+\DoxyCodeLine{00487             \textcolor{keywordflow}{if} (\textcolor{keywordflow}{not} title \textcolor{keywordflow}{in} sheetGroup) \textcolor{keywordflow}{and} (\textcolor{keywordflow}{not} sheetURL \textcolor{keywordflow}{in} sheetGroup):}
+\DoxyCodeLine{00488                 print(\textcolor{stringliteral}{"{}passed"{}})}
+\DoxyCodeLine{00489                 update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'all\_likes'}, \textcolor{stringliteral}{'passed'})}
+\DoxyCodeLine{00490                 \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00491 }
+\DoxyCodeLine{00492         print(title)}
+\DoxyCodeLine{00493         print(sheetURL)}
+\DoxyCodeLine{00494         print(SpreadsheetURL)}
+\DoxyCodeLine{00495 }
+\DoxyCodeLine{00496         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00497             UpdateListsInDataBase(sheet)}
+\DoxyCodeLine{00498             update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'all\_likes'}, \textcolor{stringliteral}{'done'})}
+\DoxyCodeLine{00499             done.append(\{\textcolor{stringliteral}{"{}title"{}}: title, \textcolor{stringliteral}{"{}sheetURL"{}}: sheetURL,}
+\DoxyCodeLine{00500                         \textcolor{stringliteral}{"{}spreadSheetUrl"{}}: SpreadsheetURL\})}
+\DoxyCodeLine{00501             \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00502         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00503             print(\textcolor{stringliteral}{"{}failed"{}})}
+\DoxyCodeLine{00504             update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'all\_likes'}, \textcolor{stringliteral}{'failed'})}
+\DoxyCodeLine{00505             failed.append(\{\textcolor{stringliteral}{"{}title"{}}: title, \textcolor{stringliteral}{"{}sheetURL"{}}: sheetURL,}
+\DoxyCodeLine{00506                           \textcolor{stringliteral}{"{}spreadSheetUrl"{}}: SpreadsheetURL\})}
+\DoxyCodeLine{00507         \textcolor{comment}{\# wait\_secs(8)}}
+\DoxyCodeLine{00508 }
+\DoxyCodeLine{00509     saveJSON(\textcolor{stringliteral}{"{}Not\_updated"{}}, failed)}
+\DoxyCodeLine{00510     saveJSON(\textcolor{stringliteral}{"{}Updated"{}}, done)}
+\DoxyCodeLine{00511     remove\_value\_from(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'all\_likes'})}
+\DoxyCodeLine{00512     \textcolor{keywordflow}{return} done, failed}
+\DoxyCodeLine{00513 }
+\DoxyCodeLine{00514 }
+\DoxyCodeLine{00515 \textcolor{keyword}{def }VerifyUpdate():}
+\DoxyCodeLine{00516     NotUpdated = json.load(open(\textcolor{stringliteral}{"{}data/Not\_updated.json"{}}, \textcolor{stringliteral}{"{}r"{}}))[\textcolor{stringliteral}{"{}data"{}}]}
+\DoxyCodeLine{00517 }
+\DoxyCodeLine{00518     sheetList = list(map(\textcolor{keyword}{lambda} a: a[\textcolor{stringliteral}{"{}spreadSheetUrl"{}}], NotUpdated))}
+\DoxyCodeLine{00519 }
+\DoxyCodeLine{00520     print(sheetList)}
+\DoxyCodeLine{00521     }
+\DoxyCodeLine{00522     done, failed = FullUpdate(just=\textcolor{keyword}{True}, sheetGroup=sheetList)}
+\DoxyCodeLine{00523     saveJSON(\textcolor{stringliteral}{"{}Not\_updated"{}}, failed)}
+\DoxyCodeLine{00524     saveJSON(\textcolor{stringliteral}{"{}Updated"{}}, done)}
+\DoxyCodeLine{00525 }
+\DoxyCodeLine{00526 }
+\DoxyCodeLine{00529 \textcolor{keyword}{def }update\_code(worksheet:Worksheet):}
+\DoxyCodeLine{00530 }
+\DoxyCodeLine{00531     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} validate(worksheet):}
+\DoxyCodeLine{00532         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00533 }
+\DoxyCodeLine{00534     print(worksheet.title, end= \textcolor{stringliteral}{"{}: "{}})}
+\DoxyCodeLine{00535     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'worksheet.title'}, worksheet.title)}
+\DoxyCodeLine{00536     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'spreadsheet.title'}, worksheet.spreadsheet.title)}
+\DoxyCodeLine{00537     command = get\_cols\_title(worksheet, code\_col(\textcolor{stringliteral}{"{}index"{}}))}
+\DoxyCodeLine{00538     }
+\DoxyCodeLine{00539 }
+\DoxyCodeLine{00540     \textcolor{keywordflow}{if} command == \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00541         print(print(\textcolor{stringliteral}{"{}Code not found"{}}))}
+\DoxyCodeLine{00542         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'command'}, \textcolor{stringliteral}{"{}Code not found"{}})}
+\DoxyCodeLine{00543         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00544 }
+\DoxyCodeLine{00545     \textcolor{keywordflow}{if} command == script():}
+\DoxyCodeLine{00546         print(\textcolor{stringliteral}{"{}\(\backslash\)"{}"{}} + command + \textcolor{stringliteral}{"{}\(\backslash\)"{} found"{}})}
+\DoxyCodeLine{00547         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'command'}, command)}
+\DoxyCodeLine{00548         \textcolor{keywordflow}{try} :}
+\DoxyCodeLine{00549             \textcolor{comment}{\#defining critic function}}
+\DoxyCodeLine{00550             \textcolor{comment}{\#submiting to the loss manager}}
+\DoxyCodeLine{00551             url = worksheet.spreadsheet.url}
+\DoxyCodeLine{00552             title = worksheet.title}
+\DoxyCodeLine{00553             path = submit(\textcolor{keyword}{lambda} : run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : rebuild\_sheet(url, title).update(code\_title(), script(), raw = \textcolor{keyword}{False}), \textcolor{stringliteral}{"{}update code"{}}))  }
+\DoxyCodeLine{00554             }
+\DoxyCodeLine{00555             \textcolor{comment}{\#running code}}
+\DoxyCodeLine{00556             run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : worksheet.batch\_clear([code\_col(\textcolor{stringliteral}{"{}location"{}})]), \textcolor{stringliteral}{"{}clear column"{}})}
+\DoxyCodeLine{00557             run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : worksheet.update(code\_title(), script(), raw = \textcolor{keyword}{False}), \textcolor{stringliteral}{"{}update code"{}})}
+\DoxyCodeLine{00558             }
+\DoxyCodeLine{00559             \textcolor{comment}{\#clearing loss manager in case of success}}
+\DoxyCodeLine{00560             clear(path)}
+\DoxyCodeLine{00561 }
+\DoxyCodeLine{00562             }
+\DoxyCodeLine{00563 }
+\DoxyCodeLine{00564         \textcolor{keywordflow}{except} APIError \textcolor{keyword}{as} err:                 }
+\DoxyCodeLine{00565             \textcolor{keywordflow}{if} err.args[0][\textcolor{stringliteral}{"{}code"{}}] == 400:}
+\DoxyCodeLine{00566                 pp(\textcolor{stringliteral}{"{}celula invalida"{}})}
+\DoxyCodeLine{00567                 pp([worksheet.title, worksheet.spreadsheet.url, worksheet.col\_count])}
+\DoxyCodeLine{00568             \textcolor{keywordflow}{raise} err}
+\DoxyCodeLine{00569         }
+\DoxyCodeLine{00570         \textcolor{keywordflow}{except} KeyboardInterrupt:}
+\DoxyCodeLine{00571              run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : worksheet.update(code\_title(), script(), raw = \textcolor{keyword}{False}), \textcolor{stringliteral}{"{}update code"{}})}
+\DoxyCodeLine{00572         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00573 }
+\DoxyCodeLine{00574         print()}
+\DoxyCodeLine{00575     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00576         print(\textcolor{stringliteral}{"{}Code not found; command : "{}} + command)}
+\DoxyCodeLine{00577         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'command'}, f\textcolor{stringliteral}{'not valid : \{command\}'})}
+\DoxyCodeLine{00578         }
+\DoxyCodeLine{00579 }
+\DoxyCodeLine{00580 }
+\DoxyCodeLine{00582 \textcolor{keyword}{def }update\_all():}
+\DoxyCodeLine{00583     do\_to\_all(update\_code)}
+\DoxyCodeLine{00584 }
+\DoxyCodeLine{00585 }
+\DoxyCodeLine{00586 }
+\DoxyCodeLine{00590 \textcolor{keyword}{def }fix\_no\_code\_sheet(worksheet:Worksheet):}
+\DoxyCodeLine{00591     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} validate(worksheet):}
+\DoxyCodeLine{00592         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00593 }
+\DoxyCodeLine{00594     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00595         formula = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : worksheet.get(code\_title(), value\_render\_option=\textcolor{stringliteral}{'FORMULA'}).first(), \textcolor{stringliteral}{"{}get formula"{}})}
+\DoxyCodeLine{00596         val = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : worksheet.acell(code\_title(), value\_render\_option=\textcolor{stringliteral}{'UNFORMATTED\_VALUE'}).value, \textcolor{stringliteral}{"{}get unformatted value"{}})}
+\DoxyCodeLine{00597     \textcolor{keywordflow}{except} CellNotFound:}
+\DoxyCodeLine{00598         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00599     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'worksheet.title'}, worksheet.title)}
+\DoxyCodeLine{00600     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'spreadsheet.title'}, worksheet.spreadsheet.title)}
+\DoxyCodeLine{00601     }
+\DoxyCodeLine{00602     \textcolor{keywordflow}{if} (\textcolor{keywordflow}{not} formula == script()):}
+\DoxyCodeLine{00603         print(\textcolor{stringliteral}{"{}Fixing "{}} + worksheet.title + \textcolor{stringliteral}{"{} : "{}} + worksheet.spreadsheet.url)}
+\DoxyCodeLine{00604         run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : worksheet.update(code\_title(), script(), raw = \textcolor{keyword}{False}))}
+\DoxyCodeLine{00605 }
+\DoxyCodeLine{00606     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} val == \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00607         print(val, end = \textcolor{stringliteral}{"{} : "{}})}
+\DoxyCodeLine{00608         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'cell.value'}, val)}
+\DoxyCodeLine{00609         \textcolor{keywordflow}{if} \textcolor{stringliteral}{"{}Loading..."{}} \textcolor{keywordflow}{in} val \textcolor{keywordflow}{or} \textcolor{stringliteral}{"{}\#ERROR!"{}} \textcolor{keywordflow}{in} val:}
+\DoxyCodeLine{00610             print(\textcolor{stringliteral}{"{}Refreshing "{}} + worksheet.title + \textcolor{stringliteral}{"{} : "{}} + worksheet.spreadsheet.url)}
+\DoxyCodeLine{00611             update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'refreshing'}, \textcolor{keyword}{True})}
+\DoxyCodeLine{00612             update\_code(worksheet)}
+\DoxyCodeLine{00613             remove\_value\_from(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'refreshing'})}
+\DoxyCodeLine{00614 }
+\DoxyCodeLine{00615 }
+\DoxyCodeLine{00616 }
+\DoxyCodeLine{00618 \textcolor{keyword}{def }fix\_all\_sheets():}
+\DoxyCodeLine{00619     run\_with\_timeout\_checker(UpdateAllQuery)}
+\DoxyCodeLine{00620     run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : do\_to\_all(fix\_no\_code\_sheet))}
+\DoxyCodeLine{00621 }
+\DoxyCodeLine{00622 }
+\DoxyCodeLine{00623 }
+\DoxyCodeLine{00628 \textcolor{keyword}{def }smartLockSheet(worksheet:Worksheet, emails:List[str]):}
+\DoxyCodeLine{00629     command = get\_cols\_title(worksheet, 2)}
+\DoxyCodeLine{00630 }
+\DoxyCodeLine{00631     \textcolor{keywordflow}{if} command == \textcolor{stringliteral}{"{}"{}} : }
+\DoxyCodeLine{00632         print(worksheet.title + \textcolor{stringliteral}{"{} -\/> "{}} + worksheet.spreadsheet.title)}
+\DoxyCodeLine{00633         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'worksheet.title'}, worksheet.title)}
+\DoxyCodeLine{00634         update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'spreadsheet.title'}, worksheet.spreadsheet.title)}
+\DoxyCodeLine{00635 }
+\DoxyCodeLine{00636     \textcolor{keywordflow}{if} worksheet.title.lower() == get\_all\_likes\_name().lower():}
+\DoxyCodeLine{00637         lockSheet(worksheet, emails)}
+\DoxyCodeLine{00638         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00639 }
+\DoxyCodeLine{00640     \textcolor{keywordflow}{if} worksheet.title.lower() == get\_new\_profiles\_name().lower():}
+\DoxyCodeLine{00641         lockRange(worksheet, \textcolor{stringliteral}{"{}A:C"{}}, emails)}
+\DoxyCodeLine{00642         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00643 }
+\DoxyCodeLine{00644     \textcolor{keywordflow}{if} command == script():}
+\DoxyCodeLine{00645         lockLinksCol(worksheet, emails)}
+\DoxyCodeLine{00646         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00647 }
+\DoxyCodeLine{00648 }
+\DoxyCodeLine{00651 \textcolor{keyword}{def }smartLockAll(emails:List[str]):}
+\DoxyCodeLine{00652     do\_to\_all(smartLockSheet, [emails])}
+\DoxyCodeLine{00653 }
+\DoxyCodeLine{00654 }
+\DoxyCodeLine{00655 }
+\DoxyCodeLine{00659 \textcolor{keyword}{def }QueryBuilderAllLikes(SpreadSheet:Spreadsheet)-\/>str:}
+\DoxyCodeLine{00660     queryLanguageSelector = get\_query()}
+\DoxyCodeLine{00661     sheetListCode = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00662     measured = \textcolor{keyword}{False}}
+\DoxyCodeLine{00663     \textcolor{keywordflow}{for} workSheet \textcolor{keywordflow}{in} SpreadSheet:}
+\DoxyCodeLine{00664         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} validate(workSheet):}
+\DoxyCodeLine{00665             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00666 }
+\DoxyCodeLine{00667         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} measured :}
+\DoxyCodeLine{00668             line = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : workSheet.row\_values(1), \textcolor{stringliteral}{"{}Measure title row"{}})}
+\DoxyCodeLine{00669 }
+\DoxyCodeLine{00670             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} len(line) > get\_highest\_column():}
+\DoxyCodeLine{00671                 range = get\_col\_by\_num(0) + \textcolor{stringliteral}{"{}2:"{}} + get\_col\_by\_num(len(line))}
+\DoxyCodeLine{00672             \textcolor{keywordflow}{else} :}
+\DoxyCodeLine{00673                 range = get\_col\_by\_num(0) + \textcolor{stringliteral}{"{}2:"{}} + get\_col\_by\_num(get\_highest\_column())}
+\DoxyCodeLine{00674             }
+\DoxyCodeLine{00675             measured = \textcolor{keyword}{True}}
+\DoxyCodeLine{00676 }
+\DoxyCodeLine{00677         sheetListCode += \textcolor{stringliteral}{"{}'"{}} + workSheet.title.replace(\textcolor{stringliteral}{"{}'"{}}, \textcolor{stringliteral}{"{}''"{}}) + \textcolor{stringliteral}{"{}'!"{}} + range + \textcolor{stringliteral}{"{};"{}}}
+\DoxyCodeLine{00678 }
+\DoxyCodeLine{00679     sheetListCode = sheetListCode[0:-\/1]}
+\DoxyCodeLine{00680 }
+\DoxyCodeLine{00681     \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}=QUERY(\{"{}}+ sheetListCode + \textcolor{stringliteral}{"{}\},"{}} + queryLanguageSelector + \textcolor{stringliteral}{"{}, 0 )"{}}}
+\DoxyCodeLine{00682 }
+\DoxyCodeLine{00683 }
+\DoxyCodeLine{00693 \textcolor{keyword}{def }QueryUpdater(SpreadSheet:Spreadsheet):}
+\DoxyCodeLine{00694     print(\textcolor{stringliteral}{"{}Update : "{}} + SpreadSheet.title, end=\textcolor{stringliteral}{"{} : "{}})}
+\DoxyCodeLine{00695     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'spreadsheet.title'}, SpreadSheet.title)}
+\DoxyCodeLine{00696     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'updating.query'}, \textcolor{keyword}{True})}
+\DoxyCodeLine{00697 }
+\DoxyCodeLine{00698     created = \textcolor{keyword}{False}}
+\DoxyCodeLine{00699     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00700         sheet = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : SpreadSheet.worksheet(get\_all\_likes\_name()), \textcolor{stringliteral}{"{}get All Likes"{}})}
+\DoxyCodeLine{00701     \textcolor{keywordflow}{except} WorksheetNotFound:}
+\DoxyCodeLine{00702         created = \textcolor{keyword}{True}}
+\DoxyCodeLine{00703         sheet = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : SpreadSheet.add\_worksheet(get\_all\_likes\_name(), 2,2), \textcolor{stringliteral}{"{}create All Likes"{}})}
+\DoxyCodeLine{00704         lockSheet(sheet, email())}
+\DoxyCodeLine{00705 }
+\DoxyCodeLine{00706     code = QueryBuilderAllLikes(SpreadSheet)}
+\DoxyCodeLine{00707 }
+\DoxyCodeLine{00708     run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : sheet.update(\textcolor{stringliteral}{"{}A2"{}}, code, raw=\textcolor{keyword}{False}), \textcolor{stringliteral}{"{}Update All Likes"{}})}
+\DoxyCodeLine{00709 }
+\DoxyCodeLine{00710     print(\textcolor{stringliteral}{"{}done"{}})}
+\DoxyCodeLine{00711     remove\_value\_from(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'updating.query'})}
+\DoxyCodeLine{00712 }
+\DoxyCodeLine{00713 }
+\DoxyCodeLine{00714 }
+\DoxyCodeLine{00716 \textcolor{keyword}{def }UpdateAllQuery():}
+\DoxyCodeLine{00717     do\_to\_all\_spreadsheets(QueryUpdater)}
+\DoxyCodeLine{00718 }
+\DoxyCodeLine{00719 }
+\DoxyCodeLine{00720 }
+\DoxyCodeLine{00729 \textcolor{keyword}{def }VerifyerBuilder(SpreadSheet:Spreadsheet)-\/>Tuple:}
+\DoxyCodeLine{00730     queryLanguageSelector = \textcolor{stringliteral}{'"{}select *"{}'}}
+\DoxyCodeLine{00731     GeneralCode = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00732     tableList = []}
+\DoxyCodeLine{00733     \textcolor{keywordflow}{for} workSheet \textcolor{keywordflow}{in} SpreadSheet:}
+\DoxyCodeLine{00734         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} validate(workSheet):}
+\DoxyCodeLine{00735             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00736 }
+\DoxyCodeLine{00737         range = code\_title()}
+\DoxyCodeLine{00738         iteration\_code = \textcolor{stringliteral}{"{}'"{}} + workSheet.title.replace(\textcolor{stringliteral}{"{}'"{}}, \textcolor{stringliteral}{"{}''"{}}) + \textcolor{stringliteral}{"{}'!"{}} + range}
+\DoxyCodeLine{00739         GeneralCode += iteration\_code + \textcolor{stringliteral}{"{},"{}}}
+\DoxyCodeLine{00740         }
+\DoxyCodeLine{00741         tableList.append( \textcolor{stringliteral}{"{}=QUERY(\{"{}}+ iteration\_code + \textcolor{stringliteral}{"{}\},"{}} + queryLanguageSelector + \textcolor{stringliteral}{"{}, 0 )"{}})}
+\DoxyCodeLine{00742 }
+\DoxyCodeLine{00743     GeneralCode = \textcolor{stringliteral}{"{}\{"{}} + GeneralCode[0:-\/1] + \textcolor{stringliteral}{"{}\}"{}}}
+\DoxyCodeLine{00744     }
+\DoxyCodeLine{00745     range = \textcolor{stringliteral}{"{}A1:\{col\}2"{}}.format(col = get\_col\_by\_num(len(tableList)))}
+\DoxyCodeLine{00746     GeneralCode =  \textcolor{stringliteral}{"{}=QUERY(\{iteration\_code\},\{query\}, 0 )"{}}.format(iteration\_code = GeneralCode, query = queryLanguageSelector)}
+\DoxyCodeLine{00747 }
+\DoxyCodeLine{00748     \textcolor{keywordflow}{return} [[GeneralCode], tableList], range}
+\DoxyCodeLine{00749 }
+\DoxyCodeLine{00750 }
+\DoxyCodeLine{00754 \textcolor{keyword}{def }VerityerUpdater(SpreadSheet:Spreadsheet):}
+\DoxyCodeLine{00755     print(\textcolor{stringliteral}{"{}Update : "{}} + SpreadSheet.title, end=\textcolor{stringliteral}{"{} : "{}})}
+\DoxyCodeLine{00756     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'spreadsheet.title'}, SpreadSheet.title)}
+\DoxyCodeLine{00757     update\_checker(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'updating.verify'}, \textcolor{keyword}{True})}
+\DoxyCodeLine{00758     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00759         sheet = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : SpreadSheet.worksheet(\textcolor{stringliteral}{"{}!Verifyer"{}}), \textcolor{stringliteral}{"{}get !Verifyer"{}})}
+\DoxyCodeLine{00760     \textcolor{keywordflow}{except} WorksheetNotFound:}
+\DoxyCodeLine{00761         created = \textcolor{keyword}{True}}
+\DoxyCodeLine{00762         sheet = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : SpreadSheet.add\_worksheet(\textcolor{stringliteral}{"{}!Verifyer"{}}, 2,10), \textcolor{stringliteral}{"{}create !Verifyer"{}})}
+\DoxyCodeLine{00763         lockSheet(sheet, email(), secure=\textcolor{keyword}{False})}
+\DoxyCodeLine{00764 }
+\DoxyCodeLine{00765     code, range = VerifyerBuilder(SpreadSheet)}
+\DoxyCodeLine{00766 }
+\DoxyCodeLine{00767     run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : sheet.update(range, code, raw=\textcolor{keyword}{False}), \textcolor{stringliteral}{"{}Update Verifyer"{}})}
+\DoxyCodeLine{00768 }
+\DoxyCodeLine{00769     print(\textcolor{stringliteral}{"{}done"{}})}
+\DoxyCodeLine{00770     remove\_value\_from(\textcolor{stringliteral}{'update'}, \textcolor{stringliteral}{'updating.verify'})}
+\DoxyCodeLine{00771 }
+\DoxyCodeLine{00772 }
+\DoxyCodeLine{00773 }
+\DoxyCodeLine{00775 \textcolor{keyword}{def }UpdateAllVerifyers():}
+\DoxyCodeLine{00776     do\_to\_all\_spreadsheets(VerityerUpdater)}
+
+\end{DoxyCode}

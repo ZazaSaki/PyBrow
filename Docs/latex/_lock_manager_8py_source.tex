@@ -1,0 +1,163 @@
+\doxysection{Lock\+Manager.\+py}
+\label{_lock_manager_8py_source}\index{LockManager.py@{LockManager.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{import} json}
+\DoxyCodeLine{00002 \textcolor{keyword}{from} typing \textcolor{keyword}{import} Dict, List}
+\DoxyCodeLine{00003 }
+\DoxyCodeLine{00004 \textcolor{keyword}{import} gspread}
+\DoxyCodeLine{00005 \textcolor{keyword}{from} gspread.worksheet \textcolor{keyword}{import} Worksheet}
+\DoxyCodeLine{00006 \textcolor{keyword}{from} Drive.OptionManager \textcolor{keyword}{import} code\_title}
+\DoxyCodeLine{00007 \textcolor{keyword}{from} Drive.docsUpdaterBase \textcolor{keyword}{import} client\_session}
+\DoxyCodeLine{00008 \textcolor{keyword}{from} General.general \textcolor{keyword}{import} get\_col\_by\_num, run\_with\_timeout\_checker}
+\DoxyCodeLine{00009 }
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{00013 \textcolor{keyword}{def }getProtectedRanges(worksheet:Worksheet)-\/>List[Dict]:}
+\DoxyCodeLine{00014     params = \{\}}
+\DoxyCodeLine{00015     params[\textcolor{stringliteral}{"{}fields"{}}] = \textcolor{stringliteral}{"{}sheets(properties(title),protectedRanges)"{}}}
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00017     id = worksheet.url}
+\DoxyCodeLine{00018     }
+\DoxyCodeLine{00019     data = run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : client\_session.request(\textcolor{stringliteral}{"{}get"{}}, id, params=params), \textcolor{stringliteral}{"{}Get all protected ranges data"{}}).json()[\textcolor{stringliteral}{"{}sheets"{}}]}
+\DoxyCodeLine{00020     }
+\DoxyCodeLine{00021     data = list(filter(\textcolor{keyword}{lambda} x : x[\textcolor{stringliteral}{"{}properties"{}}][\textcolor{stringliteral}{"{}title"{}}] == worksheet.title, data))}
+\DoxyCodeLine{00022     data = list(filter(\textcolor{keyword}{lambda} x : \textcolor{stringliteral}{"{}protectedRanges"{}} \textcolor{keywordflow}{in} x.keys(), data))}
+\DoxyCodeLine{00023     data = list(map(\textcolor{keyword}{lambda} x : \{\textcolor{stringliteral}{"{}title"{}} : x[\textcolor{stringliteral}{"{}properties"{}}][\textcolor{stringliteral}{"{}title"{}}], \textcolor{stringliteral}{"{}protectedRanges"{}} : x[\textcolor{stringliteral}{"{}protectedRanges"{}}]\}, data))}
+\DoxyCodeLine{00024     }
+\DoxyCodeLine{00025     \textcolor{keywordflow}{if} data == [] :}
+\DoxyCodeLine{00026         \textcolor{keywordflow}{return} [] }
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00028     data = list(map(\textcolor{keyword}{lambda} x : convert\_ranges(x), data))[0]}
+\DoxyCodeLine{00029     }
+\DoxyCodeLine{00030     \textcolor{keywordflow}{return} data[\textcolor{stringliteral}{"{}protectedRanges"{}}]}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00035 \textcolor{keyword}{def }convert\_range(sheet\_object:dict)-\/>str:}
+\DoxyCodeLine{00036     \textcolor{keywordflow}{try} : }
+\DoxyCodeLine{00037         startRow = sheet\_object[\textcolor{stringliteral}{"{}range"{}}][\textcolor{stringliteral}{"{}startRowIndex"{}}]+1}
+\DoxyCodeLine{00038         endRow = sheet\_object[\textcolor{stringliteral}{"{}range"{}}][\textcolor{stringliteral}{"{}endRowIndex"{}}]}
+\DoxyCodeLine{00039     \textcolor{keywordflow}{except} KeyError:}
+\DoxyCodeLine{00040         startRow = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00041         endRow = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043     \textcolor{keywordflow}{try} : }
+\DoxyCodeLine{00044         startCol = sheet\_object[\textcolor{stringliteral}{"{}range"{}}][\textcolor{stringliteral}{"{}startColumnIndex"{}}]}
+\DoxyCodeLine{00045         endCol =sheet\_object[\textcolor{stringliteral}{"{}range"{}}][\textcolor{stringliteral}{"{}endColumnIndex"{}}]-\/1}
+\DoxyCodeLine{00046     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00047         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}A:AA"{}}}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049     startCol = get\_col\_by\_num(startCol)}
+\DoxyCodeLine{00050     endCol = get\_col\_by\_num(endCol)}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052     \textcolor{keywordflow}{if} startRow == \textcolor{stringliteral}{"{}"{}}:}
+\DoxyCodeLine{00053         \textcolor{keywordflow}{return} startCol + \textcolor{stringliteral}{"{}:"{}} + endCol }
+\DoxyCodeLine{00054 }
+\DoxyCodeLine{00055     \textcolor{keywordflow}{if} startRow == endRow \textcolor{keywordflow}{and} startCol==endCol:}
+\DoxyCodeLine{00056         \textcolor{keywordflow}{return} startCol + str(startRow)}
+\DoxyCodeLine{00057     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00058         \textcolor{keywordflow}{return} startCol + str(startRow) + \textcolor{stringliteral}{"{}:"{}} + endCol + str(endRow)}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060 }
+\DoxyCodeLine{00064 \textcolor{keyword}{def }convert\_ranges(sheet\_object\_list:List[dict])-\/>dict:}
+\DoxyCodeLine{00065     \textcolor{keywordflow}{for} item \textcolor{keywordflow}{in} sheet\_object\_list[\textcolor{stringliteral}{'protectedRanges'}]:}
+\DoxyCodeLine{00066         A1 = convert\_range(item)}
+\DoxyCodeLine{00067         item[\textcolor{stringliteral}{"{}range"{}}][\textcolor{stringliteral}{"{}A1Notation"{}}] = A1}
+\DoxyCodeLine{00068         }
+\DoxyCodeLine{00069     }
+\DoxyCodeLine{00070     \textcolor{keywordflow}{return} sheet\_object\_list}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00077 \textcolor{keyword}{def }getLockedRange(range:str, worksheet:Worksheet)-\/>Dict:}
+\DoxyCodeLine{00078     sheetRanges = getProtectedRanges(worksheet)}
+\DoxyCodeLine{00079     sheetRanges = list(filter(\textcolor{keyword}{lambda} range : range[\textcolor{stringliteral}{"{}description"{}}]==\textcolor{stringliteral}{"{}bot column"{}}, sheetRanges))}
+\DoxyCodeLine{00080     }
+\DoxyCodeLine{00081     \textcolor{keywordflow}{if} sheetRanges == []:}
+\DoxyCodeLine{00082         \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084     sheetRanges = list(filter(\textcolor{keyword}{lambda}  sheet : sheet[\textcolor{stringliteral}{"{}range"{}}][\textcolor{stringliteral}{"{}A1Notation"{}}] == range.upper(), sheetRanges))}
+\DoxyCodeLine{00085     }
+\DoxyCodeLine{00086     \textcolor{keywordflow}{if} sheetRanges == []:}
+\DoxyCodeLine{00087         \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00088     }
+\DoxyCodeLine{00089     \textcolor{keywordflow}{return} sheetRanges}
+\DoxyCodeLine{00090 }
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00095 \textcolor{keyword}{def }lockLinksCol(worksheet:Worksheet, emails:List[str]):}
+\DoxyCodeLine{00096     lockRange(worksheet, code\_title(), emails)}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098 }
+\DoxyCodeLine{00104 \textcolor{keyword}{def }lockRange(worksheet:Worksheet, range:str, emails:List[str]):}
+\DoxyCodeLine{00105     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} client\_session.auth.service\_account\_email \textcolor{keywordflow}{in} emails: emails.append(client\_session.auth.service\_account\_email)}
+\DoxyCodeLine{00106     }
+\DoxyCodeLine{00107     protectedRange = getLockedRange(range, worksheet)}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} protectedRange == \textcolor{keywordtype}{None}: }
+\DoxyCodeLine{00110         protectedRange = protectedRange[0]}
+\DoxyCodeLine{00111         editProtectedRange(worksheet, range, emails, protectedRange=protectedRange)}
+\DoxyCodeLine{00112         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00113     }
+\DoxyCodeLine{00114     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00115         out = run\_with\_timeout\_checker(}
+\DoxyCodeLine{00116             \textcolor{keyword}{lambda} : worksheet.add\_protected\_range(}
+\DoxyCodeLine{00117                 range, editor\_users\_emails=emails, description=\textcolor{stringliteral}{"{}bot column"{}}}
+\DoxyCodeLine{00118             ),}
+\DoxyCodeLine{00119             \textcolor{stringliteral}{"{}lock column"{}}}
+\DoxyCodeLine{00120         )}
+\DoxyCodeLine{00121 }
+\DoxyCodeLine{00122     \textcolor{keywordflow}{except} gspread.exceptions.APIError \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00123         rep = err.response}
+\DoxyCodeLine{00124         args = err.args}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126         print([rep, args])}
+\DoxyCodeLine{00127         \textcolor{keywordflow}{if} args[0][\textcolor{stringliteral}{"{}code"{}}] == 400:}
+\DoxyCodeLine{00128             \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00129         print(\textcolor{stringliteral}{"{}lock col impossible"{}})}
+\DoxyCodeLine{00130 }
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00139 \textcolor{keyword}{def }editProtectedRange(worksheet:Worksheet, range:str, emails:List[str], protectedRange=\textcolor{keywordtype}{None}):}
+\DoxyCodeLine{00140     message = \textcolor{stringliteral}{''}}
+\DoxyCodeLine{00141     \textcolor{keywordflow}{if} protectedRange == \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00142         protectedRange = getLockedRange(range, worksheet)}
+\DoxyCodeLine{00143         message = f\textcolor{stringliteral}{'edit range \{range\}, of \{worksheet.title\} of \{worksheet.spreadsheet.title\}'}}
+\DoxyCodeLine{00144     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00145         id = protectedRange[\textcolor{stringliteral}{'protectedRangeId'}]}
+\DoxyCodeLine{00146         message = f\textcolor{stringliteral}{'edit range \{range\} of id \{id\}'}}
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148     \textcolor{keywordflow}{if} protectedRange == \textcolor{keywordtype}{None} : \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150     protectedRange}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152     body = \{}
+\DoxyCodeLine{00153             \textcolor{stringliteral}{"{}requests"{}}: [}
+\DoxyCodeLine{00154                 \{}
+\DoxyCodeLine{00155                     \textcolor{stringliteral}{"{}updateProtectedRange"{}}: \{}
+\DoxyCodeLine{00156                         \textcolor{stringliteral}{"{}protectedRange"{}}: \{}
+\DoxyCodeLine{00157                             \textcolor{stringliteral}{"{}protectedRangeId"{}}: protectedRange[\textcolor{stringliteral}{'protectedRangeId'}],}
+\DoxyCodeLine{00158                             \textcolor{stringliteral}{"{}editors"{}}: \{}
+\DoxyCodeLine{00159                                 \textcolor{stringliteral}{"{}users"{}}: emails,}
+\DoxyCodeLine{00160                             \},}
+\DoxyCodeLine{00161                         \},}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163                         \textcolor{stringliteral}{'fields'} : \textcolor{stringliteral}{'editors'}}
+\DoxyCodeLine{00164                     \}}
+\DoxyCodeLine{00165                 \}}
+\DoxyCodeLine{00166             ]}
+\DoxyCodeLine{00167         \}}
+\DoxyCodeLine{00168 }
+\DoxyCodeLine{00169     run\_with\_timeout\_checker(\textcolor{keyword}{lambda} : worksheet.spreadsheet.batch\_update(body), message)}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171     \textcolor{keyword}{True}}
+\DoxyCodeLine{00172 }
+\DoxyCodeLine{00173 }
+\DoxyCodeLine{00177 \textcolor{keyword}{def }lockSheet(worksheet:Worksheet, emails:List[str]):}
+\DoxyCodeLine{00178     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} client\_session.auth.service\_account\_email \textcolor{keywordflow}{in} emails: emails.append(client\_session.auth.service\_account\_email)}
+\DoxyCodeLine{00179     max = worksheet.col\_count-\/1}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181     range\_name = \textcolor{stringliteral}{"{}A:"{}} + get\_col\_by\_num(max)}
+\DoxyCodeLine{00182 }
+\DoxyCodeLine{00183     lockRange(worksheet, range\_name, emails)}
+\DoxyCodeLine{00184 }
+
+\end{DoxyCode}

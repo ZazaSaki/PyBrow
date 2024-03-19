@@ -1,0 +1,917 @@
+\doxysection{Data\+Manager Namespace Reference}
+\label{namespace_data_manager}\index{DataManager@{DataManager}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+str \textbf{ default\+Hash} (str doc)
+\begin{DoxyCompactList}\small\item\em Hashes a string in sha256(doc.\+encode(\textquotesingle{}utf-\/8\textquotesingle{})).hexdigest() \end{DoxyCompactList}\item 
+List \textbf{ get\+Not\+Included\+With\+Hashing} (profiles, table=\char`\"{}amis\char`\"{}, comparator\+Index=1)
+\begin{DoxyCompactList}\small\item\em Filters from a list the contacts not contained in the database after hashing the ids. \end{DoxyCompactList}\item 
+List \textbf{ get\+Not\+Included} (profiles, table=\char`\"{}amis\char`\"{}, comparator\+Index=1)
+\begin{DoxyCompactList}\small\item\em Filters from a list the contacts not contained in the database. \end{DoxyCompactList}\item 
+List \textbf{ get\+All} (str table=\char`\"{}amis\char`\"{})
+\item 
+List \textbf{ get\+One} (str table=\char`\"{}amis\char`\"{})
+\item 
+tuple \textbf{ hasher} (Tuple t, int comparator\+Index=1, str table=\textquotesingle{}amis\textquotesingle{})
+\begin{DoxyCompactList}\small\item\em Hashes a gien tuple, in order to prepare it to insert. \end{DoxyCompactList}\item 
+List \textbf{ insert\+Elems} (List elems, str table=\char`\"{}amis\char`\"{}, int comparator\+Index=1)
+\begin{DoxyCompactList}\small\item\em Insert elements in a given table. \end{DoxyCompactList}\item 
+bool \textbf{ Is\+In\+Data\+Base} (str profile)
+\begin{DoxyCompactList}\small\item\em Checks if a profile link is in the database. \end{DoxyCompactList}\item 
+List \textbf{ get\+Profile} (str link)
+\begin{DoxyCompactList}\small\item\em Gets a contact from a given link. \end{DoxyCompactList}\item 
+def \textbf{ Fill\+Empty\+Info} (List profile)
+\begin{DoxyCompactList}\small\item\em Fills empty info of a contact from a repeated given contact. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Profiles} (List profiles)
+\begin{DoxyCompactList}\small\item\em Insert profiles in the table of the clean links. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Profile} (List profile)
+\begin{DoxyCompactList}\small\item\em Insert a profile in the table of the clean links. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Profile\+Links} (List links)
+\begin{DoxyCompactList}\small\item\em Insert profile links in the table of the clean links. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Profile\+Link} (str link)
+\begin{DoxyCompactList}\small\item\em Insert a profile link in the table of the clean links. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Profile\+Name\+NLinks} (List links)
+\begin{DoxyCompactList}\small\item\em Insert profile names and links in the table of the clean links when invalid links are unknown. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Profile\+Name\+NLink} (str name, str link)
+\begin{DoxyCompactList}\small\item\em Insert a profile without the invalid link in the table of the clean links. \end{DoxyCompactList}\item 
+List \textbf{ find\+Duplicateds} ()
+\begin{DoxyCompactList}\small\item\em Find duplicated contacts. \end{DoxyCompactList}\item 
+def \textbf{ Remove\+Duplicateds} ()
+\begin{DoxyCompactList}\small\item\em Remove duplicates. \end{DoxyCompactList}\item 
+bool \textbf{ Is\+In\+Cleaned\+Links} (str profile)
+\begin{DoxyCompactList}\small\item\em Verifies if a clean link is in the database. \end{DoxyCompactList}\item 
+bool \textbf{ Is\+In\+Dirty\+Links} (str link)
+\begin{DoxyCompactList}\small\item\em Verifies if an invalid link is in the database. \end{DoxyCompactList}\item 
+List \textbf{ get\+Dirty\+Links} ()
+\item 
+List \textbf{ filter\+List} (List profiles, int offset=0)
+\begin{DoxyCompactList}\small\item\em Filters from a list the contacts\textquotesingle{} links not contained in the database. \end{DoxyCompactList}\item 
+List \textbf{ get\+Invalid\+Profile} (str link)
+\begin{DoxyCompactList}\small\item\em Gets a contact from a given link in the invalids link table. \end{DoxyCompactList}\item 
+def \textbf{ Fill\+Empty\+Info\+Invalid} (List profile)
+\begin{DoxyCompactList}\small\item\em Fills empty info of a contact from a repeat given contact, in invalid list. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Invalid} (List profiles)
+\begin{DoxyCompactList}\small\item\em Inserts profiles in the table of the invalid links. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Invalid\+Profiles} (List profiles)
+\begin{DoxyCompactList}\small\item\em Inserts profiles in the table of the invalid links. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Invalid\+Profile} (str name, str profile)
+\begin{DoxyCompactList}\small\item\em Inserts a profile without the invalid link in the table of the invalid links. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Invalid\+Links} (List profiles)
+\begin{DoxyCompactList}\small\item\em Inserts profile links in the table of the invalid links. \end{DoxyCompactList}\item 
+int \textbf{ insert\+Invalid\+Link} (str profile)
+\begin{DoxyCompactList}\small\item\em Inserts a profile link in the table of the invalid links. \end{DoxyCompactList}\item 
+def \textbf{ validate} (str dirty\+Profile, bool valid, str name=None, str valid\+Link=None)
+\begin{DoxyCompactList}\small\item\em Validates a profile in invalid table and adds the profile to the clean table. \end{DoxyCompactList}\item 
+def \textbf{ remove\+Valids} ()
+\begin{DoxyCompactList}\small\item\em Remove all validated links in invalids table. \end{DoxyCompactList}\item 
+List \textbf{ get\+Un\+Verifyed} ()
+\item 
+List \textbf{ get\+Invalid} ()
+\item 
+def \textbf{ hash\+Invalids} ()
+\item 
+def \textbf{ test} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\textbf{ threadsafety}
+\item 
+\textbf{ conn} = sqlite3.\+connect(\textquotesingle{}./Drive/Data\+Base/amis.\+db\textquotesingle{}, check\+\_\+same\+\_\+thread=False)
+\begin{DoxyCompactList}\small\item\em Connection with database. \end{DoxyCompactList}\item 
+\textbf{ cursor} = conn.\+cursor()
+\begin{DoxyCompactList}\small\item\em Python Class \+: buffer/executer of SQL commands. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\label{namespace_data_manager_ad921b01d93eac09db1620a503e405b34}} 
+\index{DataManager@{DataManager}!defaultHash@{defaultHash}}
+\index{defaultHash@{defaultHash}!DataManager@{DataManager}}
+\doxysubsubsection{defaultHash()}
+{\footnotesize\ttfamily str Data\+Manager.\+default\+Hash (\begin{DoxyParamCaption}\item[{str}]{doc }\end{DoxyParamCaption})}
+
+
+
+Hashes a string in sha256(doc.\+encode(\textquotesingle{}utf-\/8\textquotesingle{})).hexdigest() 
+
+
+\begin{DoxyParams}{Parameters}
+{\em doc} & string to hash \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the hexadecimal hashcode in string format 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{hasher}{p.}{namespace_data_manager_a62ca295392abd4ea7b2b557ce0d33fcd} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 18} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a1cb2480d7a4adea9ca4ae854900b38fb}} 
+\index{DataManager@{DataManager}!FillEmptyInfo@{FillEmptyInfo}}
+\index{FillEmptyInfo@{FillEmptyInfo}!DataManager@{DataManager}}
+\doxysubsubsection{FillEmptyInfo()}
+{\footnotesize\ttfamily def Data\+Manager.\+Fill\+Empty\+Info (\begin{DoxyParamCaption}\item[{List}]{profile }\end{DoxyParamCaption})}
+
+
+
+Fills empty info of a contact from a repeated given contact. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profile} & profile to write from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+contact = [name, link, verified, valid] 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 197} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a26a534f4d3aa68a22b1113ee11e27dc5}} 
+\index{DataManager@{DataManager}!FillEmptyInfoInvalid@{FillEmptyInfoInvalid}}
+\index{FillEmptyInfoInvalid@{FillEmptyInfoInvalid}!DataManager@{DataManager}}
+\doxysubsubsection{FillEmptyInfoInvalid()}
+{\footnotesize\ttfamily def Data\+Manager.\+Fill\+Empty\+Info\+Invalid (\begin{DoxyParamCaption}\item[{List}]{profile }\end{DoxyParamCaption})}
+
+
+
+Fills empty info of a contact from a repeat given contact, in invalid list. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profile} & profile to write from \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+contact = [name, link, verifyed, valid] 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 377} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_ae633c50307ff420c7d1fc5e3733e9db5}} 
+\index{DataManager@{DataManager}!filterList@{filterList}}
+\index{filterList@{filterList}!DataManager@{DataManager}}
+\doxysubsubsection{filterList()}
+{\footnotesize\ttfamily List Data\+Manager.\+filter\+List (\begin{DoxyParamCaption}\item[{List}]{profiles,  }\item[{int }]{offset = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Filters from a list the contacts\textquotesingle{} links not contained in the database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profiles} & list of contacts \\
+\hline
+{\em offset} & index of the id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of filtered contacts 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Contact = link 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 356} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a2b19fbc80a10186b7a41be4cc129bfd4}} 
+\index{DataManager@{DataManager}!findDuplicateds@{findDuplicateds}}
+\index{findDuplicateds@{findDuplicateds}!DataManager@{DataManager}}
+\doxysubsubsection{findDuplicateds()}
+{\footnotesize\ttfamily List Data\+Manager.\+find\+Duplicateds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Find duplicated contacts. 
+
+\begin{DoxyReturn}{Returns}
+list of duplicates 
+\end{DoxyReturn}
+\begin{DoxyAttention}{Attention}
+Very long running time 
+\end{DoxyAttention}
+
+
+Definition at line \textbf{ 274} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_ae48923b660ca683dfa4e5b1c0426b0e8}} 
+\index{DataManager@{DataManager}!getAll@{getAll}}
+\index{getAll@{getAll}!DataManager@{DataManager}}
+\doxysubsubsection{getAll()}
+{\footnotesize\ttfamily List Data\+Manager.\+get\+All (\begin{DoxyParamCaption}\item[{str}]{table = {\ttfamily \char`\"{}amis\char`\"{}} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em table} & name of the table in database \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+every item in the database 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 84} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a90318018c5f5b9474fb0861bf6a8180a}} 
+\index{DataManager@{DataManager}!getDirtyLinks@{getDirtyLinks}}
+\index{getDirtyLinks@{getDirtyLinks}!DataManager@{DataManager}}
+\doxysubsubsection{getDirtyLinks()}
+{\footnotesize\ttfamily List Data\+Manager.\+get\+Dirty\+Links (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+All invalid links that have been fixed 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 346} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_ad663d9c506c56cc072b42ea0dd0df9b8}} 
+\index{DataManager@{DataManager}!getInvalid@{getInvalid}}
+\index{getInvalid@{getInvalid}!DataManager@{DataManager}}
+\doxysubsubsection{getInvalid()}
+{\footnotesize\ttfamily List Data\+Manager.\+get\+Invalid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 488} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a7fd80ee936014d4ca7e39602fad56231}} 
+\index{DataManager@{DataManager}!getInvalidProfile@{getInvalidProfile}}
+\index{getInvalidProfile@{getInvalidProfile}!DataManager@{DataManager}}
+\doxysubsubsection{getInvalidProfile()}
+{\footnotesize\ttfamily List Data\+Manager.\+get\+Invalid\+Profile (\begin{DoxyParamCaption}\item[{str}]{link }\end{DoxyParamCaption})}
+
+
+
+Gets a contact from a given link in the invalids link table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em link} & link of the contact \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+contact if contained 
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Contact = [name, link, invalid] 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 368} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_ae1a1a17ae285457a3cf5ea5f74358731}} 
+\index{DataManager@{DataManager}!getNotIncluded@{getNotIncluded}}
+\index{getNotIncluded@{getNotIncluded}!DataManager@{DataManager}}
+\doxysubsubsection{getNotIncluded()}
+{\footnotesize\ttfamily List Data\+Manager.\+get\+Not\+Included (\begin{DoxyParamCaption}\item[{}]{profiles,  }\item[{}]{table = {\ttfamily \char`\"{}amis\char`\"{}},  }\item[{}]{comparator\+Index = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Filters from a list the contacts not contained in the database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profiles} & list of contacts \\
+\hline
+{\em table} & name of the table in database \\
+\hline
+{\em comparator\+Index} & index of the id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of filtered contacts 
+\end{DoxyReturn}
+\begin{DoxyAttention}{Attention}
+it also hashed the values to search the hashed version of the elements 
+\end{DoxyAttention}
+\begin{DoxySeeAlso}{See also}
+\doxyref{get\+Not\+Included\+With\+Hashing}{p.}{namespace_data_manager_abb8ffb18754c936b4d00ca785765f7d1} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 62} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_abb8ffb18754c936b4d00ca785765f7d1}} 
+\index{DataManager@{DataManager}!getNotIncludedWithHashing@{getNotIncludedWithHashing}}
+\index{getNotIncludedWithHashing@{getNotIncludedWithHashing}!DataManager@{DataManager}}
+\doxysubsubsection{getNotIncludedWithHashing()}
+{\footnotesize\ttfamily List Data\+Manager.\+get\+Not\+Included\+With\+Hashing (\begin{DoxyParamCaption}\item[{}]{profiles,  }\item[{}]{table = {\ttfamily \char`\"{}amis\char`\"{}},  }\item[{}]{comparator\+Index = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Filters from a list the contacts not contained in the database after hashing the ids. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profiles} & list of contacts \\
+\hline
+{\em table} & name of the table in database \\
+\hline
+{\em comparator\+Index} & index of the id \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of filtered contacts 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 41} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a28be207f0c4d9b290c6817a543f8e224}} 
+\index{DataManager@{DataManager}!getOne@{getOne}}
+\index{getOne@{getOne}!DataManager@{DataManager}}
+\doxysubsubsection{getOne()}
+{\footnotesize\ttfamily List Data\+Manager.\+get\+One (\begin{DoxyParamCaption}\item[{str}]{table = {\ttfamily \char`\"{}amis\char`\"{}} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em table} & name of the table in database \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+one item in the database 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 91} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a0120f5012f4e5794870b99fa651c4d4c}} 
+\index{DataManager@{DataManager}!getProfile@{getProfile}}
+\index{getProfile@{getProfile}!DataManager@{DataManager}}
+\doxysubsubsection{getProfile()}
+{\footnotesize\ttfamily List Data\+Manager.\+get\+Profile (\begin{DoxyParamCaption}\item[{str}]{link }\end{DoxyParamCaption})}
+
+
+
+Gets a contact from a given link. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em link} & link of the contact \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+contact if contained 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 187} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a43f2a3aa86fe538030dab8741f0f0e15}} 
+\index{DataManager@{DataManager}!getUnVerifyed@{getUnVerifyed}}
+\index{getUnVerifyed@{getUnVerifyed}!DataManager@{DataManager}}
+\doxysubsubsection{getUnVerifyed()}
+{\footnotesize\ttfamily List Data\+Manager.\+get\+Un\+Verifyed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyReturn}{Returns}
+all unverified links from invalid table 
+\end{DoxyReturn}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Dirty\+Cleaner\+Base}{p.}{namespace_dirty_cleaner_base} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 482} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a62ca295392abd4ea7b2b557ce0d33fcd}} 
+\index{DataManager@{DataManager}!hasher@{hasher}}
+\index{hasher@{hasher}!DataManager@{DataManager}}
+\doxysubsubsection{hasher()}
+{\footnotesize\ttfamily tuple Data\+Manager.\+hasher (\begin{DoxyParamCaption}\item[{Tuple}]{t,  }\item[{int }]{comparator\+Index = {\ttfamily 1},  }\item[{str }]{table = {\ttfamily \textquotesingle{}amis\textquotesingle{}} }\end{DoxyParamCaption})}
+
+
+
+Hashes a gien tuple, in order to prepare it to insert. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em t} & tuple of a table element \\
+\hline
+{\em comparator\+Index} & index of the id\textquotesingle{}s position \\
+\hline
+{\em table} & the destination table of the tuble \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the hashed version of the given tuble\+: 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+Behavior \+:
+\begin{DoxyItemize}
+\item if table different than \char`\"{}amis\char`\"{} \+:
+\begin{DoxyItemize}
+\item only it hashes the comparater idex position
+\end{DoxyItemize}
+\item else \+: ~\newline
+
+\begin{DoxyItemize}
+\item it every single element of the tuple 
+\end{DoxyItemize}
+\end{DoxyItemize}
+\end{DoxyWarning}
+\begin{DoxyAttention}{Attention}
+It hashes with default\+Hash function 
+\end{DoxyAttention}
+\begin{DoxySeeAlso}{See also}
+\doxyref{default\+Hash}{p.}{namespace_data_manager_ad921b01d93eac09db1620a503e405b34} ~\newline
+ 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 109} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_ac3eb0ffc0051bac149d5524ac02abf80}} 
+\index{DataManager@{DataManager}!hashInvalids@{hashInvalids}}
+\index{hashInvalids@{hashInvalids}!DataManager@{DataManager}}
+\doxysubsubsection{hashInvalids()}
+{\footnotesize\ttfamily def Data\+Manager.\+hash\+Invalids (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 493} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_ac1892acda28d8a27cac0a5cea909457a}} 
+\index{DataManager@{DataManager}!insertElems@{insertElems}}
+\index{insertElems@{insertElems}!DataManager@{DataManager}}
+\doxysubsubsection{insertElems()}
+{\footnotesize\ttfamily List Data\+Manager.\+insert\+Elems (\begin{DoxyParamCaption}\item[{List}]{elems,  }\item[{str}]{table = {\ttfamily \char`\"{}amis\char`\"{}},  }\item[{int}]{comparator\+Index = {\ttfamily 1} }\end{DoxyParamCaption})}
+
+
+
+Insert elements in a given table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em elems} & list of contacts \\
+\hline
+{\em table} & name of the table in database \\
+\hline
+{\em comparator\+Index} & index of the id\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+not inserted
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+If contact is repeated, it used the extra information to fill the gaps 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 132} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a289d40fce16c5713d71a453d8026e082}} 
+\index{DataManager@{DataManager}!insertInvalid@{insertInvalid}}
+\index{insertInvalid@{insertInvalid}!DataManager@{DataManager}}
+\doxysubsubsection{insertInvalid()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Invalid (\begin{DoxyParamCaption}\item[{List}]{profiles }\end{DoxyParamCaption})}
+
+
+
+Inserts profiles in the table of the invalid links. 
+
+\begin{DoxyWarning}{Warning}
+internal version
+\end{DoxyWarning}
+
+\begin{DoxyParams}{Parameters}
+{\em profile} & list of contacts\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of not inserted
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Contact = [name, link, verifyed, valid] if contact is repeated, it used the extra information to fill the gaps
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxyref{insert\+Invalid\+Profiles}{p.}{namespace_data_manager_a867d460ed329f7eb0906b8c9eb72bdc6} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 404} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a8f8226ab13cb506bc0321c21869744cd}} 
+\index{DataManager@{DataManager}!insertInvalidLink@{insertInvalidLink}}
+\index{insertInvalidLink@{insertInvalidLink}!DataManager@{DataManager}}
+\doxysubsubsection{insertInvalidLink()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Invalid\+Link (\begin{DoxyParamCaption}\item[{str}]{profile }\end{DoxyParamCaption})}
+
+
+
+Inserts a profile link in the table of the invalid links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profile} & link \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{insert\+Invalid}{p.}{namespace_data_manager_a289d40fce16c5713d71a453d8026e082} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 448} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_af6dbda5671f937fa9b11de25d022dd95}} 
+\index{DataManager@{DataManager}!insertInvalidLinks@{insertInvalidLinks}}
+\index{insertInvalidLinks@{insertInvalidLinks}!DataManager@{DataManager}}
+\doxysubsubsection{insertInvalidLinks()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Invalid\+Links (\begin{DoxyParamCaption}\item[{List}]{profiles }\end{DoxyParamCaption})}
+
+
+
+Inserts profile links in the table of the invalid links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profiles} & list of links \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{insert\+Invalid}{p.}{namespace_data_manager_a289d40fce16c5713d71a453d8026e082} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 440} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a2f27113662edc8f92342496cee98841d}} 
+\index{DataManager@{DataManager}!insertInvalidProfile@{insertInvalidProfile}}
+\index{insertInvalidProfile@{insertInvalidProfile}!DataManager@{DataManager}}
+\doxysubsubsection{insertInvalidProfile()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Invalid\+Profile (\begin{DoxyParamCaption}\item[{str}]{name,  }\item[{str}]{profile }\end{DoxyParamCaption})}
+
+
+
+Inserts a profile without the invalid link in the table of the invalid links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & name of the contact \\
+\hline
+{\em profile} & profile of the contact \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{insert\+Invalid\+Profiles}{p.}{namespace_data_manager_a867d460ed329f7eb0906b8c9eb72bdc6}, \doxyref{insert\+Invalid}{p.}{namespace_data_manager_a289d40fce16c5713d71a453d8026e082} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 433} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a867d460ed329f7eb0906b8c9eb72bdc6}} 
+\index{DataManager@{DataManager}!insertInvalidProfiles@{insertInvalidProfiles}}
+\index{insertInvalidProfiles@{insertInvalidProfiles}!DataManager@{DataManager}}
+\doxysubsubsection{insertInvalidProfiles()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Invalid\+Profiles (\begin{DoxyParamCaption}\item[{List}]{profiles }\end{DoxyParamCaption})}
+
+
+
+Inserts profiles in the table of the invalid links. 
+
+\begin{DoxyAttention}{Attention}
+user version
+\end{DoxyAttention}
+
+\begin{DoxyParams}{Parameters}
+{\em profile} & list of contacts\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of not inserted
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Contact = [name, link] if conatct is repeated it used the extra information to fill the gaps 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 423} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a9e6c96df4cd723d088a3a2b6b3eada8d}} 
+\index{DataManager@{DataManager}!insertProfile@{insertProfile}}
+\index{insertProfile@{insertProfile}!DataManager@{DataManager}}
+\doxysubsubsection{insertProfile()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Profile (\begin{DoxyParamCaption}\item[{List}]{profile }\end{DoxyParamCaption})}
+
+
+
+Insert a profile in the table of the clean links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profile} & contacts \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{insert\+Profiles}{p.}{namespace_data_manager_aa9fea906ebf58b25c0808c917fa277bb} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 234} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a00336e1a30f1af75a2ae60e0ffae8d64}} 
+\index{DataManager@{DataManager}!insertProfileLink@{insertProfileLink}}
+\index{insertProfileLink@{insertProfileLink}!DataManager@{DataManager}}
+\doxysubsubsection{insertProfileLink()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Profile\+Link (\begin{DoxyParamCaption}\item[{str}]{link }\end{DoxyParamCaption})}
+
+
+
+Insert a profile link in the table of the clean links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em link} & link \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{insert\+Profile\+Links}{p.}{namespace_data_manager_a338054c8afa6a0211d4daebf49238d7e} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 248} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a338054c8afa6a0211d4daebf49238d7e}} 
+\index{DataManager@{DataManager}!insertProfileLinks@{insertProfileLinks}}
+\index{insertProfileLinks@{insertProfileLinks}!DataManager@{DataManager}}
+\doxysubsubsection{insertProfileLinks()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Profile\+Links (\begin{DoxyParamCaption}\item[{List}]{links }\end{DoxyParamCaption})}
+
+
+
+Insert profile links in the table of the clean links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em links} & list of links \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \textbf{ 240} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a44b52f34c9c408b06ae4af314439e22a}} 
+\index{DataManager@{DataManager}!insertProfileNameNLink@{insertProfileNameNLink}}
+\index{insertProfileNameNLink@{insertProfileNameNLink}!DataManager@{DataManager}}
+\doxysubsubsection{insertProfileNameNLink()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Profile\+Name\+NLink (\begin{DoxyParamCaption}\item[{str}]{name,  }\item[{str}]{link }\end{DoxyParamCaption})}
+
+
+
+Insert a profile without the invalid link in the table of the clean links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & name of the contact \\
+\hline
+{\em link} & link of the contact \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{insert\+Profile\+Name\+NLinks}{p.}{namespace_data_manager_ac5af6d5dc5cb54f9e8f49b7a9c67f5c9} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 268} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_ac5af6d5dc5cb54f9e8f49b7a9c67f5c9}} 
+\index{DataManager@{DataManager}!insertProfileNameNLinks@{insertProfileNameNLinks}}
+\index{insertProfileNameNLinks@{insertProfileNameNLinks}!DataManager@{DataManager}}
+\doxysubsubsection{insertProfileNameNLinks()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Profile\+Name\+NLinks (\begin{DoxyParamCaption}\item[{List}]{links }\end{DoxyParamCaption})}
+
+
+
+Insert profile names and links in the table of the clean links when invalid links are unknown. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em links} & list of contacts \\
+\hline
+\end{DoxyParams}
+\begin{DoxyNote}{Note}
+item = [name, profile link] 
+\end{DoxyNote}
+\begin{DoxySeeAlso}{See also}
+\doxyref{insert\+Profile\+Links}{p.}{namespace_data_manager_a338054c8afa6a0211d4daebf49238d7e} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 258} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_aa9fea906ebf58b25c0808c917fa277bb}} 
+\index{DataManager@{DataManager}!insertProfiles@{insertProfiles}}
+\index{insertProfiles@{insertProfiles}!DataManager@{DataManager}}
+\doxysubsubsection{insertProfiles()}
+{\footnotesize\ttfamily int Data\+Manager.\+insert\+Profiles (\begin{DoxyParamCaption}\item[{List}]{profiles }\end{DoxyParamCaption})}
+
+
+
+Insert profiles in the table of the clean links. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profile} & list of contacts\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of not inserted
+\end{DoxyReturn}
+\begin{DoxyNote}{Note}
+Contact = [name, profile({\itshape id}), invalid link] if contact is repeated, it used the extra information to fill the gaps 
+
+contact = [name, link, invalid link] 
+\end{DoxyNote}
+
+
+Definition at line \textbf{ 222} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a0e01854086502bf1faf1d0b9cb4383ec}} 
+\index{DataManager@{DataManager}!IsInCleanedLinks@{IsInCleanedLinks}}
+\index{IsInCleanedLinks@{IsInCleanedLinks}!DataManager@{DataManager}}
+\doxysubsubsection{IsInCleanedLinks()}
+{\footnotesize\ttfamily bool Data\+Manager.\+Is\+In\+Cleaned\+Links (\begin{DoxyParamCaption}\item[{str}]{profile }\end{DoxyParamCaption})}
+
+
+
+Verifies if a clean link is in the database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profile} & link to search for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\itshape True} if found or {\itshape False} if not 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 316} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a8a2586987d8047efa57915ccb3c06372}} 
+\index{DataManager@{DataManager}!IsInDataBase@{IsInDataBase}}
+\index{IsInDataBase@{IsInDataBase}!DataManager@{DataManager}}
+\doxysubsubsection{IsInDataBase()}
+{\footnotesize\ttfamily bool Data\+Manager.\+Is\+In\+Data\+Base (\begin{DoxyParamCaption}\item[{str}]{profile }\end{DoxyParamCaption})}
+
+
+
+Checks if a profile link is in the database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em profiles} & link to search \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\itshape True} if contains or {\itshape False} if it doesn\textquotesingle{}t 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 163} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_ad7fd78247d201802d4a1e630014ae6d1}} 
+\index{DataManager@{DataManager}!IsInDirtyLinks@{IsInDirtyLinks}}
+\index{IsInDirtyLinks@{IsInDirtyLinks}!DataManager@{DataManager}}
+\doxysubsubsection{IsInDirtyLinks()}
+{\footnotesize\ttfamily bool Data\+Manager.\+Is\+In\+Dirty\+Links (\begin{DoxyParamCaption}\item[{str}]{link }\end{DoxyParamCaption})}
+
+
+
+Verifies if an invalid link is in the database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em link} & link to search for \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+{\itshape True} if found or {\itshape False} if doesn\textquotesingle{}t 
+\end{DoxyReturn}
+
+
+Definition at line \textbf{ 331} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a058ef10dc33923eb4de7f049e40b6a43}} 
+\index{DataManager@{DataManager}!RemoveDuplicateds@{RemoveDuplicateds}}
+\index{RemoveDuplicateds@{RemoveDuplicateds}!DataManager@{DataManager}}
+\doxysubsubsection{RemoveDuplicateds()}
+{\footnotesize\ttfamily def Data\+Manager.\+Remove\+Duplicateds (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Remove duplicates. 
+
+\begin{DoxyAttention}{Attention}
+Very long run time 
+\end{DoxyAttention}
+\begin{DoxySeeAlso}{See also}
+\doxyref{find\+Duplicateds}{p.}{namespace_data_manager_a2b19fbc80a10186b7a41be4cc129bfd4} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 293} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a62fe99e830e0b5047c9a701fb6961894}} 
+\index{DataManager@{DataManager}!removeValids@{removeValids}}
+\index{removeValids@{removeValids}!DataManager@{DataManager}}
+\doxysubsubsection{removeValids()}
+{\footnotesize\ttfamily def Data\+Manager.\+remove\+Valids (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Remove all validated links in invalids table. 
+
+\begin{DoxySeeAlso}{See also}
+\doxyref{Dirty\+Cleaner\+Base}{p.}{namespace_dirty_cleaner_base} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 475} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_aae83be49212289360d3ab3c8f474ec81}} 
+\index{DataManager@{DataManager}!test@{test}}
+\index{test@{test}!DataManager@{DataManager}}
+\doxysubsubsection{test()}
+{\footnotesize\ttfamily def Data\+Manager.\+test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \textbf{ 524} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_ad7fa713e3df071b72b8e5eda00c43661}} 
+\index{DataManager@{DataManager}!validate@{validate}}
+\index{validate@{validate}!DataManager@{DataManager}}
+\doxysubsubsection{validate()}
+{\footnotesize\ttfamily def Data\+Manager.\+validate (\begin{DoxyParamCaption}\item[{str}]{dirty\+Profile,  }\item[{bool}]{valid,  }\item[{str }]{name = {\ttfamily None},  }\item[{str}]{valid\+Link = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Validates a profile in invalid table and adds the profile to the clean table. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em dirty\+Profile} & invalid link \\
+\hline
+{\em valid} & {\itshape bool} is validatable to the invalid link \\
+\hline
+{\em name} & name of the profile \\
+\hline
+{\em valid\+Link} & valid link relative \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{See also}
+\doxyref{Dirty\+Cleaner\+Base}{p.}{namespace_dirty_cleaner_base} 
+\end{DoxySeeAlso}
+
+
+Definition at line \textbf{ 459} of file \textbf{ Data\+Manager.\+py}.
+
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\label{namespace_data_manager_a785e46ed58196be5b49820b4a2ef212c}} 
+\index{DataManager@{DataManager}!conn@{conn}}
+\index{conn@{conn}!DataManager@{DataManager}}
+\doxysubsubsection{conn}
+{\footnotesize\ttfamily Data\+Manager.\+conn = sqlite3.\+connect(\textquotesingle{}./Drive/Data\+Base/amis.\+db\textquotesingle{}, check\+\_\+same\+\_\+thread=False)}
+
+
+
+Connection with database. 
+
+
+
+Definition at line \textbf{ 8} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_a333aa624ed09e628d663b79762c0ffaf}} 
+\index{DataManager@{DataManager}!cursor@{cursor}}
+\index{cursor@{cursor}!DataManager@{DataManager}}
+\doxysubsubsection{cursor}
+{\footnotesize\ttfamily Data\+Manager.\+cursor = conn.\+cursor()}
+
+
+
+Python Class \+: buffer/executer of SQL commands. 
+
+
+
+Definition at line \textbf{ 12} of file \textbf{ Data\+Manager.\+py}.
+
+\mbox{\label{namespace_data_manager_aa467b03b614bee55fd95d3fb9a874b48}} 
+\index{DataManager@{DataManager}!threadsafety@{threadsafety}}
+\index{threadsafety@{threadsafety}!DataManager@{DataManager}}
+\doxysubsubsection{threadsafety}
+{\footnotesize\ttfamily Data\+Manager.\+threadsafety}
+
+
+
+Definition at line \textbf{ 6} of file \textbf{ Data\+Manager.\+py}.
+

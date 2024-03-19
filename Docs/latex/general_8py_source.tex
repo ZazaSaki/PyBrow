@@ -1,0 +1,212 @@
+\doxysection{general.\+py}
+\label{general_8py_source}\index{general.py@{general.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001 \textcolor{keyword}{import} time}
+\DoxyCodeLine{00002 \textcolor{keyword}{import} json}
+\DoxyCodeLine{00003 \textcolor{keyword}{from} types \textcolor{keyword}{import} FunctionType}
+\DoxyCodeLine{00004 \textcolor{keyword}{from} typing \textcolor{keyword}{import} Dict, List, Tuple}
+\DoxyCodeLine{00005 \textcolor{keyword}{from} gspread.exceptions \textcolor{keyword}{import} APIError}
+\DoxyCodeLine{00006 }
+\DoxyCodeLine{00007 \textcolor{keyword}{from} FeedbackDisplayer \textcolor{keyword}{import} remove\_from\_all, remove\_value\_from, update\_all\_checkers, update\_checker}
+\DoxyCodeLine{00008 \textcolor{keyword}{from} .loadingBar \textcolor{keyword}{import} closeCounter, openCounter, updateCounter}
+\DoxyCodeLine{00009 }
+\DoxyCodeLine{00010 }
+\DoxyCodeLine{00011 Alpha = \textcolor{stringliteral}{"{}ABCDEFGHIJKLMNOPQRSTUVWXYZ"{}}}
+\DoxyCodeLine{00012 }
+\DoxyCodeLine{00013 \textcolor{comment}{\# -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00014 \textcolor{comment}{\# general function}}
+\DoxyCodeLine{00015 }
+\DoxyCodeLine{00016 }
+\DoxyCodeLine{00022 \textcolor{keyword}{def }run\_with\_timeout\_checker(task:FunctionType, message:str = \textcolor{stringliteral}{"{}do task"{}}):}
+\DoxyCodeLine{00023     \textcolor{keywordflow}{while} \textcolor{keyword}{True} : }
+\DoxyCodeLine{00024         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00025             \textcolor{keywordflow}{return} task()}
+\DoxyCodeLine{00026         \textcolor{keywordflow}{except} APIError \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00027             \textcolor{keywordflow}{if} time\_out\_checker(err):}
+\DoxyCodeLine{00028                 ExplicitWait(\textcolor{stringliteral}{"{}Waiting for api to "{}} + message + \textcolor{stringliteral}{"{} : "{}})}
+\DoxyCodeLine{00029             \textcolor{keywordflow}{else} :}
+\DoxyCodeLine{00030                 \textcolor{keywordflow}{raise} err}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032 }
+\DoxyCodeLine{00035 \textcolor{keyword}{def }time\_out\_checker(err:Exception):}
+\DoxyCodeLine{00036     rep = err.response}
+\DoxyCodeLine{00037     args = err.args}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039     \textcolor{keywordflow}{if} args[0][\textcolor{stringliteral}{"{}code"{}}] == 429:}
+\DoxyCodeLine{00040         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00041     }
+\DoxyCodeLine{00042     \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00043 }
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00050 \textcolor{keyword}{def }cleanTable(NameLinkList:List)-\/>Tuple:}
+\DoxyCodeLine{00051     primary = []}
+\DoxyCodeLine{00052     secondary = []}
+\DoxyCodeLine{00053 }
+\DoxyCodeLine{00054     \textcolor{keywordflow}{for} item \textcolor{keywordflow}{in} NameLinkList[1:]:}
+\DoxyCodeLine{00055 }
+\DoxyCodeLine{00056         link = linkparse(item[1])}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00059             number = link[link.rindex(\textcolor{stringliteral}{"{}/"{}})+1:]}
+\DoxyCodeLine{00060         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00061             \textcolor{comment}{\#print(item[0] + "{}//"{} + link + "{}//"{} + item[0] + "{}//"{} + "{}not addded"{})}}
+\DoxyCodeLine{00062             \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064         \textcolor{keywordflow}{if} number.isdigit():}
+\DoxyCodeLine{00065             secondary.append([item[0], link])}
+\DoxyCodeLine{00066         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00067             primary.append([item[0], link])}
+\DoxyCodeLine{00068 }
+\DoxyCodeLine{00069     \textcolor{keywordflow}{return} primary, secondary}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00076 \textcolor{keyword}{def }saveJSON(name:str, fileInfo:Dict):}
+\DoxyCodeLine{00077     file = open(\textcolor{stringliteral}{"{}data/"{}}+name+\textcolor{stringliteral}{"{}.json"{}}, \textcolor{stringliteral}{"{}w"{}})}
+\DoxyCodeLine{00078     data = \{\textcolor{stringliteral}{"{}data"{}}: fileInfo\}}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080     file.write(\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082     json.dump(data, file)}
+\DoxyCodeLine{00083     file.close()}
+\DoxyCodeLine{00084     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00093 \textcolor{keyword}{def }getNotIncluded(newList:List, baseList:List, offset:int = 0)-\/>List:}
+\DoxyCodeLine{00094     \textcolor{comment}{\# inicializating screen counter}}
+\DoxyCodeLine{00095     \textcolor{comment}{\#openCounter("{}filtering"{}, len(newList))}}
+\DoxyCodeLine{00096 }
+\DoxyCodeLine{00097     \textcolor{comment}{\# filter values}}
+\DoxyCodeLine{00098     i = 0}
+\DoxyCodeLine{00099     filtered = []}
+\DoxyCodeLine{00100     \textcolor{keywordflow}{for} link \textcolor{keywordflow}{in} newList:}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} link[offset] \textcolor{keywordflow}{in} baseList:}
+\DoxyCodeLine{00103             filtered.append(link)}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105         i += 1}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107         \textcolor{comment}{\# update screen counter}}
+\DoxyCodeLine{00108         \textcolor{comment}{\# updateCounter(i)}}
+\DoxyCodeLine{00109         \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111     \textcolor{comment}{\# closing used counter}}
+\DoxyCodeLine{00112     \textcolor{comment}{\# closeCounter()}}
+\DoxyCodeLine{00113     \textcolor{keywordflow}{return} filtered}
+\DoxyCodeLine{00114 }
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00118 \textcolor{keyword}{def }get\_col\_by\_num(num:int)-\/>str:}
+\DoxyCodeLine{00119     \textcolor{keywordflow}{if} num >= len(Alpha):}
+\DoxyCodeLine{00120         letters\_num = int(num / len(Alpha))}
+\DoxyCodeLine{00121         last\_letter = num \% len(Alpha)}
+\DoxyCodeLine{00122         \textcolor{keywordflow}{return} get\_col\_by\_num(letters\_num-\/1) + Alpha[last\_letter]}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124     \textcolor{keywordflow}{return} Alpha[num]}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00130 \textcolor{keyword}{def }wait\_secs(sec:int=1):}
+\DoxyCodeLine{00131     \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(sec):}
+\DoxyCodeLine{00132         time.sleep(1)}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00139 \textcolor{keyword}{def }ExplicitWait(message:str=\textcolor{stringliteral}{"{}Waiting for api to respond"{}}, secs:int=30):}
+\DoxyCodeLine{00140     }
+\DoxyCodeLine{00141     update\_checker(\textcolor{stringliteral}{'general'}, \textcolor{stringliteral}{'wait\_message'}, message)}
+\DoxyCodeLine{00142     openCounter(message, secs)}
+\DoxyCodeLine{00143     \textcolor{keywordflow}{for} x \textcolor{keywordflow}{in} range(secs):}
+\DoxyCodeLine{00144         update\_checker(\textcolor{stringliteral}{'general'}, \textcolor{stringliteral}{'wait\_time'}, f\textcolor{stringliteral}{'\{x\}/\{secs\}'})}
+\DoxyCodeLine{00145         updateCounter(x+1)}
+\DoxyCodeLine{00146         wait\_secs(1)}
+\DoxyCodeLine{00147     remove\_value\_from(\textcolor{stringliteral}{'general'}, \textcolor{stringliteral}{'wait\_message'})}
+\DoxyCodeLine{00148     remove\_value\_from(\textcolor{stringliteral}{'general'}, \textcolor{stringliteral}{'wait\_time'})}
+\DoxyCodeLine{00149     closeCounter()}
+\DoxyCodeLine{00150 }
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00156 \textcolor{keyword}{def }linkparse(link:str)-\/>str:}
+\DoxyCodeLine{00157     \textcolor{keywordflow}{if} link == \textcolor{stringliteral}{"{}"{}}:}
+\DoxyCodeLine{00158         \textcolor{keywordflow}{return} link}
+\DoxyCodeLine{00159 }
+\DoxyCodeLine{00160     \textcolor{keywordflow}{if} \textcolor{stringliteral}{"{}business.facebook.com/to"{}} \textcolor{keywordflow}{in} link:}
+\DoxyCodeLine{00161         link = link.replace(\textcolor{stringliteral}{"{}business.facebook.com/to"{}}, \textcolor{stringliteral}{"{}www.facebook.com"{}})}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163     \textcolor{keywordflow}{if} \textcolor{stringliteral}{"{}business.facebook.com"{}} \textcolor{keywordflow}{in} link:}
+\DoxyCodeLine{00164         link = link.replace(\textcolor{stringliteral}{"{}business.facebook.com"{}}, \textcolor{stringliteral}{"{}www.facebook.com"{}})}
+\DoxyCodeLine{00165 }
+\DoxyCodeLine{00166     temp = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00167     splitter = [\textcolor{stringliteral}{"{}\_\_tn\_\_"{}}, \textcolor{stringliteral}{"{}\_\_cft\_\_"{}}]}
+\DoxyCodeLine{00168     sp = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00169 }
+\DoxyCodeLine{00170     \textcolor{comment}{\# search for existance of spliters}}
+\DoxyCodeLine{00171     \textcolor{keywordflow}{for} splt \textcolor{keywordflow}{in} splitter:}
+\DoxyCodeLine{00172         \textcolor{comment}{\# setting the founded spliter}}
+\DoxyCodeLine{00173         \textcolor{keywordflow}{if} splt \textcolor{keywordflow}{in} link:}
+\DoxyCodeLine{00174             sp = splt}
+\DoxyCodeLine{00175             \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177     \textcolor{comment}{\# return link if as no splitters (is clean) (stop recursion)}}
+\DoxyCodeLine{00178     \textcolor{keywordflow}{if} sp == \textcolor{stringliteral}{"{}"{}}:}
+\DoxyCodeLine{00179         \textcolor{keywordflow}{if} link[-\/1] == \textcolor{stringliteral}{"{}/"{}}:}
+\DoxyCodeLine{00180             \textcolor{keywordflow}{return} link[0:-\/1]}
+\DoxyCodeLine{00181         \textcolor{keywordflow}{return} link}
+\DoxyCodeLine{00182 }
+\DoxyCodeLine{00183     \textcolor{comment}{\# taking the clean part}}
+\DoxyCodeLine{00184     temp = link.split(sp)[0]}
+\DoxyCodeLine{00185 }
+\DoxyCodeLine{00186     \textcolor{comment}{\# recursive cleaning}}
+\DoxyCodeLine{00187     temp = linkparse(temp)}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189     \textcolor{comment}{\# taking the last character if is a splitter as well("{}?"{} or "{}\&"{})}}
+\DoxyCodeLine{00190     last = temp[-\/1]}
+\DoxyCodeLine{00191     \textcolor{keywordflow}{if} last == \textcolor{stringliteral}{"{}?"{}} \textcolor{keywordflow}{or} last == \textcolor{stringliteral}{"{}\&"{}}:}
+\DoxyCodeLine{00192         \textcolor{keywordflow}{return} temp[0:-\/1]}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194     \textcolor{keywordflow}{return} temp}
+\DoxyCodeLine{00195 }
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00199 \textcolor{keyword}{def }listparse(list:List)-\/>List:}
+\DoxyCodeLine{00200     \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(len(list)):}
+\DoxyCodeLine{00201         list[i] = [linkparse(list[i])]}
+\DoxyCodeLine{00202     \textcolor{keywordflow}{return} list}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205 \textcolor{keyword}{def }containsPartsOf(group, word, patience=300):}
+\DoxyCodeLine{00206     i = 0}
+\DoxyCodeLine{00207     \textcolor{keywordflow}{for} item \textcolor{keywordflow}{in} group:}
+\DoxyCodeLine{00208         i += 0}
+\DoxyCodeLine{00209         \textcolor{keywordflow}{if} word \textcolor{keywordflow}{in} item:}
+\DoxyCodeLine{00210             \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00211         \textcolor{keywordflow}{if} i >= patience:}
+\DoxyCodeLine{00212             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214     \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00215 \textcolor{comment}{\# -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217 }
+\DoxyCodeLine{00220 \textcolor{keyword}{def }listOfRowsToListOfCols(ListOfList:List)-\/>List:}
+\DoxyCodeLine{00221     comp = len(ListOfList[1])}
+\DoxyCodeLine{00222     colFormat = []}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224     \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(comp):}
+\DoxyCodeLine{00225         colFormat.append([])}
+\DoxyCodeLine{00226 }
+\DoxyCodeLine{00227     \textcolor{keywordflow}{for} row \textcolor{keywordflow}{in} ListOfList:}
+\DoxyCodeLine{00228         col = 0}
+\DoxyCodeLine{00229         \textcolor{keywordflow}{for} cell \textcolor{keywordflow}{in} row:}
+\DoxyCodeLine{00230             colFormat[col].append(cell)}
+\DoxyCodeLine{00231 }
+\DoxyCodeLine{00232             col += 1}
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234     \textcolor{keywordflow}{return} colFormat}
+\DoxyCodeLine{00235 }
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00242 \textcolor{keyword}{def }getAplicableCleanList(dictionary:Dict)-\/>Dict:}
+\DoxyCodeLine{00243     \textcolor{keywordflow}{for} word \textcolor{keywordflow}{in} dictionary:}
+\DoxyCodeLine{00244         dictionary[word] = list(map(\textcolor{keyword}{lambda} i: [i[0],\textcolor{stringliteral}{'=HYPERLINK("{}'}+i[0]+\textcolor{stringliteral}{'"{}, "{}'}+ i[1] +\textcolor{stringliteral}{'"{})'}] + i[2:], dictionary[word]))}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246     \textcolor{keywordflow}{return} dictionary}
+
+\end{DoxyCode}
