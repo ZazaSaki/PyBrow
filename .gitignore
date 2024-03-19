@@ -1,0 +1,11 @@
+creds.json
+/data/*
+/Browser/browser_data/*
+PostList.txt
+__pycache__
+chromedriver.exe
+!gitignore
+*.db
+*.pkl
+/images
+/Docs
