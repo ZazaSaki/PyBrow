@@ -1,0 +1,37 @@
+{
+    "login": [],
+    "page": {
+        "openList": [
+            "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div/div[2]/div/div/div/div[1]/div[2]/div/div[1]/div/div[1]/div/span/div/span[1]/span/span",
+            "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div/div/div/div/div/div/div/div/div/div/div/div/div/div[2]/div/div[4]/div/div/div[1]/div/div[1]/div/div[1]/span[2]/div/span[2]/span/span",
+            "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div/div/div[2]/div/div/div[1]/div/div/div[2]/div[1]/div/div[1]/div/span/div/span[1]/span/span",
+            "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div/div[1]/div[1]/div/div/div/div/div/div/div/div/div/div/div/div/div/div[2]/div/div[4]/div/div/div[1]/div/div[1]/div/div[1]/span[2]/div/span[2]/span/span"
+        ],
+        "list": {
+            "main": "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div",
+            "reactList": "/div[1]/div/div/div/div/div[1]",
+            "scrollable": "/div[3]",
+            "List": "/div[3]/div[1]",
+            "itemStyle": "padding-left: 8px; padding-right: 8px;"
+        }
+    },
+    "feed": {
+        "openList": [
+            "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div[4]/div[1]/div/div/div/div/div/div/div/div/div/div[1]/div/div[2]/div/div[4]/div/div/div[1]/div/div[1]/div/div[1]/span[2]/div/span[2]/span/span",
+            "/html/body/div[1]/div/div[1]/div/div[3]/div/div/div[1]/div[1]/div/div/div/div/div/div/div/div/div/div/div/div/div/div[2]/div/div[4]/div/div/div[1]/div/div[1]/div/div[2]/div[2]/div/span"
+        ],
+        "list": {
+            "main": "/html/body/div[1]/div/div[1]/div/div[4]/div/div/div[1]/div/div[2]/div/div/div",
+            "reactList": "/div[1]/div/div/div/div/div[1]",
+            "scrollable": "/div[3]",
+            "List": "/div[3]/div[1]",
+            "itemStyle": "padding-left: 8px; padding-right: 8px;"
+        }
+    },
+    "post": {
+        "post": [
+            ],
+        "feed": [
+        ]
+    }
+}
