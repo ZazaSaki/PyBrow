@@ -1,0 +1,117 @@
+const mainPath = <<mainPath>>;
+//paths relative to mainPath
+const scrollablePath = <<scrollablePath>>;
+const theListPath = <<listPath>>;
+const reactListPath = <<reactListPath>>;
+
+console.log(mainPath)
+console.log(scrollablePath)
+console.log(theListPath)
+console.log(reactListPath)
+
+function sleep(ms) {
+  return new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+}
+
+//get Element By Xpath function
+function getElementByXpath(path) {
+  return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
+
+function getElementByXpathFromElem(path, elem) {
+  return document.evaluate(path, elem, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+}
+
+
+//get Children List from element function
+function getChildrenListFromPath(path){
+    return getElementByXpath(path).children;
+}
+
+//sroll bottom element function
+function scrollBottom(elem){
+    elem.scrollTop = elem.scrollHeight;
+}
+
+//html Collection to array
+function HTMLCollectToArray(collect){
+    return Array.from(collect);
+}
+
+//count reaction function
+function reactNumber(list){
+    let total = 0;
+
+    reactList.map(it => {
+        const f = it == reactList[0];
+        const l = it == reactList[1];
+
+
+        console.log(total);
+        console.log(f);
+        console.log(l);
+        console.log(it)
+
+        if(!(f || l)){
+            const val = getElementByXpathFromElem("div[1]/span/text()", it).textContent;
+
+            console.log(val);
+
+            reactNumber = parseInt(val);
+
+            total += reactNumber; 
+        }
+
+        console.log(total);
+    });
+    reactList[2].textContent = total;
+    return total
+}
+
+//scroll Bottom
+let scrollable = getElementByXpath(scrollablePath);
+
+console.log(scrollable);
+
+scrollBottom(scrollable);
+
+/*
+console.log(scrollable);
+
+
+let reactList = HTMLCollectToArray(getChildrenListFromPath(reactListPath));
+
+let list = getChildrenListFromPath(theListPath);
+
+console.log(reactList);
+
+console.log(list[0]);
+
+let tt = reactNumber(reactList);
+let count = 0;
+while(tt!= list.length){
+    let wait = !(tt!= list.length);
+    
+    scrollBottom(getElementByXpath(scrollablePath))
+    
+    
+    console.log(wait)
+    console.log(tt);
+    console.log(list.length)
+    
+    list = getChildrenListFromPath(theListPath);
+    
+    while(wait){
+        await sleep(2000);
+        wait=false;
+    }
+    
+    await sleep(5000);
+    
+
+    console.log(count);
+    if(count > 4)break;
+    count++;
+}*/
